@@ -36,3 +36,8 @@ The primary Dynamic/Static websites
 
 **CMS**
 - Contentful
+
+# Core Tech Demo
+https://core-tech-demo.vercel.app
+
+This simple demo illustrates the stack in action.
