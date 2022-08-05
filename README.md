@@ -1,34 +1,38 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Philosophy
+- Start small and adapt accordingly
 
-## Getting Started
+This repo is designed to contain a minimal amount of technologies in order to maximise agility. As your application grows and your needs change, you are expected to add on your own technologies.
 
-First, run the development server:
+- Scalability
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+Many of the tech selected has been battle tested and are used in many of the largest tech companies in the world. Your core tech must be able to scale and it must be able to scale fast.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Strong free tier support
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Apart from the obvious low cost = better, apps have to first prove their worth before being invested into.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- Easy to develop; Quick to configure
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+As will be apparent from the strong use of serverless and managed tools, this stack minimises the amount of boilerplate and setup required and allows developers to focus on actually building the app itself.
 
-## Learn More
+## Use Cases
+The primary Dynamic/Static websites
 
-To learn more about Next.js, take a look at the following resources:
+## Tech
+**Frontend**
+- NextJS
+- React
+- Tailwind CSS
+- Typescript
+- Prisma
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Database**
+- MongoDB
+- Planetscale
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+**DevOps**
+- Github
+- Vercel
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+**CMS**
+- Contentful
