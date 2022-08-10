@@ -1,11 +1,46 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+model attacks {
+  id       Int     @id @default(autoincrement())
+  familiar Int?
+  name     String? @db.VarChar(255)
+  effect   String? @db.VarChar(255)
+}
+
+model elements {
+  id   Int     @id @default(autoincrement())
+  name String? @db.VarChar(255)
+}
+
+model familiars {
+  id      Int     @id @default(autoincrement())
+  name    String? @db.VarChar(255)
+  element Int?
+  passive String? @db.VarChar(255)
+  attack  Int?
+  defense Int?
+  health  Int?
+  speed   Int?
+}
+
+model items {
+  id     Int     @id @default(autoincrement())
+  name   String? @db.VarChar(255)
+  effect String? @db.VarChar(255)
+}
+
+model moves {
+  id      Int     @id @default(autoincrement())
+  name    String? @db.VarChar(255)
+  element Int?
+  effect  String? @db.VarChar(255)
 }
