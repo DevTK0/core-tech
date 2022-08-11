@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { PrismaNamespace, PrismaClient } from '@prisma'; 
+import { PrismaNamespace, PrismaClient } from '@/prisma'; 
 
 type QueryType = PrismaNamespace.PromiseReturnType<typeof query>
 
