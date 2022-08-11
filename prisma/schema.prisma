@@ -9,38 +9,44 @@ datasource db {
   referentialIntegrity = "prisma"
 }
 
-model attacks {
-  id       Int     @id @default(autoincrement())
-  familiar Int?
-  name     String? @db.VarChar(255)
-  effect   String? @db.VarChar(255)
+model Attack {
+  id          Int      @id @default(autoincrement())
+  familiar    Familiar @relation(fields: [familiar_id], references: [id])
+  familiar_id Int
+  name        String   @db.VarChar(255)
+  effect      String   @db.VarChar(255)
 }
 
-model elements {
-  id   Int     @id @default(autoincrement())
-  name String? @db.VarChar(255)
+model Element {
+  id        Int        @id @default(autoincrement())
+  name      String     @db.VarChar(255)
+  familiars Familiar[]
+  moves     Move[]
 }
 
-model familiars {
-  id      Int     @id @default(autoincrement())
-  name    String? @db.VarChar(255)
-  element Int?
-  passive String? @db.VarChar(255)
-  attack  Int?
-  defense Int?
-  health  Int?
-  speed   Int?
+model Familiar {
+  id         Int      @id @default(autoincrement())
+  name       String   @db.VarChar(255)
+  element    Element  @relation(fields: [element_id], references: [id])
+  element_id Int
+  passive    String   @db.VarChar(255)
+  attack     Int
+  defense    Int
+  health     Int
+  speed      Int
+  attacks    Attack[]
 }
 
-model items {
-  id     Int     @id @default(autoincrement())
-  name   String? @db.VarChar(255)
-  effect String? @db.VarChar(255)
+model Item {
+  id     Int    @id @default(autoincrement())
+  name   String @db.VarChar(255)
+  effect String @db.VarChar(255)
 }
 
-model moves {
-  id      Int     @id @default(autoincrement())
-  name    String? @db.VarChar(255)
-  element Int?
-  effect  String? @db.VarChar(255)
+model Move {
+  id         Int     @id @default(autoincrement())
+  name       String  @db.VarChar(255)
+  element    Element @relation(fields: [element_id], references: [id])
+  element_id Int
+  effect     String  @db.VarChar(255)
 }
