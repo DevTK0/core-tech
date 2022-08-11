@@ -1,3 +1,8 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma as PrismaNamespace, PrismaClient as Client } from "@prisma/client"
 
-export const Prisma: PrismaClient = new PrismaClient();
+const PrismaClient: Client = new Client();
+
+export {
+    PrismaClient,
+    PrismaNamespace
+}
