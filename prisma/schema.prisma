@@ -27,16 +27,17 @@ model Element {
 }
 
 model Familiar {
-  id         Int      @id @default(autoincrement())
-  name       String   @db.VarChar(255)
-  element    Element  @relation(fields: [element_id], references: [id])
-  element_id Int
-  passive    String   @db.VarChar(255)
-  attack     Int
-  defense    Int
-  health     Int
-  speed      Int
-  attacks    Attack[]
+  id          Int           @id @default(autoincrement())
+  name        String        @db.VarChar(255)
+  element     Element       @relation(fields: [element_id], references: [id])
+  element_id  Int
+  passive     String        @db.VarChar(255)
+  attack      Int
+  defense     Int
+  health      Int
+  speed       Int
+  attacks     Attack[]
+  FamiliarSet FamiliarSet[]
 }
 
 model Item {
@@ -54,7 +55,7 @@ model Move {
   MoveSet    MoveSet[]
 }
 
-// Combat
+// Battle Prep
 model Team {
   id          Int           @id @default(autoincrement())
   name        String        @db.VarChar(255)
@@ -63,13 +64,17 @@ model Team {
   FamiliarSet FamiliarSet[]
 }
 
-model FamiliarSet { 
-  id       Int       @id @default(autoincrement())
-  team     Team      @relation(fields: [team_id], references: [id])
-  team_id  Int
-  position Int
-  ItemSet  ItemSet[]
-  MoveSet  MoveSet[]
+model FamiliarSet {
+  id          Int       @unique @default(autoincrement())
+  team        Team      @relation(fields: [team_id], references: [id])
+  team_id     Int
+  familiar    Familiar  @relation(fields: [familiar_id], references: [id])
+  familiar_id Int
+  position    Int
+  ItemSet     ItemSet[]
+  MoveSet     MoveSet[]
+
+  @@id([team_id, position])
 }
 
 model ItemSet {

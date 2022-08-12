@@ -5,11 +5,11 @@
       "@/prisma": [
         "./lib/prisma"
       ],
-      "@/types": [
-        "./types"
+      "@/types/*": [
+        "./types/*"
       ],
-      "@/components": [
-        "./components"
+      "@/components/*": [
+        "./components/*"
       ]
     },
     "target": "es5",

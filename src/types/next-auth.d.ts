@@ -13,7 +13,11 @@ declare module "next-auth" {
 }
 
 declare module 'next-auth/jwt/types' {
-    interface JWT {
-      uid: string;
-    }
+  interface JWT {
+    uid: string;
   }
+}
+
+export {
+  Session,
+}

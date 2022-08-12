@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { PrismaNamespace, PrismaClient } from '@/prisma'; 
 
-type QueryType = PrismaNamespace.PromiseReturnType<typeof query>
+type ResponseType = PrismaNamespace.PromiseReturnType<typeof query>
 
 async function query() {
   const response = await PrismaClient.familiar
@@ -26,7 +26,7 @@ async function query() {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<QueryType>
+  res: NextApiResponse<ResponseType>
 ) {
 
   return res.json(await query());
