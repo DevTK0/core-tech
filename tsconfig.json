@@ -3,7 +3,13 @@
     "baseUrl": "src",
     "paths": {
       "@/prisma": [
-        "../prisma/lib/prisma"
+        "./lib/prisma"
+      ],
+      "@/types": [
+        "./types"
+      ],
+      "@/components": [
+        "./components"
       ]
     },
     "target": "es5",

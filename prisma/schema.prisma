@@ -9,6 +9,8 @@ datasource db {
   referentialIntegrity = "prisma"
 }
 
+// FamiliarDex
+
 model Attack {
   id          Int      @id @default(autoincrement())
   familiar    Familiar @relation(fields: [familiar_id], references: [id])
@@ -44,28 +46,63 @@ model Item {
 }
 
 model Move {
-  id         Int     @id @default(autoincrement())
-  name       String  @db.VarChar(255)
-  element    Element @relation(fields: [element_id], references: [id])
+  id         Int       @id @default(autoincrement())
+  name       String    @db.VarChar(255)
+  element    Element   @relation(fields: [element_id], references: [id])
   element_id Int
-  effect     String  @db.VarChar(255)
+  effect     String    @db.VarChar(255)
+  MoveSet    MoveSet[]
+}
+
+// Combat
+model Team {
+  id          Int           @id @default(autoincrement())
+  name        String        @db.VarChar(255)
+  player      User          @relation(fields: [player_id], references: [id])
+  player_id   String
+  FamiliarSet FamiliarSet[]
+}
+
+model FamiliarSet { 
+  id       Int       @id @default(autoincrement())
+  team     Team      @relation(fields: [team_id], references: [id])
+  team_id  Int
+  position Int
+  ItemSet  ItemSet[]
+  MoveSet  MoveSet[]
+}
+
+model ItemSet {
+  id             Int         @id @default(autoincrement())
+  familiarset    FamiliarSet @relation(fields: [familiarset_id], references: [id])
+  familiarset_id Int
+  slot           Int
+}
+
+model MoveSet {
+  id             Int         @id @default(autoincrement())
+  familiarset    FamiliarSet @relation(fields: [familiarset_id], references: [id])
+  familiarset_id Int
+  slot           Int
+  move           Move        @relation(fields: [move_id], references: [id])
+  move_id        Int
 }
 
 // NextAuth Models
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -88,6 +125,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  Team          Team[]
 }
 
 model VerificationToken {
