@@ -21,7 +21,7 @@ const Header: NextPage = () => {
       <div className="w-full py-6 flex items-center justify-end border-b border-indigo-500 lg:border-none">
         <div className="flex items-center mr-auto">
           <Link href="/">
-            <a href="/">
+            <a>
               <Image
                 className="h-8 w-auto sm:h-10"
                 src="/favicon.ico"
