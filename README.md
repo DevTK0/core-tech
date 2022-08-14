@@ -26,6 +26,9 @@ The primary Dynamic/Static websites
 - Typescript
 - Prisma
 
+- Ajv for input validation
+- NextAuth for user authentication
+
 **Database**
 - MongoDB
 - Planetscale

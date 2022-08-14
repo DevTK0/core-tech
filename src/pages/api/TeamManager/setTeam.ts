@@ -1,8 +1,23 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { PrismaNamespace, PrismaClient } from '@/prisma'; 
 import { getServerSession } from '../auth/[...nextauth]';
+import { ajv, JSONSchemaType, ErrorObject } from '@/ajv';
 
-type QueryType = PrismaNamespace.PromiseReturnType<typeof query>
+interface RequestType {
+  teamName: string
+}
+
+const schema: JSONSchemaType<RequestType> = {
+  type: "object",
+  properties: {
+    teamName: {type: "string", default: "team1"}
+  },
+  required: [],
+  additionalProperties: false
+}
+
+
+type ResponseType = PrismaNamespace.PromiseReturnType<typeof query>
 
 async function query(playerId: string, teamName: string) {
   const response = await PrismaClient.team.create({
@@ -17,16 +32,26 @@ async function query(playerId: string, teamName: string) {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<QueryType>
+  res: NextApiResponse<ResponseType | ErrorObject[]>
 ) {
 
   const session = await getServerSession(req, res);
 
   if (!session) {
     console.log('no session');
+    return res.status(401);
   } else {
+
+    const validate = ajv.compile(schema);
+
+    if (!validate(req.query)) {
+      const errors: ErrorObject[] = (validate.errors) ? validate.errors : [];
+      return res.status(400).json(errors);
+    }
+
     const userId = session.user.id;
-    const teamName = (typeof req.query.teamName === 'string') ? req.query.teamName : 'team1';
+    const teamName = req.body.teamName;
+
     return res.json(await query(userId, teamName));
   }
   

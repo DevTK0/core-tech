@@ -3,41 +3,43 @@ import { PrismaNamespace, PrismaClient } from '@/prisma';
 import { getServerSession } from '../auth/[...nextauth]';
 import { ajv, JSONSchemaType, ErrorObject } from '@/ajv';
 
+
 interface RequestType {
-  teamId: number,
-  familiarId: number,
-  position: number
+  familiarsetId: number
+  slot: number
+  itemId: number
 }
 
 const schema: JSONSchemaType<RequestType> = {
   type: "object",
   properties: {
-    teamId: {type: "integer", nullable: false},
-    familiarId: {type: "integer", nullable: false},
-    position: {type: "integer", nullable: false},
+    familiarsetId: {type: "integer", nullable: false},
+    slot: {type: "integer", nullable: false, minimum: 1, maximum: 1},
+    itemId: {type: "integer", nullable: false},
   },
-  required: ["teamId", "familiarId", "position"],
+  required: ["familiarsetId", "slot", "itemId"],
   additionalProperties: false
 }
 
+
 type ResponseType = PrismaNamespace.PromiseReturnType<typeof query>
 
-async function query(teamId: number, familiarId: number, position: number) {
-  const response = await PrismaClient.familiarSet.upsert({
+async function query(familiarsetId: number, slot: number, itemId: number) {
+  const response = await PrismaClient.itemSet.upsert({
     where: {
-      team_id_position: {
-        team_id: teamId,
-        position: position
+      familiarset_id_slot: {
+        familiarset_id: familiarsetId,
+        slot: slot
       }
     },
     update: {
-      familiar_id: familiarId
+      item_id: itemId
     },
     create: {
-      team_id: teamId,
-      familiar_id: familiarId,
-      position: position
-    }
+      familiarset_id: familiarsetId,
+      slot: slot,
+      item_id: itemId
+    },
   });
   
   return response;
@@ -52,6 +54,7 @@ export default async function handler(
 
   if (!session) {
     console.log('no session');
+    return res.status(401).json([]);
   } else {
 
     const validate = ajv.compile(schema);
@@ -60,12 +63,12 @@ export default async function handler(
       const errors: ErrorObject[] = (validate.errors) ? validate.errors : [];
       return res.status(400).json(errors);
     }
-    
-    const teamId = req.body.teamId;
-    const familiarId = req.body.familiarId;
-    const position = req.body.position;
-    
-    return res.status(200).json(await query(teamId, familiarId, position));
+
+    const familiarsetId = req.body.familiarsetId;
+    const slot = req.body.slot;
+    const itemId = req.body.itemId;
+
+    return res.json(await query(familiarsetId, slot, itemId));
   }
   
 }

@@ -41,9 +41,10 @@ model Familiar {
 }
 
 model Item {
-  id     Int    @id @default(autoincrement())
-  name   String @db.VarChar(255)
-  effect String @db.VarChar(255)
+  id      Int       @id @default(autoincrement())
+  name    String    @db.VarChar(255)
+  effect  String    @db.VarChar(255)
+  ItemSet ItemSet[]
 }
 
 model Move {
@@ -78,19 +79,25 @@ model FamiliarSet {
 }
 
 model ItemSet {
-  id             Int         @id @default(autoincrement())
+  id             Int         @unique @default(autoincrement())
   familiarset    FamiliarSet @relation(fields: [familiarset_id], references: [id])
   familiarset_id Int
   slot           Int
+  item           Item        @relation(fields: [item_id], references: [id])
+  item_id        Int
+
+  @@id([familiarset_id, slot])
 }
 
 model MoveSet {
-  id             Int         @id @default(autoincrement())
+  id             Int         @unique @default(autoincrement())
   familiarset    FamiliarSet @relation(fields: [familiarset_id], references: [id])
   familiarset_id Int
   slot           Int
   move           Move        @relation(fields: [move_id], references: [id])
   move_id        Int
+
+  @@id([familiarset_id, slot])
 }
 
 // NextAuth Models
