@@ -51,22 +51,24 @@ const Header: NextPage = () => {
                 </div>
                 <div className="ml-10 space-x-4">
                     {!session && (
+                        <Link href="#">
                         <a
-                        href="#"
                         onClick={handleSignin}
                         className="inline-block mr-0 bg-indigo-500 py-2 px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75"
                         >
                         Sign in
                         </a>
+                        </Link>
                     )}
                     {session && (
+                        <Link href="#">
                         <a
-                        href="#"
                         onClick={handleSignout}
                         className="inline-block bg-indigo-500 py-2 px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75"
                         >
                         Sign out
                         </a>
+                        </Link>
                     )}
                     </div>
             </div>
