@@ -8,7 +8,7 @@ const Home: NextPage = () => {
     <div className="mx-auto px-4 sm:px-6">
         <Header />
         <main>
-            
+            <SimpleTable />
         </main>
     </div>
   )
