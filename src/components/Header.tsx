@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import Image from 'next/image'
 import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 
@@ -21,10 +22,12 @@ const Header: NextPage = () => {
             <div className="w-full py-6 flex items-center justify-end border-b border-indigo-500 lg:border-none">
                 <div className="flex items-center mr-auto"> 
                     <a href="/">
-                        <img
+                        <Image
                         className="h-8 w-auto sm:h-10"
-                        src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
+                        src="/favicon.ico"
                         alt=""
+                        width={40}
+                        height={40}
                         />
                     </a>
                     <div className="ml-10 space-x-8 block">

@@ -99,7 +99,6 @@ const SimpleTable: NextPage = () => {
                     </th>
                     <th scope="col" className="px-relative py-3.5 pl-3 pr-4 sm:pr-6 text-right">
                         <a
-                          href="#"
                           onClick={() => add(rows, setRows)}
                           className="bg-indigo-600 px-2 py-1 border border-transparent rounded-md text-white"
                         >
@@ -140,7 +139,6 @@ const SimpleTable: NextPage = () => {
                       <td className="whitespace-nowrap w-10 px-relative py-4 pl-3 pr-4 text-center text-sm font-medium sm:pr-6">
                         <a
                           onClick={() => remove(rows, setRows)}
-                          href="#"
                           className="bg-red-600 px-2 py-1 border border-transparent rounded-md text-white"
                         >
                           X
