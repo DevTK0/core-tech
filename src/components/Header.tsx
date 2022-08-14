@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import { useSession, signIn, signOut } from "next-auth/react";
+import Link from "next/link";
 
 const handleSignin = (e: React.SyntheticEvent) => {
   e.preventDefault();
@@ -27,15 +28,21 @@ const Header: NextPage = () => {
                         />
                     </a>
                     <div className="ml-10 space-x-8 block">
-                        <a href="/explore" className="text-base font-medium">
-                            Explore
-                        </a>
-                        <a href="/manage" className="text-base font-medium">
-                            Manage
-                        </a>
-                        <a href="/battle" className="text-base font-medium">
-                            Battle
-                        </a>
+                        <Link href="/explore">
+                            <a className="text-base font-medium">
+                                Explore
+                            </a>
+                        </Link>
+                        <Link href="/manage">
+                            <a className="text-base font-medium">
+                                Manage
+                            </a>
+                        </Link>
+                        <Link href="/battle">
+                            <a className="text-base font-medium">
+                                Battle
+                            </a>
+                        </Link>
                     </div>
                     
                 </div>
