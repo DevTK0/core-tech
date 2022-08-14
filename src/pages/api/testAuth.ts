@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { unstable_getServerSession } from "next-auth/next"
-import { authOptions } from "./auth/[...nextauth]"
+import { getServerSession } from "./auth/[...nextauth]"
 import { Session } from "@/types/next-auth";
 
 export default async function handler(
@@ -9,7 +8,7 @@ export default async function handler(
   res: NextApiResponse<Session>
 ) {
 
-  const session = await unstable_getServerSession(req, res, authOptions)
+  const session = await getServerSession(req, res)
 
   if (session) {
     console.log(session);

@@ -5,6 +5,9 @@
       "@/prisma": [
         "./lib/prisma"
       ],
+      "@/ajv": [
+        "./lib/ajv"
+      ],
       "@/types/*": [
         "./types/*"
       ],
