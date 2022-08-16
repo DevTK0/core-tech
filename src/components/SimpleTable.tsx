@@ -46,7 +46,7 @@ const SimpleTable: NextPage = () => {
         <div className="sm:flex-auto">
           <h1 className="text-xl font-semibold text-gray-900">Team Manager</h1>
           <p className="mt-2 text-sm text-gray-700">
-            Here you can setup the familiars to bring with you into battle.
+            Choose the familiars to bring with you into battle.
           </p>
         </div>
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none"></div>
