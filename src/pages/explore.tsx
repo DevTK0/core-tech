@@ -43,9 +43,8 @@ const Home: NextPage = () => {
             <div className="mt-4 sm:mt-0 sm:ml-10">
               <nav className="-mb-px flex space-x-8">
                 {tabs.map((tab) => (
-                  <Link href={tab.href}>
+                  <Link href={tab.href} key={tab.name}>
                   <a
-                    key={tab.name}
                     onClick={() => switchTabs(tab)}
                     className={classNames(
                       tab.current
