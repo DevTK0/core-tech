@@ -1,10 +1,9 @@
 import type { NextPage } from "next";
 import Header from "../components/Header";
 import {
-  ChevronDownIcon,
   SearchIcon,
-  SortAscendingIcon,
 } from "@heroicons/react/solid";
+import Link from "next/link";
 
 const tabs = [
   { name: "Familiars", href: "#", current: true },
@@ -14,6 +13,12 @@ const tabs = [
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
+}
+
+function switchTabs(current: any) {
+  tabs.forEach((tab) => {
+    tab.current = (tab === current) ? true : false;
+  });
 }
 
 const Home: NextPage = () => {
@@ -38,9 +43,10 @@ const Home: NextPage = () => {
             <div className="mt-4 sm:mt-0 sm:ml-10">
               <nav className="-mb-px flex space-x-8">
                 {tabs.map((tab) => (
+                  <Link href={tab.href}>
                   <a
                     key={tab.name}
-                    href={tab.href}
+                    onClick={() => switchTabs(tab)}
                     className={classNames(
                       tab.current
                         ? "border-indigo-500 text-indigo-600"
@@ -51,6 +57,7 @@ const Home: NextPage = () => {
                   >
                     {tab.name}
                   </a>
+                  </Link>
                 ))}
               </nav>
             </div>
