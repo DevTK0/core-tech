@@ -1,4 +1,5 @@
 import { Prisma as PrismaNamespace, PrismaClient as Client } from "@prisma/client"
+import { PlayerMove, FamiliarState } from "@prisma/client"
 
 declare global {
     // allow global `var` declarations
@@ -14,4 +15,9 @@ let PrismaClient: Client = global.prisma;
 export {
     PrismaClient,
     PrismaNamespace
+}
+
+export type {
+    PlayerMove,
+    FamiliarState
 }

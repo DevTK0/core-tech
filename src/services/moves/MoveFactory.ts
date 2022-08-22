@@ -1,10 +1,5 @@
-import { FireBlast } from "./FireBlast";
-import { IceBlast } from "./IceBlast";
-
-const Moves = {
-    "Fire Blast": FireBlast,
-    "Ice Blast": IceBlast
-};
+import { FamiliarState } from "@/services/battle/FamiliarState";
+import { Moves } from "./Moves";
 
 type Moves = typeof Moves;
 type Keys = keyof Moves;
@@ -13,7 +8,7 @@ type SingleKeys<K> = [K] extends (K extends Keys ? [K] : never) ? K : never;
 type ClassType<A extends Keys> = Extract<Tuples<Keys>, [A, any]>[1];
 
 export class MoveFactory {
-    static getMove<K extends Keys>(k: SingleKeys<K>): ClassType<K> {
-        return new Moves[k]();
+    static getMove<K extends Keys>(k: SingleKeys<K>, source: FamiliarState): ClassType<K> {
+        return new Moves[k](source);
     }
 }

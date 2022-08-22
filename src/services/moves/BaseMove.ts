@@ -1,28 +1,24 @@
-import { Summon } from "@/services/battle/Summon";
+import { FamiliarState } from "@/services/battle/FamiliarState";
 
-export class BaseMove {
+export abstract class BaseMove {
     
-    public source: Summon = new Summon();
-    public targets: Summon[] = [];
+    public targets: FamiliarState[] = [];
 
-    constructor() { }
+    constructor(
+        public source: FamiliarState
+    ) { 
+        this.source = source;
+    }
 
-    setSource = (summon: Summon) => {
-        this.source = summon;
-        return this;
-    };
-
-    setTargets = (summon: Summon[]) => {
+    setTargets = (summon: FamiliarState[]) => {
         this.targets = summon;
         return this;
     };
 
-    effect = () => {}
+    protected abstract effect(): void;
 
     resolve = () => {
-        
         this.effect();
-
         return this;
     }
 }
