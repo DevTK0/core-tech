@@ -3,22 +3,6 @@ import { FamiliarState } from "./FamiliarState";
 
 type CallbackFunctionVariadic = (...args: any[]) => void;
 
-export class Game {
-
-    constructor(
-        public allies: FamiliarState[] = [],
-        public enemies: FamiliarState[] = [],
-    ) { }
-        
-}
-
-declare global {
-    var game: Game
-}
-if (!global.game) {
-    global.game = new Game();
-}
-
 export class Event {    
 
     private handlers: CallbackFunctionVariadic[] = [];

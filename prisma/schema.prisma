@@ -11,14 +11,6 @@ datasource db {
 
 // FamiliarDex
 
-model Attack {
-  id          Int      @id @default(autoincrement())
-  familiar    Familiar @relation(fields: [familiar_id], references: [id])
-  familiar_id Int
-  name        String   @db.VarChar(255)
-  effect      String   @db.VarChar(255)
-}
-
 model Element {
   id        Int        @id @default(autoincrement())
   name      String     @db.VarChar(255)
@@ -27,8 +19,8 @@ model Element {
 }
 
 model Familiar {
-  id            Int             @id @default(autoincrement())
-  name          String          @db.VarChar(255)
+  // id            Int             @id @default(autoincrement())
+  name          String          @id @db.VarChar(255)
   element       Element         @relation(fields: [element_id], references: [id])
   element_id    Int
   passive       String          @db.VarChar(255)
@@ -36,7 +28,6 @@ model Familiar {
   defense       Int
   health        Int
   speed         Int
-  attacks       Attack[]
   FamiliarSet   FamiliarSet[]
   FamiliarState FamiliarState[]
 }
@@ -74,8 +65,8 @@ model FamiliarSet {
   id          Int        @unique @default(autoincrement())
   team        Team       @relation(fields: [team_id], references: [id])
   team_id     Int
-  familiar    Familiar   @relation(fields: [familiar_id], references: [id])
-  familiar_id Int
+  familiar    Familiar   @relation(fields: [familiar_name], references: [name])
+  familiar_name String
   position    Int
   ItemSet     ItemSet[]
   SkillSet    SkillSet[]
@@ -180,8 +171,8 @@ model FamiliarState {
   id          Int          @id @default(autoincrement())
   turn        Turn         @relation(fields: [turn_id], references: [id])
   turn_id     Int
-  familiar    Familiar     @relation(fields: [familiar_id], references: [id])
-  familiar_id Int
+  familiar    Familiar     @relation(fields: [familiar_name], references: [name])
+  familiar_name String
   position    Int
   health      Int
   stamina     Int

@@ -15,9 +15,7 @@ export class BerryItem extends Item {
         event.onDamage.add(this.effect);
     }
     effect(source: MiniFamiliar) {
-        
-        console.log(global.game);
-        
+
         if (source.getHealth() < 50) {
             console.log("Berry Item activated!");
             source.heal(25);
