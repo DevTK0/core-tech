@@ -10,19 +10,16 @@ datasource db {
 }
 
 // FamiliarDex
-
 model Element {
-  id        Int        @id @default(autoincrement())
-  name      String     @db.VarChar(255)
+  name      String     @id @db.VarChar(255)
   familiars Familiar[]
   moves     Skill[]
 }
 
 model Familiar {
-  // id            Int             @id @default(autoincrement())
   name          String          @id @db.VarChar(255)
-  element       Element         @relation(fields: [element_id], references: [id])
-  element_id    Int
+  element       Element         @relation(fields: [element_name], references: [name])
+  element_name  String
   passive       String          @db.VarChar(255)
   attack        Int
   defense       Int
@@ -41,14 +38,14 @@ model Item {
 }
 
 model Skill {
-  id         Int          @id @default(autoincrement())
-  name       String       @db.VarChar(255)
-  element    Element      @relation(fields: [element_id], references: [id])
-  element_id Int
-  effect     String       @db.VarChar(255)
-  SkillSet   SkillSet[]
-  SkillState SkillState[]
-  PlayerMove PlayerMove[]
+  id           Int          @id @default(autoincrement())
+  name         String       @db.VarChar(255)
+  element      Element      @relation(fields: [element_name], references: [name])
+  element_name String
+  effect       String       @db.VarChar(255)
+  SkillSet     SkillSet[]
+  SkillState   SkillState[]
+  PlayerMove   PlayerMove[]
 }
 
 // Management
@@ -62,14 +59,14 @@ model Team {
 }
 
 model FamiliarSet {
-  id          Int        @unique @default(autoincrement())
-  team        Team       @relation(fields: [team_id], references: [id])
-  team_id     Int
-  familiar    Familiar   @relation(fields: [familiar_name], references: [name])
+  id            Int        @unique @default(autoincrement())
+  team          Team       @relation(fields: [team_id], references: [id])
+  team_id       Int
+  familiar      Familiar   @relation(fields: [familiar_name], references: [name])
   familiar_name String
-  position    Int
-  ItemSet     ItemSet[]
-  SkillSet    SkillSet[]
+  position      Int
+  ItemSet       ItemSet[]
+  SkillSet      SkillSet[]
 
   @@id([team_id, position])
 }
@@ -168,24 +165,24 @@ model FieldState {
 }
 
 model FamiliarState {
-  id          Int          @id @default(autoincrement())
-  turn        Turn         @relation(fields: [turn_id], references: [id])
-  turn_id     Int
-  familiar    Familiar     @relation(fields: [familiar_name], references: [name])
+  id            Int          @id @default(autoincrement())
+  turn          Turn         @relation(fields: [turn_id], references: [id])
+  turn_id       Int
+  familiar      Familiar     @relation(fields: [familiar_name], references: [name])
   familiar_name String
-  position    Int
-  health      Int
-  stamina     Int
-  attack      Int
-  defense     Int
-  speed       Int
-  onField     Boolean
-  team        Team         @relation(fields: [team_id], references: [id])
-  team_id     Int
-  ItemState   ItemState[]
-  SkillState  SkillState[]
-  Target      Target[]
-  PlayerMove  PlayerMove[]
+  position      Int
+  health        Int
+  stamina       Int
+  attack        Int
+  defense       Int
+  speed         Int
+  onField       Boolean
+  team          Team         @relation(fields: [team_id], references: [id])
+  team_id       Int
+  ItemState     ItemState[]
+  SkillState    SkillState[]
+  Target        Target[]
+  PlayerMove    PlayerMove[]
 }
 
 model ItemState {
