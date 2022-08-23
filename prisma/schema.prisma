@@ -93,18 +93,18 @@ model ArtSet {
 
 // Battle
 model Battle {
-  id          Int     @id @default(autoincrement())
-  player_1    User    @relation("player1", fields: [player_1_id], references: [id])
-  player_1_id String
-  player_2    User    @relation("player2", fields: [player_2_id], references: [id])
-  player_2_id String
-  winner      User?   @relation("winner", fields: [winner_id], references: [id])
-  winner_id   String?
-  loser       User?   @relation("loser", fields: [loser_id], references: [id])
-  loser_id    String?
-  ruleset     Ruleset @relation(fields: [ruleset_name], references: [name])
-  ruleset_name  String
-  Turn        Turn[]
+  id           Int     @id @default(autoincrement())
+  player_1     User    @relation("player1", fields: [player_1_id], references: [id])
+  player_1_id  String
+  player_2     User    @relation("player2", fields: [player_2_id], references: [id])
+  player_2_id  String
+  winner       User?   @relation("winner", fields: [winner_id], references: [id])
+  winner_id    String?
+  loser        User?   @relation("loser", fields: [loser_id], references: [id])
+  loser_id     String?
+  ruleset      Ruleset @relation(fields: [ruleset_name], references: [name])
+  ruleset_name String
+  Turn         Turn[]
 }
 
 model Ruleset {
@@ -129,8 +129,8 @@ model PlayerMove {
   id        Int           @unique @default(autoincrement())
   turn      Turn          @relation(fields: [turn_id], references: [id])
   turn_id   Int
-  type      MoveType      @relation(fields: [type_id], references: [id])
-  type_id   Int
+  type      MoveType      @relation(fields: [type_name], references: [name])
+  type_name String
   spell_id  Int?
   attack_id Int?
   art       Art?          @relation(fields: [art_name], references: [name])
@@ -141,8 +141,7 @@ model PlayerMove {
 }
 
 model MoveType {
-  id          Int          @id @default(autoincrement())
-  name        String       @db.VarChar(255)
+  name        String       @id @db.VarChar(255)
   description String       @db.VarChar(255)
   PlayerMove  PlayerMove[]
 }
