@@ -22,10 +22,10 @@ async function query(id: number) {
           item: true,
         },
       },
-      SkillState: {
+      ArtState: {
         select: {
           id: true,
-          skill: true,
+          art: true,
         },
       },
     },

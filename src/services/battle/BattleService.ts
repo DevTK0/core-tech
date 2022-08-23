@@ -26,7 +26,7 @@ async function query(battleId: number, turn: number) {
                     id: true,
                     turn: true,
                     type: true,
-                    skill: true,
+                    art: true,
                     source: true,
                     targets: true
                 }
@@ -36,7 +36,7 @@ async function query(battleId: number, turn: number) {
                     id: true,
                     turn_id: true,
                     team_id: true,
-                    familiar_id: true,
+                    familiar_name: true,
                     stamina: true,
                     attack: true,
                     defense: true,
@@ -50,10 +50,10 @@ async function query(battleId: number, turn: number) {
                             item: true,
                         }
                     },
-                    SkillState: {
+                    ArtState: {
                         select: {
                             id: true,
-                            skill: true
+                            art: true
                         }
                     }
                 }
@@ -102,7 +102,7 @@ export async function loadPlayerMoves() {
     const moves: BaseMove[] = [];
 
     playerMoves?.forEach(playerMove => {
-        const moveName = playerMove.skill?.name as keyof typeof Moves;
+        const moveName = playerMove.art?.name as keyof typeof Moves;
         const source = FamiliarFactory.getFamiliar(playerMove.source);
         const move = MoveFactory.getMove(moveName, source);
 
