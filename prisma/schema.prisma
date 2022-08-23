@@ -141,9 +141,8 @@ model PlayerMove {
 }
 
 model MoveType {
-  name        String       @id @db.VarChar(255)
-  description String       @db.VarChar(255)
-  PlayerMove  PlayerMove[]
+  name       String       @id @db.VarChar(255)
+  PlayerMove PlayerMove[]
 }
 
 model Target {
