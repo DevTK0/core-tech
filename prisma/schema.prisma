@@ -30,8 +30,8 @@ model Familiar {
 }
 
 model Item {
-  id        Int         @id @default(autoincrement())
-  name      String      @db.VarChar(255)
+  // id        Int         @id @default(autoincrement())
+  name      String      @id @db.VarChar(255)
   effect    String      @db.VarChar(255)
   ItemSet   ItemSet[]
   ItemState ItemState[]
@@ -76,8 +76,8 @@ model ItemSet {
   familiarset    FamiliarSet @relation(fields: [familiarset_id], references: [id])
   familiarset_id Int
   slot           Int
-  item           Item        @relation(fields: [item_id], references: [id])
-  item_id        Int
+  item           Item        @relation(fields: [item_name], references: [name])
+  item_name        String
 
   @@id([familiarset_id, slot])
 }
@@ -189,8 +189,8 @@ model ItemState {
   id               Int           @id @default(autoincrement())
   familiarstate    FamiliarState @relation(fields: [familiarstate_id], references: [id])
   familiarstate_id Int
-  item             Item          @relation(fields: [item_id], references: [id])
-  item_id          Int
+  item             Item          @relation(fields: [item_name], references: [name])
+  item_name          String
 }
 
 model SkillState {
