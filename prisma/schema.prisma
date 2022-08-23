@@ -13,7 +13,7 @@ datasource db {
 model Element {
   name      String     @id @db.VarChar(255)
   familiars Familiar[]
-  moves     Skill[]
+  moves     Art[]
 }
 
 model Familiar {
@@ -30,21 +30,20 @@ model Familiar {
 }
 
 model Item {
-  // id        Int         @id @default(autoincrement())
   name      String      @id @db.VarChar(255)
   effect    String      @db.VarChar(255)
   ItemSet   ItemSet[]
   ItemState ItemState[]
 }
 
-model Skill {
-  id           Int          @id @default(autoincrement())
-  name         String       @db.VarChar(255)
+model Art {
+  // id           Int          @id @default(autoincrement())
+  name         String       @id @db.VarChar(255)
   element      Element      @relation(fields: [element_name], references: [name])
   element_name String
   effect       String       @db.VarChar(255)
-  SkillSet     SkillSet[]
-  SkillState   SkillState[]
+  ArtSet       ArtSet[]
+  ArtState     ArtState[]
   PlayerMove   PlayerMove[]
 }
 
@@ -59,14 +58,14 @@ model Team {
 }
 
 model FamiliarSet {
-  id            Int        @unique @default(autoincrement())
-  team          Team       @relation(fields: [team_id], references: [id])
+  id            Int       @unique @default(autoincrement())
+  team          Team      @relation(fields: [team_id], references: [id])
   team_id       Int
-  familiar      Familiar   @relation(fields: [familiar_name], references: [name])
+  familiar      Familiar  @relation(fields: [familiar_name], references: [name])
   familiar_name String
   position      Int
   ItemSet       ItemSet[]
-  SkillSet      SkillSet[]
+  ArtSet        ArtSet[]
 
   @@id([team_id, position])
 }
@@ -77,18 +76,18 @@ model ItemSet {
   familiarset_id Int
   slot           Int
   item           Item        @relation(fields: [item_name], references: [name])
-  item_name        String
+  item_name      String
 
   @@id([familiarset_id, slot])
 }
 
-model SkillSet {
+model ArtSet {
   id             Int         @unique @default(autoincrement())
   familiarset    FamiliarSet @relation(fields: [familiarset_id], references: [id])
   familiarset_id Int
   slot           Int
-  skill          Skill       @relation(fields: [skill_id], references: [id])
-  skill_id       Int
+  art            Art         @relation(fields: [art_name], references: [name])
+  art_name       String
 
   @@id([familiarset_id, slot])
 }
@@ -136,8 +135,8 @@ model PlayerMove {
   type_id   Int
   spell_id  Int?
   attack_id Int?
-  skill     Skill?        @relation(fields: [skill_id], references: [id])
-  skill_id  Int?
+  art       Art?          @relation(fields: [art_name], references: [name])
+  art_name  String?
   source    FamiliarState @relation(fields: [source_id], references: [id])
   source_id Int
   targets   Target[]
@@ -180,7 +179,7 @@ model FamiliarState {
   team          Team         @relation(fields: [team_id], references: [id])
   team_id       Int
   ItemState     ItemState[]
-  SkillState    SkillState[]
+  ArtState      ArtState[]
   Target        Target[]
   PlayerMove    PlayerMove[]
 }
@@ -190,15 +189,15 @@ model ItemState {
   familiarstate    FamiliarState @relation(fields: [familiarstate_id], references: [id])
   familiarstate_id Int
   item             Item          @relation(fields: [item_name], references: [name])
-  item_name          String
+  item_name        String
 }
 
-model SkillState {
+model ArtState {
   id               Int           @id @default(autoincrement())
   familiarstate    FamiliarState @relation(fields: [familiarstate_id], references: [id])
   familiarstate_id Int
-  skill            Skill         @relation(fields: [skill_id], references: [id])
-  skill_id         Int
+  art              Art           @relation(fields: [art_name], references: [name])
+  art_name         String
 }
 
 // NextAuth Models
