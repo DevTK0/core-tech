@@ -1,4 +1,4 @@
-import { FamiliarState as PrismaFamiliarState } from "@prisma/client";
+import { FamiliarState as PrismaFamiliarState, Item, Skill } from "@prisma/client";
 
 /**
  * Holds the current state of the familiar and provides methods for interacting with the familiar.
@@ -16,6 +16,14 @@ export class FamiliarState {
         [ this.familiar.position, familiar2.familiar.position ] = [ familiar2.familiar.position, this.familiar.position ];
 
         return this;
+    }
+
+    getTeam() {
+        return this.familiar.team_id;
+    }
+
+    isActive() {
+        return this.familiar.onField;
     }
     
     adjustHealth(value: number) {

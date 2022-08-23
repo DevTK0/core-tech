@@ -62,11 +62,12 @@ model Skill {
 
 // Management
 model Team {
-  id          Int           @id @default(autoincrement())
-  name        String        @db.VarChar(255)
-  player      User          @relation(fields: [player_id], references: [id])
-  player_id   String
-  FamiliarSet FamiliarSet[]
+  id            Int             @id @default(autoincrement())
+  name          String          @db.VarChar(255)
+  player        User            @relation(fields: [player_id], references: [id])
+  player_id     String
+  FamiliarSet   FamiliarSet[]
+  FamiliarState FamiliarState[]
 }
 
 model FamiliarSet {
@@ -111,10 +112,10 @@ model Battle {
   player_1_id String
   player_2    User    @relation("player2", fields: [player_2_id], references: [id])
   player_2_id String
-  winner      User    @relation("winner", fields: [winner_id], references: [id])
-  winner_id   String
-  loser       User    @relation("loser", fields: [loser_id], references: [id])
-  loser_id    String
+  winner      User?   @relation("winner", fields: [winner_id], references: [id])
+  winner_id   String?
+  loser       User?   @relation("loser", fields: [loser_id], references: [id])
+  loser_id    String?
   ruleset     Ruleset @relation(fields: [ruleset_id], references: [id])
   ruleset_id  Int
   Turn        Turn[]
@@ -188,6 +189,8 @@ model FamiliarState {
   defense     Int
   speed       Int
   onField     Boolean
+  team        Team         @relation(fields: [team_id], references: [id])
+  team_id     Int
   ItemState   ItemState[]
   SkillState  SkillState[]
   Target      Target[]

@@ -12,4 +12,8 @@ export namespace FamiliarFactory {
       return fs;
     }
   }
+
+  export function findFamiliar(id: number) {
+    return familiars.get(id);
+  }
 }

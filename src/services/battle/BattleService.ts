@@ -4,6 +4,7 @@ import { PrismaClient, PrismaNamespace, PlayerMove } from '@/prisma';
 import { FamiliarState } from './FamiliarState';
 import { Moves } from '../moves/Moves';
 import { FamiliarFactory } from './FamiliarFactory';
+import { Game } from './Game';
 // import { FamiliarState } from './FamiliarState';
 
 async function query(battleId: number, turn: number) {
@@ -27,13 +28,14 @@ async function query(battleId: number, turn: number) {
                     type: true,
                     skill: true,
                     source: true,
-                    targets: true,
+                    targets: true
                 }
             },
             FamiliarState: {
                 select: {
                     id: true,
                     turn_id: true,
+                    team_id: true,
                     familiar_id: true,
                     stamina: true,
                     attack: true,
@@ -65,84 +67,109 @@ async function query(battleId: number, turn: number) {
 
 export type TurnState = PrismaNamespace.PromiseReturnType<typeof query>;
   
-async function loadState() {
+export async function loadFamiliarState() {
+
+    const turnState = await query(1,1);
+    const familiars: FamiliarState[] = [];
+
+    const familiarStates = turnState?.FamiliarState;
+
+    familiarStates?.forEach(familiarState => {
+
+        const familiar = FamiliarFactory.getFamiliar(familiarState);
+        familiars.push(familiar);
+        
+    });
+
+    global.game = new Game(familiars);
+
+    return familiars;
+}
+
+export async function loadPlayerMoves() {
 
     const turnState = await query(1,1);
 
     const familiarStates = turnState?.FamiliarState;
 
     familiarStates?.forEach(familiarState => {
-        // load familiars
-        // TODO: remove this load and only load the required familiars
+
         const familiar = FamiliarFactory.getFamiliar(familiarState);
-
-        const skillStates = familiarState.SkillState;
-
-        // load moves
-        // TODO: remove this load and only load the required moves
-        skillStates.forEach(skillState => {
-            const moveName = skillState.skill.name as keyof typeof Moves;
-            const moveClass = MoveFactory.getMove(moveName, familiar);
-        });
-
-        // load items
-        // TODO: remove this load and only load the required items
-        // const itemState = familiarState.ItemState;
-        // const item = itemState.item;
+        
     });
-}
 
+    const playerMoves = turnState?.PlayerMove;
+    const moves: BaseMove[] = [];
 
-function processMoves(turnState: TurnState) {
-
-    const moveList : any[] = []
-
-    const playerMoves = turnState?.PlayerMove || [];
-
-    playerMoves.forEach(playerMove => {
+    playerMoves?.forEach(playerMove => {
         const moveName = playerMove.skill?.name as keyof typeof Moves;
         const source = FamiliarFactory.getFamiliar(playerMove.source);
-        const moveClass = MoveFactory.getMove(moveName, source);
-    });
+        const move = MoveFactory.getMove(moveName, source);
 
-    return moveList;
+        const targets = playerMove.targets?.map(target => {
+            return FamiliarFactory.findFamiliar(target.target_id);
+        }).filter(target => target !== undefined);
+
+        move.setTargets(targets);
+        
+        moves.push(move);
+    }
+    );
+
+    return moves;
 }
 
 
+// function processMoves(turnState: TurnState) {
 
-function saveState() {
+//     const moveList : any[] = []
 
-}
+//     const playerMoves = turnState?.PlayerMove || [];
 
-const fam = {
-    id: 1,
-    turn_id: 1,
-    fieldstate_id: 1,
-    familiar_id: 1,
-    position: 1,
-    stamina: 1,
-    health: 1,
-    attack: 1,
-    defense: 1,
-    speed: 1,
-    onField: false
-}
+//     playerMoves.forEach(playerMove => {
+//         const moveName = playerMove.skill?.name as keyof typeof Moves;
+//         const source = FamiliarFactory.getFamiliar(playerMove.source);
+//         const moveClass = MoveFactory.getMove(moveName, source);
+//     });
 
-const familiar1 = new FamiliarState(fam);
-const familiar2 = new FamiliarState(fam);
+//     return moveList;
+// }
 
-const move1: BaseMove = MoveFactory.getMove("Fire Blast", familiar1);
-const move2: BaseMove = MoveFactory.getMove("Ice Blast", familiar2);
 
-move1
-.setTargets([familiar2])
-.resolve()
-;
 
-move2
-.setTargets([familiar1])
-.resolve()
-;
+// function saveState() {
+
+// }
+
+// const fam = {
+//     id: 1,
+//     turn_id: 1,
+//     fieldstate_id: 1,
+//     familiar_id: 1,
+//     position: 1,
+//     stamina: 1,
+//     health: 1,
+//     attack: 1,
+//     defense: 1,
+//     speed: 1,
+//     onField: false
+// }
+
+// const familiar1 = new FamiliarState(fam);
+// const familiar2 = new FamiliarState(fam);
+
+// const move1: BaseMove = MoveFactory.getMove("Fire Blast", familiar1);
+// const move2: BaseMove = MoveFactory.getMove("Ice Blast", familiar2);
+
+// move1
+// .setTargets([familiar2])
+// .resolve()
+// ;
+
+// move2
+// .setTargets([familiar1])
+// .resolve()
+// ;
 
 
 

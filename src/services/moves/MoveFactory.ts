@@ -12,3 +12,4 @@ export class MoveFactory {
         return new Moves[k](source);
     }
 }
+
