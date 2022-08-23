@@ -126,18 +126,17 @@ model Turn {
 }
 
 model PlayerMove {
-  id        Int           @unique @default(autoincrement())
-  turn      Turn          @relation(fields: [turn_id], references: [id])
-  turn_id   Int
-  type      MoveType      @relation(fields: [type_name], references: [name])
-  type_name String
-  spell_id  Int?
-  attack_id Int?
-  art       Art?          @relation(fields: [art_name], references: [name])
-  art_name  String?
-  source    FamiliarState @relation(fields: [source_id], references: [id])
-  source_id Int
-  targets   Target[]
+  id         Int           @unique @default(autoincrement())
+  turn       Turn          @relation(fields: [turn_id], references: [id])
+  turn_id    Int
+  type       MoveType      @relation(fields: [type_name], references: [name])
+  type_name  String
+  spell_name String?
+  art        Art?          @relation(fields: [art_name], references: [name])
+  art_name   String?
+  source     FamiliarState @relation(fields: [source_id], references: [id])
+  source_id  Int
+  targets    Target[]
 }
 
 model MoveType {
