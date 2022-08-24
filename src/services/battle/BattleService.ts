@@ -6,15 +6,18 @@ import { Moves } from '../moves/Moves';
 import { FamiliarFactory } from './FamiliarFactory';
 import { Game } from './Game';
 import { BattleQueue } from './BattleQueue';
-import { loadPlayerMoves, saveGameState } from './StateManager';
+import { StateManager } from './StateManager';
 
 
 export async function run() {
     
-    const moves = loadPlayerMoves();
+    const state = new StateManager();
+    state.load(1,1);
+
     // load moves into queue
+    const moves = state.getPlayerMoves();
     const queue = new BattleQueue();
-    (await moves).forEach(move => {
+    moves!.forEach(move => {
         queue.addMove(move);
     });
 
@@ -25,7 +28,7 @@ export async function run() {
     }
 
     // save turn
-    saveGameState();
+    state.save();
 
     // generate log
     

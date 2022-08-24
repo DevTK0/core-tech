@@ -1,152 +1,148 @@
 import { PrismaClient, PrismaNamespace } from '@/prisma';
+import { PlayerMove, FamiliarState } from '@/prisma'
 import { BaseMove } from '../moves/BaseMove';
 import { MoveFactory } from '../moves/MoveFactory';
 import { Moves } from '../moves/Moves';
 import { FamiliarFactory } from './FamiliarFactory';
-import { FamiliarState } from '@/prisma';
-
-async function loadState(battleId: number, turn: number) {
-    const response = await PrismaClient.turn.findUnique({
-        where: {
-            battle_id_turn: {
-                battle_id: battleId,
-                turn: turn
-            }
-        },
-        select: {
-            battle_id: true,
-            turn: true,
-            FieldState: {
-                select: {
-                    id: true,
-                    field: true,
-                }
-            },
-            PlayerMove: {
-                select: {
-                    turn: true,
-                    type: true,
-                    art: true,
-                    source: true,
-                    targets: true
-                }
-            },
-            FamiliarState: {
-                select: {
-                    id: true,
-                    turn_id: true,
-                    team_id: true,
-                    familiar_name: true,
-                    stamina: true,
-                    attack: true,
-                    defense: true,
-                    health: true,
-                    speed: true,
-                    position: true,
-                    onField: true,
-                    turn: true,
-                    ItemState: {
-                        select: {
-                            item: true,
-                        }
-                    },
-                    ArtState: {
-                        select: {
-                            art: true
-                        }
-                    }
-                }
-            }
-
-        }
-    })
-    
-    return response;
-}
-
-type TurnState = PrismaNamespace.PromiseReturnType<typeof loadState>
-
-let turnState: TurnState = {
-    battle_id: 1,
-    turn: 1,
-    FieldState: [],
-    PlayerMove: [],
-    FamiliarState: []
-};
 
 
-export async function loadPlayerMoves() {
+type GameState = PrismaNamespace.PromiseReturnType<InstanceType<typeof StateManager>['load']>
 
-    turnState = await loadState(1,1);
+export class StateManager {
 
-    const familiarStates = turnState?.FamiliarState;
+    private gameState: GameState | undefined;
 
-    familiarStates?.forEach(familiarState => {
+    constructor() {}
 
-        FamiliarFactory.getFamiliar(familiarState);
-        
-    });
+    getPlayerMoves() {
 
-    const playerMoves = turnState?.PlayerMove;
-    const moves: BaseMove[] = [];
+        this.gameState!.FamiliarState.forEach((familiar: FamiliarState) => {
+            FamiliarFactory.getFamiliar(familiar);
+        });
 
-    playerMoves?.forEach(playerMove => {
-        const moveName = playerMove.art?.name as keyof typeof Moves;
-        const source = FamiliarFactory.getFamiliar(playerMove.source);
-        const move = MoveFactory.getMove(moveName, source);
+        const moves: BaseMove[] = [];
 
-        const targets = playerMove.targets?.map(target => {
-            return FamiliarFactory.findFamiliar(target.target_id);
-        }).filter(target => target !== undefined);
+        this.gameState!.PlayerMove.forEach((data: PlayerMove) => {
+            const moveName = data.art_name as keyof typeof Moves;
+            const familiar = FamiliarFactory.findFamiliar(data.source_id);
+            const move = MoveFactory.getMove(moveName, familiar);
 
-        move.setTargets(targets);
-        
-        moves.push(move);
+            moves.push(move);
+        });
+
+        return moves;
     }
-    );
 
-    return moves;
-}
+    async load(battleId: number, turn: number) {
 
-export async function saveGameState() {
-    
-    const response = await PrismaClient.turn.create({
-        data: {
-            battle: {
-                connect: {
-                    id: turnState!.battle_id
+        const response = await PrismaClient.turn.findUnique({
+            where: {
+                battle_id_turn: {
+                    battle_id: battleId,
+                    turn: turn
                 }
             },
-            turn: turnState!.turn + 1,
-            FieldState: {
-                create: [],
-            },
-            FamiliarState: {
-                create: turnState!.FamiliarState.map(familiarState => {
-                    return {
-                        team: {
-                            connect: {
-                                id: familiarState.team_id
-                            }
-                        },
-                        familiar: {
-                            connect: {
-                                name: familiarState.familiar_name
-                            }
-                        },
-                        stamina: familiarState.stamina,
-                        attack: familiarState.attack,
-                        defense: familiarState.defense,
-                        health: familiarState.health,
-                        speed: familiarState.speed,
-                        position: familiarState.position,
-                        onField: familiarState.onField,
+            select: {
+                battle_id: true,
+                turn: true,
+                FieldState: {
+                    select: {
+                        id: true,
+                        field: true,
                     }
-                })
-            }
-
-        }
-    })
+                },
+                PlayerMove: {
+                    select: {
+                        id: true,
+                        turn: true,
+                        turn_id: true,
+                        type: true,
+                        type_name: true,
+                        art: true,
+                        art_name: true,
+                        spell_name: true,
+                        source: true,
+                        source_id: true,
+                        targets: true
+                    }
+                },
+                FamiliarState: {
+                    select: {
+                        id: true,
+                        turn_id: true,
+                        team_id: true,
+                        familiar_name: true,
+                        stamina: true,
+                        attack: true,
+                        defense: true,
+                        health: true,
+                        speed: true,
+                        position: true,
+                        onField: true,
+                        turn: true,
+                        ItemState: {
+                            select: {
+                                item: true,
+                            }
+                        },
+                        ArtState: {
+                            select: {
+                                art: true
+                            }
+                        }
+                    }
+                }
     
-    return response;
+            }
+        })
+
+        return response;
+    }
+
+    async save() {
+
+        if (!this.gameState) {
+            throw new Error("Game state is not initialized");
+        }
+
+        const response = await PrismaClient.turn.create({
+            data: {
+                battle: {
+                    connect: {
+                        id: this.gameState!.battle_id
+                    }
+                },
+                turn: this.gameState!.turn + 1,
+                FieldState: {
+                    create: [],
+                },
+                FamiliarState: {
+                    create: this.gameState!.FamiliarState.map(familiarState => {
+                        return {
+                            team: {
+                                connect: {
+                                    id: familiarState.team_id
+                                }
+                            },
+                            familiar: {
+                                connect: {
+                                    name: familiarState.familiar_name
+                                }
+                            },
+                            stamina: familiarState.stamina,
+                            attack: familiarState.attack,
+                            defense: familiarState.defense,
+                            health: familiarState.health,
+                            speed: familiarState.speed,
+                            position: familiarState.position,
+                            onField: familiarState.onField,
+                        }
+                    })
+                }
+    
+            }
+        })
+        
+        return response;
+    }
 }
