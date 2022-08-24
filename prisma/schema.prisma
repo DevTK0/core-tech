@@ -153,9 +153,16 @@ model Target {
 }
 
 model FieldState {
-  id      Int  @id @default(autoincrement())
-  turn    Turn @relation(fields: [turn_id], references: [id])
-  turn_id Int
+  id         Int       @id @default(autoincrement())
+  turn       Turn      @relation(fields: [turn_id], references: [id])
+  turn_id    Int
+  field      FieldType @relation(fields: [field_name], references: [name])
+  field_name String
+}
+
+model FieldType {
+  name       String       @id @db.VarChar(255)
+  FieldState FieldState[]
 }
 
 model FamiliarState {

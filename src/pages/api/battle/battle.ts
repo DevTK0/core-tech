@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { PrismaNamespace, PrismaClient } from '@/prisma'; 
-import { loadFamiliarState, loadPlayerMoves } from '@/services/battle/BattleService';
+import { run } from '@/services/battle/BattleService';
 
 // type ResponseType = PrismaNamespace.PromiseReturnType<typeof query>
 
@@ -9,6 +9,6 @@ export default async function handler(
   res: NextApiResponse<any>
 ) {
 
-  return res.json(await loadPlayerMoves());
+  return res.json(await run());
   
 }

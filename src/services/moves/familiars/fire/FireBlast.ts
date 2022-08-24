@@ -23,6 +23,9 @@ export class FireBlast extends BaseMove {
         console.log("Fire Blast!", value);
         
         target.damage(value);
+
+        console.log(target.getHealth());
+
         source.adjustStamina(-cost);
     }
 }

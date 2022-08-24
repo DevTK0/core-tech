@@ -1,4 +1,4 @@
-import { FamiliarState as PrismaFamiliarState, Item, Skill } from "@prisma/client";
+import { FamiliarState as PrismaFamiliarState, Item } from "@prisma/client";
 
 /**
  * Holds the current state of the familiar and provides methods for interacting with the familiar.
