@@ -4,7 +4,7 @@ import { BaseMove } from "../BaseMove"
 export class Swap extends BaseMove {
 
     constructor(
-        public source: FamiliarState
+        protected source: FamiliarState
     ) {
         super(source);
     }

@@ -1,22 +1,24 @@
-import { Event, Callback } from './Event';
+import { Handlers, Callback } from './Handlers';
 
-export enum Events {
+enum Events {
     OnDamage,
     PreDamage,  
     OnSwap,
     OnDeath,
-    OnHeal      
+    OnHeal,
+    TurnStart,
+    TurnEnd
 }
 
-type EventName = keyof typeof Events;
+export type EventName = keyof typeof Events;
 
-export class FamiliarEventManager {
+export class GlobalEvent {
 
-    private map : {[k: string]: Event} = {};
+    private map : {[k: string]: Handlers} = {};
 
     constructor() { 
         Object.keys(Events).forEach(key => {
-            this.map[key] = new Event();
+            this.map[key] = new Handlers();
         });
     }
 

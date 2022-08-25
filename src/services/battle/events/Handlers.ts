@@ -1,6 +1,6 @@
 export type Callback = (...args: any[]) => void;
 
-export class Event {    
+export class Handlers {    
 
     private handlers: Callback[] = [];
 

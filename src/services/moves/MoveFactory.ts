@@ -13,3 +13,4 @@ export class MoveFactory {
     }
 }
 
+export const MoveService : MoveFactory =  new MoveFactory();

@@ -3,31 +3,38 @@ import { PlayerMove, FamiliarState } from "@/prisma";
 import { BaseMove } from "../moves/BaseMove";
 import { MoveFactory } from "../moves/MoveFactory";
 import { Moves } from "../moves/Moves";
-import { FamiliarFactory } from "./FamiliarFactory";
+import { FamiliarService } from "./FamiliarService";
 
-type GameState = PrismaNamespace.PromiseReturnType<
-  InstanceType<typeof StateManager>["load"]
+type TurnData = PrismaNamespace.PromiseReturnType<
+  InstanceType<typeof DataManager>["load"]
 >;
 
-export class StateManager {
-  private gameState: GameState | undefined;
+export class DataManager {
+  private turnData: TurnData | undefined;
 
   constructor() {}
 
   getPlayerMoves() {
-    this.gameState!.FamiliarState.forEach((familiar: FamiliarState) => {
-      FamiliarFactory.getFamiliar(familiar);
+
+    if (!this.turnData) {
+      throw new Error("Game state is not initialized");
+    }
+
+    // load familiars first
+    this.turnData.FamiliarState.forEach((familiar: FamiliarState) => {
+      FamiliarService.loadFamiliar(familiar);
     });
 
     const moves: BaseMove[] = [];
 
-    this.gameState!.PlayerMove.forEach((data: PlayerMove) => {
+    // load player moves for this turn
+    this.turnData.PlayerMove.forEach((data: PlayerMove) => {
       const moveName =
         data.type_name == "Art"
           ? (data.art_name as keyof typeof Moves)
           : (data.spell_name as keyof typeof Moves);
 
-      const familiar = FamiliarFactory.findFamiliar(data.source_id);
+      const familiar = FamiliarService.findFamiliar(data.source_id);
       const move = MoveFactory.getMove(moveName, familiar);
 
       moves.push(move);
@@ -101,7 +108,7 @@ export class StateManager {
   }
 
   async save() {
-    if (!this.gameState) {
+    if (!this.turnData) {
       throw new Error("Game state is not initialized");
     }
 
@@ -109,15 +116,15 @@ export class StateManager {
       data: {
         battle: {
           connect: {
-            id: this.gameState!.battle_id,
+            id: this.turnData!.battle_id,
           },
         },
-        turn: this.gameState!.turn + 1,
+        turn: this.turnData!.turn + 1,
         FieldState: {
           create: [],
         },
         FamiliarState: {
-          create: this.gameState!.FamiliarState.map((familiarState) => {
+          create: this.turnData!.FamiliarState.map((familiarState) => {
             return {
               team: {
                 connect: {
@@ -145,3 +152,5 @@ export class StateManager {
     return response;
   }
 }
+
+export const DataService: DataManager = new DataManager();

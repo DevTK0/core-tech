@@ -3,11 +3,11 @@ import { BaseMove } from "../../BaseMove";
 
 export class IceBlast extends BaseMove {
 
-    public power: number = 100;
-    public cost: number = 100;
+    protected power: number = 100;
+    protected cost: number = 100;
 
     constructor(
-        public source: FamiliarState
+        protected source: FamiliarState
     ) {
         super(source);
     }

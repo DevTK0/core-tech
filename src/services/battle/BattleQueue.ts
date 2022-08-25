@@ -1,20 +1,36 @@
+import { BaseMove } from "../moves/BaseMove";
+
+/**
+ * This isn't really a queue, more like a list.
+ * nextMove() retrieves the fastest move in the list by searching each one everytime.
+ * This is required as items/abilities/moves can affect the move order at any time.
+ * 
+ */
 export class BattleQueue {
 
-
-    public queue: any = [];
+    public moves: BaseMove[] = [];
 
     constructor() { }
 
     nextMove() {
-        return this.queue.shift();
+
+        let fastest: BaseMove = this.moves[0];
+
+        this.moves.forEach((move: BaseMove) => {
+            if (move.calcPriority() > fastest.calcPriority()) {
+                fastest = move;
+            }
+        });
+
+        return fastest;
     }
 
     addMove(move: any) {
-        this.queue.push(move);
+        this.moves.push(move);
     }
 
     length() {
-        return this.queue.length;
+        return this.moves.length;
     }
 
 

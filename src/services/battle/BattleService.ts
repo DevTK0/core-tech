@@ -1,18 +1,19 @@
 import { BattleQueue } from './BattleQueue';
-import { StateManager } from './StateManager';
-
+import { DataService } from './DataService';
+import { GlobalService } from './events/GlobalService';
 
 export async function run() {
     
-    const state = new StateManager();
-    state.load(1,1);
+    DataService.load(1,1);
 
     // load moves into queue
-    const moves = state.getPlayerMoves();
+    const moves = DataService.getPlayerMoves();
     const queue = new BattleQueue();
-    moves!.forEach(move => {
+    moves.forEach(move => {
         queue.addMove(move);
     });
+
+    GlobalService.dispatch("TurnStart");
 
     // run queue
     while (queue.length() > 0) {
@@ -20,8 +21,9 @@ export async function run() {
         move.resolve();
     }
 
-    // save turn
-    state.save();
+    GlobalService.dispatch("TurnEnd");
+
+    DataService.save();
 
     // generate log
     

@@ -2,18 +2,29 @@ import { FamiliarState } from "@/services/battle/FamiliarState";
 
 export abstract class BaseMove {
     
-    public targets: FamiliarState[] = [];
+    protected targets: FamiliarState[] = [];
+    protected source: FamiliarState | undefined;
+    protected priority: number = 1;
 
     constructor(
-        public source: FamiliarState
+        source?: FamiliarState
     ) { 
         this.source = source;
     }
 
-    setTargets = (summon: FamiliarState[]) => {
-        this.targets = summon;
+    setSource = (source: FamiliarState) => {
+        this.source = source;
         return this;
-    };
+    }
+
+    setTargets = (targets: FamiliarState[]) => {
+        this.targets = targets;
+        return this;
+    }
+
+    calcPriority = () => {
+        return this.priority * this.source!.getSpeed();
+    }
 
     protected abstract effect(): void;
 
