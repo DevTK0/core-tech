@@ -1,4 +1,5 @@
 import { BerryItem, FocusSash, Item } from "./BerryItem";
+import { Events, FamiliarEventManager } from "./FamiliarEventManager";
 import { FamiliarState } from "./FamiliarState";
 
 type CallbackFunctionVariadic = (...args: any[]) => void;
@@ -21,20 +22,9 @@ export class Event {
     
 }
 
-export class EventManager {
-
-    constructor(
-        public preDamage: Event = new Event(),
-        public onDamage: Event = new Event(),
-        public onSwap: Event = new Event(),
-        public onDeath: Event = new Event(),
-        public onHeal: Event = new Event()
-    ) { }
-}
-
 export class MiniFamiliar {
 
-    public eventManager: EventManager;
+    public event: FamiliarEventManager;
 
     constructor(
         public name: string,
@@ -43,17 +33,17 @@ export class MiniFamiliar {
     ) { 
         this.name = name;
         this.health = 50;
-        this.eventManager = new EventManager();
-        item.add(this.eventManager);
+        this.event = new FamiliarEventManager();
+        item.add(this.event);
     }
 
     damage(value: number) {
 
-        this.eventManager.preDamage.dispatch(this);
+        this.event.dispatch(Events.PreDamage , this);
 
         this.health -= value;
 
-        this.eventManager.onDamage.dispatch(this);
+        this.event.dispatch(Events.OnDamage , this);
         
         return this;
     }
@@ -69,7 +59,7 @@ export class MiniFamiliar {
     heal(value: number) {
         this.health += value;
 
-        this.eventManager.onHeal.dispatch(this);
+        this.event.dispatch(Events.OnHeal, this);
     }
 
 }

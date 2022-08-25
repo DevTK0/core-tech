@@ -1,9 +1,10 @@
-import { EventManager, MiniFamiliar } from "./DamageEvent";
+import { MiniFamiliar } from "./DamageEvent";
+import { FamiliarEventManager, Events } from './FamiliarEventManager'
 
 export abstract class Item {
 
     abstract effect(source: MiniFamiliar): void;
-    abstract add(event: EventManager): void;
+    abstract add(event: FamiliarEventManager): void;
 }
 
 export class BerryItem extends Item {
@@ -11,8 +12,8 @@ export class BerryItem extends Item {
     constructor() {
         super();
     }
-    add(event: EventManager) {
-        event.onDamage.add(this.effect);
+    add(event: FamiliarEventManager) {
+        event.subscribe("OnDamage", this.effect);
     }
     effect(source: MiniFamiliar) {
 
@@ -28,8 +29,8 @@ export class FocusSash extends Item {
     constructor() {
         super();
     }
-    add(event: EventManager) {
-        event.onDamage.add(this.effect);
+    add(event: FamiliarEventManager) {
+        event.subscribe("OnDamage", this.effect);
     }
     
     effect(source: MiniFamiliar) {
@@ -45,8 +46,8 @@ export class AntiHeal extends Item {
     constructor() {
         super();
     }
-    add(event: EventManager) {
-        event.onHeal.add(this.effect);
+    add(event: FamiliarEventManager) {
+        event.subscribe("OnHeal", this.effect);
     }
     
     effect(source: MiniFamiliar) {
