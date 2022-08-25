@@ -39,11 +39,11 @@ export class MiniFamiliar {
 
     damage(value: number) {
 
-        this.event.dispatch(Events.PreDamage , this);
+        this.event.dispatch("PreDamage" , this);
 
         this.health -= value;
 
-        this.event.dispatch(Events.OnDamage , this);
+        this.event.dispatch("OnDamage" , this);
         
         return this;
     }
@@ -59,7 +59,7 @@ export class MiniFamiliar {
     heal(value: number) {
         this.health += value;
 
-        this.event.dispatch(Events.OnHeal, this);
+        this.event.dispatch("OnHeal", this);
     }
 
 }
