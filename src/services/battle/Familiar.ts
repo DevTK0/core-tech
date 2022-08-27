@@ -1,4 +1,5 @@
 import { FamiliarState as PrismaFamiliarState, Item } from "@prisma/client";
+import { BattleLogger } from "./BattleLogger";
 import { GlobalService } from "./GlobalService";
 
 /**
@@ -51,6 +52,12 @@ export class Familiar {
         this.familiar.health -= value;
 
         GlobalService.dispatch("OnDamage", this);
+
+        if (this.familiar.health <= 0) {
+            this.familiar.health = 0;
+            BattleLogger.log(`${this.familiar.familiar_name} was knocked out!`);
+            GlobalService.dispatch("OnKO", this);
+        }
     }
 
     adjustStamina(value: number) {
