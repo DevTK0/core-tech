@@ -11,6 +11,7 @@ async function FamiliarState(id: number) {
         },
         include: {
             familiar: true,
+            conditions: true,
             team: true,
             items: true,
             arts: true,

@@ -192,7 +192,7 @@ model ConditionState {
   id               Int           @id @default(autoincrement())
   FamiliarState    FamiliarState @relation(fields: [familiarstate_id], references: [id])
   familiarstate_id Int
-  Condition        Condition     @relation(fields: [condition_name], references: [name])
+  condition        Condition     @relation(fields: [condition_name], references: [name])
   condition_name   String
 }
 

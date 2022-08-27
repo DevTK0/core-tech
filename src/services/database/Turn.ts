@@ -15,6 +15,7 @@ export async function getTurn(battleId: number, turn: number) {
             familiars: {
                 include: {
                     familiar: true,
+                    conditions: true,
                     team: true,
                     items: true,
                     arts: true,
@@ -65,6 +66,39 @@ export async function saveTurn(turn: Turn) {
                             connect: {
                                 name: familiar.familiar_name,
                             },
+                        },
+                        conditions: {
+                            create: familiar.conditions.map((condition) => {
+                                return {
+                                    condition: {
+                                        connect: {
+                                            name: condition.condition_name,
+                                        },
+                                    },
+                                };
+                            }),
+                        },
+                        items: {
+                            create: familiar.items.map((item) => {
+                                return {
+                                    item: {
+                                        connect: {
+                                            name: item.item_name,
+                                        },
+                                    },
+                                };
+                            }),
+                        },
+                        arts: {
+                            create: familiar.arts.map((art) => {
+                                return {
+                                    art: {
+                                        connect: {
+                                            name: art.art_name,
+                                        },
+                                    },
+                                };
+                            }),
                         },
                         stamina: familiar.stamina,
                         attack: familiar.attack,

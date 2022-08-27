@@ -1,5 +1,5 @@
 import { Familiar } from "@/services/battle/Familiar";
-import { Items } from "./items";
+import { Items } from "./Items";
 
 type Items = typeof Items;
 type Keys = keyof Items;
