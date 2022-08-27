@@ -1,15 +1,13 @@
 import { BerryItem, FocusSash, Item, LightningBerry } from "./BerryItem";
-import { GlobalService } from "./GlobalService";
+import { GlobalService } from "../battle/GlobalService";
 
 export class MiniFamiliar {
-
     constructor(
         public name: string,
         public health: number,
         public speed: number,
-        public team: number,
-    ) { 
-        
+        public team: number
+    ) {
         this.name = name;
         this.health = health;
         this.speed = speed;
@@ -21,13 +19,12 @@ export class MiniFamiliar {
     }
 
     damage(value: number) {
-
-        GlobalService.dispatch("PreDamage" , this);
+        GlobalService.dispatch("PreDamage", this);
 
         this.health -= value;
 
-        GlobalService.dispatch("OnDamage" , this);
-        
+        GlobalService.dispatch("OnDamage", this);
+
         return this;
     }
 
@@ -44,7 +41,6 @@ export class MiniFamiliar {
 
         GlobalService.dispatch("OnHeal", this);
     }
-
 }
 
 const ice_golem = new MiniFamiliar("Ice Golem", 100, 100, 123);
@@ -60,7 +56,5 @@ GlobalService.dispatch("TurnStart");
 ice_golem.damage(200);
 fire_golem.damage(100);
 
-
 // console.log(ice_golem);
 // console.log(fire_golem);
-

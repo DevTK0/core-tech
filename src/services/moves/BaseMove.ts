@@ -1,35 +1,38 @@
-import { FamiliarState } from "@/services/battle/FamiliarState";
+import { Familiar } from "@/services/battle/Familiar";
 
 export abstract class BaseMove {
-    
-    protected targets: FamiliarState[] = [];
-    protected source: FamiliarState | undefined;
-    protected priority: number = 1;
+    public moveName: string = "";
+    protected moveSpeed: number = 1;
+    protected targets: Familiar[] = [];
+    protected source: Familiar | undefined;
+    protected priority?: number;
 
-    constructor(
-        source?: FamiliarState
-    ) { 
+    constructor(source?: Familiar) {
         this.source = source;
     }
 
-    setSource = (source: FamiliarState) => {
+    setSource = (source: Familiar) => {
         this.source = source;
         return this;
-    }
+    };
 
-    setTargets = (targets: FamiliarState[]) => {
+    setTargets = (targets: Familiar[]) => {
         this.targets = targets;
         return this;
-    }
+    };
 
-    calcPriority = () => {
-        return this.priority * this.source!.getSpeed();
-    }
+    getPriority = () => {
+        if (!this.priority) {
+            this.priority = this.source!.getSpeed() * this.moveSpeed;
+        }
+
+        return this.priority;
+    };
 
     protected abstract effect(): void;
 
     resolve = () => {
         this.effect();
         return this;
-    }
+    };
 }

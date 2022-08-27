@@ -1,156 +1,80 @@
-import { PrismaClient, PrismaNamespace } from "@/prisma";
-import { PlayerMove, FamiliarState } from "@/prisma";
 import { BaseMove } from "../moves/BaseMove";
 import { MoveFactory } from "../moves/MoveFactory";
 import { Moves } from "../moves/Moves";
 import { FamiliarService } from "./FamiliarService";
+import { Familiar } from "./Familiar";
 
-type TurnData = PrismaNamespace.PromiseReturnType<
-  InstanceType<typeof DataManager>["load"]
->;
+import { PlayerMoves } from "../database/PlayerMoves";
+import { FamiliarState } from "../database/FamiliarState";
+import { ItemState } from "../database/ItemState";
+import { Target } from "../database/Target";
+import { Turn, getTurn, saveTurn } from "../database/Turn";
+import { ItemFactory } from "../items/ItemFactory";
+import { Items } from "../items/items";
 
 export class DataManager {
-  private turnData: TurnData | undefined;
+    private turnData: Turn | undefined;
 
-  constructor() {}
+    constructor() {}
 
-  getPlayerMoves() {
+    getPlayerMoves() {
+        if (!this.turnData) {
+            throw new Error("Game state is not initialized");
+        }
 
-    if (!this.turnData) {
-      throw new Error("Game state is not initialized");
+        // load familiars first
+        this.turnData.familiars.forEach((data: FamiliarState) => {
+            if (data) {
+                const familiar = FamiliarService.loadFamiliar(data);
+
+                // load items together
+                data.items.forEach((item: ItemState) => {
+                    if (item) {
+                        // Load into item service
+                        const itemName = item.item_name as keyof typeof Items;
+                        ItemFactory.getItem(itemName, familiar);
+                    }
+                });
+            }
+        });
+
+        const moves: BaseMove[] = [];
+
+        // load player moves for this turn
+        this.turnData.PlayerMove.forEach((data: PlayerMoves) => {
+            if (data) {
+                const moveName =
+                    data.type_name == "Art"
+                        ? (data.art_name as keyof typeof Moves)
+                        : (data.spell_name as keyof typeof Moves);
+
+                const familiar = FamiliarService.findFamiliar(data.source_id);
+                const move = MoveFactory.getMove(moveName, familiar);
+
+                const targets: Familiar[] = [];
+                data.targets.forEach((target: Target) => {
+                    targets.push(
+                        FamiliarService.findFamiliar(target!.target_id)
+                    );
+                });
+                move.setTargets(targets);
+
+                moves.push(move);
+            }
+        });
+
+        return moves;
     }
 
-    // load familiars first
-    this.turnData.FamiliarState.forEach((familiar: FamiliarState) => {
-      FamiliarService.loadFamiliar(familiar);
-    });
-
-    const moves: BaseMove[] = [];
-
-    // load player moves for this turn
-    this.turnData.PlayerMove.forEach((data: PlayerMove) => {
-      const moveName =
-        data.type_name == "Art"
-          ? (data.art_name as keyof typeof Moves)
-          : (data.spell_name as keyof typeof Moves);
-
-      const familiar = FamiliarService.findFamiliar(data.source_id);
-      const move = MoveFactory.getMove(moveName, familiar);
-
-      moves.push(move);
-    });
-
-    return moves;
-  }
-
-  async load(battleId: number, turn: number) {
-    const response = await PrismaClient.turn.findUnique({
-      where: {
-        battle_id_turn: {
-          battle_id: battleId,
-          turn: turn,
-        },
-      },
-      select: {
-        battle_id: true,
-        turn: true,
-        FieldState: {
-          select: {
-            id: true,
-            field: true,
-          },
-        },
-        PlayerMove: {
-          select: {
-            id: true,
-            turn: true,
-            turn_id: true,
-            type: true,
-            type_name: true,
-            art: true,
-            art_name: true,
-            spell_name: true,
-            source: true,
-            source_id: true,
-            targets: true,
-          },
-        },
-        FamiliarState: {
-          select: {
-            id: true,
-            turn_id: true,
-            team_id: true,
-            familiar_name: true,
-            stamina: true,
-            attack: true,
-            defense: true,
-            health: true,
-            speed: true,
-            position: true,
-            onField: true,
-            turn: true,
-            ItemState: {
-              select: {
-                item: true,
-              },
-            },
-            ArtState: {
-              select: {
-                art: true,
-              },
-            },
-          },
-        },
-      },
-    });
-
-    return response;
-  }
-
-  async save() {
-    if (!this.turnData) {
-      throw new Error("Game state is not initialized");
+    async load(battleId: number, turn: number) {
+        this.turnData = await getTurn(battleId, turn);
     }
 
-    const response = await PrismaClient.turn.create({
-      data: {
-        battle: {
-          connect: {
-            id: this.turnData!.battle_id,
-          },
-        },
-        turn: this.turnData!.turn + 1,
-        FieldState: {
-          create: [],
-        },
-        FamiliarState: {
-          create: this.turnData!.FamiliarState.map((familiarState) => {
-            return {
-              team: {
-                connect: {
-                  id: familiarState.team_id,
-                },
-              },
-              familiar: {
-                connect: {
-                  name: familiarState.familiar_name,
-                },
-              },
-              stamina: familiarState.stamina,
-              attack: familiarState.attack,
-              defense: familiarState.defense,
-              health: familiarState.health,
-              speed: familiarState.speed,
-              position: familiarState.position,
-              onField: familiarState.onField,
-            };
-          }),
-        },
-      },
-    });
+    async save() {
+        if (!this.turnData) throw new Error("Turn data is not initialized");
 
-    return response;
-  }
+        return await saveTurn(this.turnData);
+    }
 }
 
 export const DataService: DataManager = new DataManager();

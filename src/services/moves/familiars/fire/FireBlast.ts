@@ -1,32 +1,26 @@
-import { FamiliarState } from "@/services/battle/FamiliarState";
-import { BaseMove } from "../../BaseMove"
+import { Familiar } from "@/services/battle/Familiar";
+import { BaseMove } from "../../BaseMove";
+import { BattleLogger } from "@/services/battle/BattleLogger";
 
 export class FireBlast extends BaseMove {
-
+    readonly moveName: string = "Fire Blast";
     protected power: number = 100;
     protected cost: number = 100;
+    protected moveSpeed: number = 2;
 
-    constructor(
-        protected source: FamiliarState
-    ) {
+    constructor(protected source: Familiar) {
         super(source);
     }
 
     effect = () => {
-
         const source = this.source;
         const target = this.targets[0];
         const attack = this.source.getAttack();
         const value = this.power * attack;
-        const cost = this.cost;
 
-        console.log("Fire Blast!", value);
-        
+        BattleLogger.log(`${source.getName()} used ${this.moveName}`);
+
         target.damage(value);
-
-        console.log(target.getHealth());
-
-        source.adjustStamina(-cost);
-    }
+        source.reduceStamina(this.cost);
+    };
 }
-

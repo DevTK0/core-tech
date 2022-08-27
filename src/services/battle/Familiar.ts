@@ -1,21 +1,27 @@
 import { FamiliarState as PrismaFamiliarState, Item } from "@prisma/client";
+import { GlobalService } from "./GlobalService";
 
 /**
  * Holds the current state of the familiar and provides methods for interacting with the familiar.
  */
-export class FamiliarState {
-
-    constructor(
-        private familiar: PrismaFamiliarState,
-    ) { 
+export class Familiar {
+    constructor(private familiar: PrismaFamiliarState) {
         this.familiar = familiar;
     }
 
-    swap(familiar2: FamiliarState) {
+    swap(familiar2: Familiar) {
+        [this.familiar.position, familiar2.familiar.position] = [
+            familiar2.familiar.position,
+            this.familiar.position,
+        ];
 
-        [ this.familiar.position, familiar2.familiar.position ] = [ familiar2.familiar.position, this.familiar.position ];
+        GlobalService.dispatch("OnSwap", this);
 
         return this;
+    }
+
+    getName() {
+        return this.familiar.familiar_name;
     }
 
     getTeam() {
@@ -25,57 +31,57 @@ export class FamiliarState {
     isActive() {
         return this.familiar.onField;
     }
-    
+
     adjustHealth(value: number) {
-        this.familiar.health += value;
+        this.familiar.health = value;
         return this;
     }
 
     getHealth() {
-        return this.familiar.health
+        return this.familiar.health;
     }
-    
+
     heal(value: number) {
         this.familiar.health += value;
-        return this;
     }
-    
+
     damage(value: number) {
+        GlobalService.dispatch("PreDamage", this);
+
         this.familiar.health -= value;
-        return this;
+
+        GlobalService.dispatch("OnDamage", this);
     }
 
     adjustStamina(value: number) {
-        this.familiar.stamina += value;
-        return this;
+        this.familiar.stamina = value;
     }
-    
+
+    reduceStamina(value: number) {
+        this.familiar.stamina -= value;
+    }
+
     adjustSpeed(value: number) {
-        this.familiar.speed += value;
-        return this;
+        this.familiar.speed = value;
     }
 
     getSpeed() {
         return this.familiar.speed;
     }
-    
+
     adjustAttack(value: number) {
-        this.familiar.attack += value;
-        return this;
+        this.familiar.attack = value;
     }
 
     getAttack() {
         return this.familiar.attack;
     }
-    
+
     adjustDefense(value: number) {
-        this.familiar.defense += value;
-        return this;
+        this.familiar.defense = value;
     }
 
     getDefense() {
         return this.familiar.defense;
     }
-    
-    
 }

@@ -114,13 +114,14 @@ model Ruleset {
 }
 
 model Turn {
-  id            Int             @unique @default(autoincrement())
-  battle        Battle          @relation(fields: [battle_id], references: [id])
-  battle_id     Int
-  turn          Int
-  FieldState    FieldState[]
-  FamiliarState FamiliarState[]
-  PlayerMove    PlayerMove[]
+  id         Int             @unique @default(autoincrement())
+  battle     Battle          @relation(fields: [battle_id], references: [id])
+  battle_id  Int
+  turn       Int
+  field      FieldState      @relation(fields: [field_id], references: [id])
+  field_id   Int
+  familiars  FamiliarState[]
+  PlayerMove PlayerMove[]
 
   @@id([battle_id, turn])
 }
@@ -144,32 +145,24 @@ model MoveType {
   PlayerMove PlayerMove[]
 }
 
-model Target {
-  id            Int           @unique @default(autoincrement())
-  playermove    PlayerMove    @relation(fields: [playermove_id], references: [id])
-  playermove_id Int
-  target        FamiliarState @relation(fields: [target_id], references: [id])
-  target_id     Int
-}
-
 model FieldState {
-  id         Int       @id @default(autoincrement())
-  turn       Turn      @relation(fields: [turn_id], references: [id])
-  turn_id    Int
-  field      FieldType @relation(fields: [field_name], references: [name])
+  id         Int    @id @default(autoincrement())
+  field      Field  @relation(fields: [field_name], references: [name])
   field_name String
+  Turn       Turn[]
 }
 
-model FieldType {
-  name       String       @id @db.VarChar(255)
-  FieldState FieldState[]
+model Field {
+  name        String       @id @db.VarChar(255)
+  description String       @db.VarChar(255)
+  FieldState  FieldState[]
 }
 
 model FamiliarState {
-  id            Int          @id @default(autoincrement())
-  turn          Turn         @relation(fields: [turn_id], references: [id])
+  id            Int              @id @default(autoincrement())
+  turn          Turn             @relation(fields: [turn_id], references: [id])
   turn_id       Int
-  familiar      Familiar     @relation(fields: [familiar_name], references: [name])
+  familiar      Familiar         @relation(fields: [familiar_name], references: [name])
   familiar_name String
   position      Int
   health        Int
@@ -178,12 +171,35 @@ model FamiliarState {
   defense       Int
   speed         Int
   onField       Boolean
-  team          Team         @relation(fields: [team_id], references: [id])
+  team          Team             @relation(fields: [team_id], references: [id])
   team_id       Int
-  ItemState     ItemState[]
-  ArtState      ArtState[]
-  Target        Target[]
+  conditions    ConditionState[]
+  items         ItemState[]
+  arts          ArtState[]
+  targets       Target[]
   PlayerMove    PlayerMove[]
+}
+
+model Target {
+  id            Int           @unique @default(autoincrement())
+  playermove    PlayerMove    @relation(fields: [playermove_id], references: [id])
+  playermove_id Int
+  target        FamiliarState @relation(fields: [target_id], references: [id])
+  target_id     Int
+}
+
+model ConditionState {
+  id               Int           @id @default(autoincrement())
+  FamiliarState    FamiliarState @relation(fields: [familiarstate_id], references: [id])
+  familiarstate_id Int
+  Condition        Condition     @relation(fields: [condition_name], references: [name])
+  condition_name   String
+}
+
+model Condition {
+  name           String           @id @db.VarChar(255)
+  description    String           @db.VarChar(255)
+  ConditionState ConditionState[]
 }
 
 model ItemState {
