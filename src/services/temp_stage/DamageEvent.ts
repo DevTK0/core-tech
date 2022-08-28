@@ -1,4 +1,4 @@
-import { BerryItem, FocusSash, Item, LightningBerry } from "./BerryItem";
+import { FocusSash } from "./BerryItem";
 import { GlobalService } from "../battle/GlobalService";
 
 export class MiniFamiliar {
@@ -46,11 +46,8 @@ export class MiniFamiliar {
 const ice_golem = new MiniFamiliar("Ice Golem", 100, 100, 123);
 const fire_golem = new MiniFamiliar("Fire Golem", 100, 100, 234);
 
-const lb = new LightningBerry(ice_golem);
 const fs = new FocusSash(fire_golem);
 
-GlobalService.addMiniFamiliar(ice_golem);
-GlobalService.addMiniFamiliar(fire_golem);
 GlobalService.dispatch("TurnStart");
 
 ice_golem.damage(200);
