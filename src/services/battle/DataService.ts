@@ -3,14 +3,16 @@ import { MoveFactory } from "../moves/MoveFactory";
 import { Moves } from "../moves/Moves";
 import { FamiliarService } from "./FamiliarService";
 import { Familiar } from "./Familiar";
+import { ItemFactory } from "../items/ItemFactory";
+import { Items } from "../items/Items";
+import { Conditions } from "../conditions/Conditions";
+import { ConditionFactory } from "../conditions/ConditionFactory";
 
 import { PlayerMoves } from "../database/PlayerMoves";
 import { FamiliarState } from "../database/FamiliarState";
 import { ItemState } from "../database/ItemState";
 import { Target } from "../database/Target";
 import { Turn, getTurn, saveTurn } from "../database/Turn";
-import { ItemFactory } from "../items/ItemFactory";
-import { Items } from "../items/Items";
 
 export class DataManager {
     private turnData: Turn | undefined;
@@ -33,6 +35,15 @@ export class DataManager {
                         // Load into item service
                         const itemName = item.item_name as keyof typeof Items;
                         ItemFactory.getItem(itemName, familiar);
+                    }
+                });
+
+                data.conditions.forEach((condition: any) => {
+                    if (condition) {
+                        // Load into condition service
+                        const conditionName =
+                            condition.condition_name as keyof typeof Conditions;
+                        ConditionFactory.getCondition(conditionName, familiar);
                     }
                 });
             }

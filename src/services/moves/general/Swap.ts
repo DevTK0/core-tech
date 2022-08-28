@@ -1,19 +1,14 @@
-import { FamiliarState } from "@/services/battle/FamiliarState";
-import { BaseMove } from "../BaseMove"
+import { Familiar } from "@/services/battle/Familiar";
+import { BaseMove } from "../BaseMove";
 
 export class Swap extends BaseMove {
-
-    constructor(
-        protected source: FamiliarState
-    ) {
+    constructor(protected source: Familiar) {
         super(source);
     }
 
     effect = () => {
-
         const target = this.targets[0];
-        
-        this.source.swap(target);
-    }
-}
 
+        this.source.swap(target);
+    };
+}
