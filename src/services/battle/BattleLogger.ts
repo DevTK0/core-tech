@@ -3,7 +3,19 @@ export class Logger {
 
     constructor() {}
 
-    log(message: string) {
+    logMove(user: string, move: string) {
+        this.combatLog.push(`${user} used ${move}!`);
+    }
+
+    logKO(familiar: string) {
+        this.combatLog.push(`${familiar} was Knocked Out!`);
+    }
+
+    logEffect(trigger: string, effect: string) {
+        this.combatLog.push(`${trigger} was activated! ${effect}`);
+    }
+
+    add(message: string) {
         this.combatLog.push(message);
     }
 

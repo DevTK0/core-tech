@@ -10,7 +10,7 @@ import { ItemState } from "../database/ItemState";
 import { Target } from "../database/Target";
 import { Turn, getTurn, saveTurn } from "../database/Turn";
 import { ItemFactory } from "../items/ItemFactory";
-import { Items } from "../items/items";
+import { Items } from "../items/Items";
 
 export class DataManager {
     private turnData: Turn | undefined;

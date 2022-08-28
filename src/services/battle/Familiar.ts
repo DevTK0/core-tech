@@ -55,7 +55,7 @@ export class Familiar {
 
         if (this.familiar.health <= 0) {
             this.familiar.health = 0;
-            BattleLogger.log(`${this.familiar.familiar_name} was knocked out!`);
+            BattleLogger.logKO(this.familiar.familiar_name);
             GlobalService.dispatch("OnKO", this);
         }
     }

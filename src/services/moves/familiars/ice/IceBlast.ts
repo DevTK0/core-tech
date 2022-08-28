@@ -13,14 +13,11 @@ export class IceBlast extends BaseMove {
     }
 
     effect = () => {
-        const source = this.source;
-        const target = this.targets[0];
-        const attack = this.source.getAttack();
-        const value = this.power * attack;
+        BattleLogger.logMove(this.source.getName(), this.moveName);
 
-        BattleLogger.log(`${source.getName()} used ${this.moveName}`);
+        const value = this.power * this.source.getAttack();
 
-        target.damage(value);
-        source.reduceStamina(this.cost);
+        this.targets[0].damage(value);
+        this.source.reduceStamina(this.cost);
     };
 }
