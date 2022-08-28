@@ -18,7 +18,7 @@ export async function run() {
     // run queue
     while (queue.length() > 0) {
         const move = queue.nextMove();
-        move.resolve();
+        move.useMove();
     }
 
     GlobalService.dispatch("TurnEnd");

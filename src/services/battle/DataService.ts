@@ -1,11 +1,11 @@
-import { BaseMove } from "../moves/BaseMove";
+import { Move } from "../moves/Move";
 import { MoveFactory } from "../moves/MoveFactory";
-import { Moves } from "../moves/Moves";
+import { MoveMap } from "../moves/MoveMap";
 import { FamiliarService } from "./FamiliarService";
 import { Familiar } from "./Familiar";
 import { ItemFactory } from "../items/ItemFactory";
-import { Items } from "../items/Items";
-import { Conditions } from "../conditions/Conditions";
+import { ItemMap } from "../items/ItemMap";
+import { ConditionMap } from "../conditions/ConditionMap";
 import { ConditionFactory } from "../conditions/ConditionFactory";
 
 import { PlayerMoves } from "../database/PlayerMoves";
@@ -33,7 +33,7 @@ export class DataManager {
                 data.items.forEach((item: ItemState) => {
                     if (item) {
                         // Load into item service
-                        const itemName = item.item_name as keyof typeof Items;
+                        const itemName = item.item_name as keyof typeof ItemMap;
                         ItemFactory.getItem(itemName, familiar);
                     }
                 });
@@ -42,22 +42,22 @@ export class DataManager {
                     if (condition) {
                         // Load into condition service
                         const conditionName =
-                            condition.condition_name as keyof typeof Conditions;
+                            condition.condition_name as keyof typeof ConditionMap;
                         ConditionFactory.getCondition(conditionName, familiar);
                     }
                 });
             }
         });
 
-        const moves: BaseMove[] = [];
+        const moves: Move[] = [];
 
         // load player moves for this turn
         this.turnData.PlayerMove.forEach((data: PlayerMoves) => {
             if (data) {
                 const moveName =
                     data.type_name == "Art"
-                        ? (data.art_name as keyof typeof Moves)
-                        : (data.spell_name as keyof typeof Moves);
+                        ? (data.art_name as keyof typeof MoveMap)
+                        : (data.spell_name as keyof typeof MoveMap);
 
                 const familiar = FamiliarService.findFamiliar(data.source_id);
                 const move = MoveFactory.getMove(moveName, familiar);

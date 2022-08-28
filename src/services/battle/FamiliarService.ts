@@ -1,5 +1,5 @@
 import { Familiar } from "@/services/battle/Familiar";
-import { FamiliarState } from "@/prisma";
+import { FamiliarState } from "@/services/database/FamiliarState";
 import { GlobalService } from "./GlobalService";
 
 export class FamiliarFactory {

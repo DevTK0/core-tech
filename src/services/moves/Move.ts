@@ -1,20 +1,13 @@
 import { Familiar } from "@/services/battle/Familiar";
+import { BattleLogger } from "../battle/BattleLogger";
 
-export abstract class BaseMove {
+export abstract class Move {
     public moveName: string = "";
     protected moveSpeed: number = 1;
     protected targets: Familiar[] = [];
-    protected source: Familiar | undefined;
     protected priority?: number;
 
-    constructor(source?: Familiar) {
-        this.source = source;
-    }
-
-    setSource = (source: Familiar) => {
-        this.source = source;
-        return this;
-    };
+    constructor(protected source: Familiar) {}
 
     setTargets = (targets: Familiar[]) => {
         this.targets = targets;
@@ -31,7 +24,8 @@ export abstract class BaseMove {
 
     protected abstract effect(): void;
 
-    resolve = () => {
+    useMove = () => {
+        BattleLogger.useMove(this.source.getName(), this.moveName);
         this.effect();
         return this;
     };

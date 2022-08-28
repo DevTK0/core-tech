@@ -1,7 +1,7 @@
 import { Familiar } from "@/services/battle/Familiar";
-import { Conditions } from "./Conditions";
+import { ConditionMap } from "./ConditionMap";
 
-type Conditions = typeof Conditions;
+type Conditions = typeof ConditionMap;
 type Keys = keyof Conditions;
 type Tuples<T> = T extends Keys ? [T, InstanceType<Conditions[T]>] : never;
 type SingleKeys<K> = [K] extends (K extends Keys ? [K] : never) ? K : never;
@@ -12,6 +12,6 @@ export class ConditionFactory {
         k: SingleKeys<K>,
         source: Familiar
     ): ClassType<K> {
-        return new Conditions[k](source);
+        return new ConditionMap[k](source);
     }
 }

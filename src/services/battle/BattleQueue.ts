@@ -1,4 +1,4 @@
-import { BaseMove } from "../moves/BaseMove";
+import { Move } from "../moves/Move";
 
 /**
  * This isn't really a queue, more like a list.
@@ -7,7 +7,7 @@ import { BaseMove } from "../moves/BaseMove";
  *
  */
 export class BattleQueue {
-    protected moves: BaseMove[] = [];
+    protected moves: Move[] = [];
 
     constructor() {}
 
@@ -16,9 +16,9 @@ export class BattleQueue {
             throw new Error("No moves in queue");
         }
 
-        let fastest: BaseMove = this.moves[0];
+        let fastest: Move = this.moves[0];
 
-        this.moves.forEach((move: BaseMove) => {
+        this.moves.forEach((move: Move) => {
             // Fastest Moves have priority
             if (move.getPriority() > fastest.getPriority()) {
                 fastest = move;
@@ -28,7 +28,7 @@ export class BattleQueue {
             }
         });
 
-        this.moves = this.moves.filter((move: BaseMove) => {
+        this.moves = this.moves.filter((move: Move) => {
             return move.moveName !== fastest.moveName;
         });
 

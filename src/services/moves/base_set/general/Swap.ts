@@ -1,7 +1,7 @@
 import { Familiar } from "@/services/battle/Familiar";
-import { BaseMove } from "../BaseMove";
+import { Move } from "../../Move";
 
-export class Swap extends BaseMove {
+export class Swap extends Move {
     constructor(protected source: Familiar) {
         super(source);
     }

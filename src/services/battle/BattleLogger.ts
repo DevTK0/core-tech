@@ -3,16 +3,16 @@ export class Logger {
 
     constructor() {}
 
-    logMove(user: string, move: string) {
+    useMove(user: string, move: string) {
         this.combatLog.push(`${user} used ${move}!`);
     }
 
-    logKO(familiar: string) {
+    KO(familiar: string) {
         this.combatLog.push(`${familiar} was Knocked Out!`);
     }
 
-    logEffect(trigger: string, effect: string) {
-        this.combatLog.push(`${trigger} was activated! ${effect}`);
+    useItem(trigger: string) {
+        this.combatLog.push(`${trigger} was activated!`);
     }
 
     logCondition(effect: string) {

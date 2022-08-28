@@ -1,7 +1,7 @@
 import { Familiar } from "@/services/battle/Familiar";
-import { Items } from "./Items";
+import { ItemMap } from "./ItemMap";
 
-type Items = typeof Items;
+type Items = typeof ItemMap;
 type Keys = keyof Items;
 type Tuples<T> = T extends Keys ? [T, InstanceType<Items[T]>] : never;
 type SingleKeys<K> = [K] extends (K extends Keys ? [K] : never) ? K : never;
@@ -12,6 +12,6 @@ export class ItemFactory {
         k: SingleKeys<K>,
         source: Familiar
     ): ClassType<K> {
-        return new Items[k](source);
+        return new ItemMap[k](source);
     }
 }

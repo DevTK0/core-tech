@@ -1,4 +1,5 @@
-import { Conditions } from "../conditions/Conditions";
+import { Condition } from "../conditions/Condition";
+import { ConditionMap } from "../conditions/ConditionMap";
 import { FamiliarState } from "../database/FamiliarState";
 import { BattleLogger } from "./BattleLogger";
 import { GlobalService } from "./GlobalService";
@@ -20,16 +21,16 @@ export class Familiar {
         return this;
     }
 
-    addConditions(condition: keyof typeof Conditions) {
+    addCondition(condition: Condition) {
         // @ts-ignore
         this.familiar.conditions.push({
-            condition_name: condition,
+            condition_name: condition.getName(),
         });
     }
 
-    removeCondition(condition: keyof typeof Conditions) {
+    removeCondition(condition: Condition) {
         this.familiar.conditions = this.familiar.conditions.filter(
-            (c) => c.condition_name !== condition
+            (c) => c.condition_name !== condition.getName()
         );
     }
 
@@ -71,7 +72,7 @@ export class Familiar {
 
         if (this.familiar.health <= 0) {
             this.familiar.health = 0;
-            BattleLogger.logKO(this.familiar.familiar_name);
+            BattleLogger.KO(this.familiar.familiar_name);
             GlobalService.dispatch("OnKO", this);
         }
     }

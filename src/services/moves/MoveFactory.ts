@@ -1,7 +1,7 @@
 import { Familiar } from "@/services/battle/Familiar";
-import { Moves } from "./Moves";
+import { MoveMap } from "./MoveMap";
 
-type Moves = typeof Moves;
+type Moves = typeof MoveMap;
 type Keys = keyof Moves;
 type Tuples<T> = T extends Keys ? [T, InstanceType<Moves[T]>] : never;
 type SingleKeys<K> = [K] extends (K extends Keys ? [K] : never) ? K : never;
@@ -12,6 +12,6 @@ export class MoveFactory {
         k: SingleKeys<K>,
         source: Familiar
     ): ClassType<K> {
-        return new Moves[k](source);
+        return new MoveMap[k](source);
     }
 }
