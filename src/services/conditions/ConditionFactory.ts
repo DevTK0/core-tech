@@ -10,8 +10,10 @@ type ClassType<A extends Keys> = Extract<Tuples<Keys>, [A, any]>[1];
 export class ConditionFactory {
     static getCondition<K extends Keys>(
         k: SingleKeys<K>,
-        source: Familiar
+        source: Familiar,
+        duration: number = 999,
+        charges: number = 999
     ): ClassType<K> {
-        return new ConditionMap[k](source);
+        return new ConditionMap[k](source, duration, charges);
     }
 }

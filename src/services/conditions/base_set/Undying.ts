@@ -4,11 +4,15 @@ import { BattleLogger } from "../../battle/BattleLogger";
 import { Condition } from "../Condition";
 
 export class Undying extends Condition {
-    protected readonly ConditionName = "Undying";
+    conditionName = "Undying";
 
-    constructor(protected source: Familiar) {
-        super(source);
-        GlobalService.subscribe("OnDamage", this.effect.bind(this));
+    constructor(
+        protected source: Familiar,
+        protected duration: number,
+        protected charges: number
+    ) {
+        super(source, duration, charges);
+        GlobalService.subscribe("OnDamage", this.applyEffect.bind(this));
     }
 
     effect() {

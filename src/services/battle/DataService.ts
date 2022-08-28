@@ -13,6 +13,7 @@ import { FamiliarState } from "../database/FamiliarState";
 import { ItemState } from "../database/ItemState";
 import { Target } from "../database/Target";
 import { Turn, getTurn, saveTurn } from "../database/Turn";
+import { ConditionState } from "../database/ConditionState";
 
 export class DataManager {
     private turnData: Turn | undefined;
@@ -38,12 +39,17 @@ export class DataManager {
                     }
                 });
 
-                data.conditions.forEach((condition: any) => {
+                data.conditions.forEach((condition: ConditionState) => {
                     if (condition) {
                         // Load into condition service
                         const conditionName =
                             condition.condition_name as keyof typeof ConditionMap;
-                        ConditionFactory.getCondition(conditionName, familiar);
+                        ConditionFactory.getCondition(
+                            conditionName,
+                            familiar,
+                            condition.duration,
+                            condition.charges
+                        );
                     }
                 });
             }

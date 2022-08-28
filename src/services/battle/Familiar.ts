@@ -1,4 +1,4 @@
-import { Condition } from "../conditions/Condition";
+import { Condition, CounterType } from "../conditions/Condition";
 import { ConditionMap } from "../conditions/ConditionMap";
 import { FamiliarState } from "../database/FamiliarState";
 import { BattleLogger } from "./BattleLogger";
@@ -9,6 +9,10 @@ import { GlobalService } from "./GlobalService";
  */
 export class Familiar {
     constructor(private familiar: FamiliarState) {}
+
+    getId() {
+        return this.familiar.id;
+    }
 
     swap(familiar2: Familiar) {
         [this.familiar!.position, familiar2.familiar!.position] = [
@@ -21,10 +25,37 @@ export class Familiar {
         return this;
     }
 
-    addCondition(condition: Condition) {
+    addPositiveCondition(
+        condition: Condition,
+        counter: number,
+        type: CounterType
+    ) {
+        BattleLogger.addPositiveCondition(
+            this.getName(),
+            condition,
+            counter,
+            type
+        );
+        if (type === "Charges") {
+            condition.setCharges(counter);
+        }
+        if (type === "Turns") {
+            condition.setDuration(counter);
+        }
+        this.addCondition(condition);
+    }
+
+    addNegativeCondition(condition: Condition) {
+        BattleLogger.addNegativeCondition(this.getName(), condition);
+        this.addCondition(condition);
+    }
+
+    private addCondition(condition: Condition) {
         // @ts-ignore
         this.familiar.conditions.push({
             condition_name: condition.getName(),
+            duration: condition.getDuration(),
+            charges: condition.getCharges(),
         });
     }
 
@@ -32,6 +63,16 @@ export class Familiar {
         this.familiar.conditions = this.familiar.conditions.filter(
             (c) => c.condition_name !== condition.getName()
         );
+    }
+
+    updateCondition(condition: Condition) {
+        const found = this.familiar.conditions.find(
+            (c) => c.condition_name === condition.getName()
+        );
+        if (found) {
+            found.duration = condition.getDuration();
+            found.charges = condition.getCharges();
+        }
     }
 
     getConditions() {

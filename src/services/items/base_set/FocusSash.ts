@@ -15,6 +15,6 @@ export class FocusSash extends Item {
 
     effect() {
         const condition = ConditionFactory.getCondition("Undying", this.source);
-        this.source.addCondition(condition);
+        this.source.addPositiveCondition(condition, 2, "Charges");
     }
 }

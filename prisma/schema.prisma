@@ -194,6 +194,8 @@ model ConditionState {
   familiarstate_id Int
   condition        Condition     @relation(fields: [condition_name], references: [name])
   condition_name   String
+  charges          Int
+  duration         Int
 }
 
 model Condition {

@@ -75,6 +75,8 @@ export async function saveTurn(turn: Turn) {
                                             name: condition.condition_name,
                                         },
                                     },
+                                    duration: condition.duration,
+                                    charges: condition.charges,
                                 };
                             }),
                         },
