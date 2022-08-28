@@ -1,3 +1,5 @@
+import { Burned } from "./Burned";
+import { KnockedOut } from "./KnockedOut";
 import { Undying } from "./Undying";
 
 /**
@@ -6,4 +8,6 @@ import { Undying } from "./Undying";
  */
 export const Conditions = {
     Undying: Undying,
+    "Knocked Out": KnockedOut,
+    Burned: Burned,
 };

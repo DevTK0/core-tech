@@ -1,7 +1,8 @@
 import { PrismaClient, PrismaNamespace } from "@/prisma";
 
-export type FamiliarState = PrismaNamespace.PromiseReturnType<
-    typeof FamiliarState
+export type FamiliarState = Exclude<
+    PrismaNamespace.PromiseReturnType<typeof FamiliarState>,
+    null | undefined
 >;
 
 async function FamiliarState(id: number) {

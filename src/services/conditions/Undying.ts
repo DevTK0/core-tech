@@ -11,8 +11,7 @@ export class Undying {
 
     effect() {
         if (this.source.getHealth() <= 0) {
-            BattleLogger.logEffect(
-                this.ConditionName,
+            BattleLogger.logCondition(
                 `${this.source.getName()}'s health can't drop below 1!`
             );
             this.source.adjustHealth(1);

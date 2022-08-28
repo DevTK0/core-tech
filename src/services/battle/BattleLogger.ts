@@ -15,6 +15,10 @@ export class Logger {
         this.combatLog.push(`${trigger} was activated! ${effect}`);
     }
 
+    logCondition(effect: string) {
+        this.combatLog.push(`${effect}`);
+    }
+
     add(message: string) {
         this.combatLog.push(message);
     }

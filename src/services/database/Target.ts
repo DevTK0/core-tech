@@ -1,13 +1,16 @@
 import { PrismaClient, PrismaNamespace } from "@/prisma";
 
-export type Target = PrismaNamespace.PromiseReturnType<typeof Target>;
+export type Target = Exclude<
+    PrismaNamespace.PromiseReturnType<typeof Target>,
+    null | undefined
+>;
 
 async function Target(id: number) {
-  const response = await PrismaClient.target.findUnique({
-    where: {
-      id: id,
-    },
-  });
+    const response = await PrismaClient.target.findUnique({
+        where: {
+            id: id,
+        },
+    });
 
-  return response;
+    return response;
 }

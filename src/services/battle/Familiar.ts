@@ -1,4 +1,5 @@
-import { FamiliarState as PrismaFamiliarState, Item } from "@prisma/client";
+import { Conditions } from "../conditions/Conditions";
+import { FamiliarState } from "../database/FamiliarState";
 import { BattleLogger } from "./BattleLogger";
 import { GlobalService } from "./GlobalService";
 
@@ -6,19 +7,34 @@ import { GlobalService } from "./GlobalService";
  * Holds the current state of the familiar and provides methods for interacting with the familiar.
  */
 export class Familiar {
-    constructor(private familiar: PrismaFamiliarState) {
-        this.familiar = familiar;
-    }
+    constructor(private familiar: FamiliarState) {}
 
     swap(familiar2: Familiar) {
-        [this.familiar.position, familiar2.familiar.position] = [
-            familiar2.familiar.position,
-            this.familiar.position,
+        [this.familiar!.position, familiar2.familiar!.position] = [
+            familiar2.familiar!.position,
+            this.familiar!.position,
         ];
 
         GlobalService.dispatch("OnSwap", this);
 
         return this;
+    }
+
+    addConditions(condition: keyof typeof Conditions) {
+        // @ts-ignore
+        this.familiar.conditions.push({
+            condition_name: condition,
+        });
+    }
+
+    removeCondition(condition: keyof typeof Conditions) {
+        this.familiar.conditions = this.familiar.conditions.filter(
+            (c) => c.condition_name !== condition
+        );
+    }
+
+    getConditions() {
+        return this.familiar.conditions;
     }
 
     getName() {
