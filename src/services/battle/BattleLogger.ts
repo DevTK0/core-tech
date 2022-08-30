@@ -28,10 +28,11 @@ export class Logger {
         type: CounterType
     ) {
         this.combatLog.push(
-            `${familiar} received ${condition.getName()} (${counter} ${type})!`
+            `${familiar} is ${condition.getName()} (${counter} ${type})!`
         );
     }
 
+    // Negative Conditions should be past tense.
     addNegativeCondition(familiar: string, condition: Condition) {
         this.combatLog.push(`${familiar} was ${condition.getName()}!`);
     }

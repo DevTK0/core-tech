@@ -12,7 +12,7 @@ export class Undying extends Condition {
         protected charges: number
     ) {
         super(source, duration, charges);
-        GlobalService.subscribe("OnDamage", this.applyEffect.bind(this));
+        GlobalService.subscribe("PostDamage", this.applyEffect.bind(this));
     }
 
     effect() {

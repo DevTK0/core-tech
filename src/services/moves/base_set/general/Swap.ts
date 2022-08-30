@@ -6,9 +6,7 @@ export class Swap extends Move {
         super(source);
     }
 
-    effect = () => {
-        const target = this.targets[0];
-
+    effect = (target: Familiar) => {
         this.source.swap(target);
     };
 }

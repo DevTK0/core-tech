@@ -1,4 +1,3 @@
-import { Item } from "../temp_stage/BerryItem";
 import { GlobalEvent, EventName } from "./GlobalEvent";
 import { Familiar } from "../battle/Familiar";
 import { Callback } from "./Handlers";
@@ -14,10 +13,7 @@ import { Callback } from "./Handlers";
 export class Globals {
     private globalEvent = new GlobalEvent();
 
-    constructor(
-        private familiars: Familiar[] = [],
-        private items: Item[] = []
-    ) {}
+    constructor(private familiars: Familiar[] = []) {}
 
     addFamiliar(familiar: Familiar) {
         this.familiars.push(familiar);

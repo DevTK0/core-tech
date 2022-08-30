@@ -2,16 +2,14 @@ import { GlobalService } from "@/services/battle/GlobalService";
 import { Familiar } from "../../battle/Familiar";
 import { Condition } from "../Condition";
 
-export class Burned extends Condition {
-    ConditionName = "Burned";
+export class Immune extends Condition {
+    readonly ConditionName = "Immune";
 
     constructor(protected source: Familiar) {
         super(source);
 
-        GlobalService.subscribe("TurnEnd", this.applyEffect.bind(this));
+        // GlobalService.subscribe(")
     }
 
-    effect() {
-        this.source.damage(1);
-    }
+    effect() {}
 }

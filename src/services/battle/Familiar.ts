@@ -51,6 +51,7 @@ export class Familiar {
     }
 
     private addCondition(condition: Condition) {
+        // New ConditionStates will be added so the missing fields are unnecessary.
         // @ts-ignore
         this.familiar.conditions.push({
             condition_name: condition.getName(),
@@ -104,46 +105,54 @@ export class Familiar {
         this.familiar.health += value;
     }
 
+    isInvulnerable() {
+        return this.familiar.conditions.find(
+            (c) => c.condition_name === "Invulnerable"
+        );
+    }
+
     damage(value: number) {
         GlobalService.dispatch("PreDamage", this);
 
-        this.familiar.health -= value;
+        if (!this.isInvulnerable()) {
+            this.familiar.health =
+                this.familiar.health > value ? this.familiar.health - value : 0;
+        }
 
-        GlobalService.dispatch("OnDamage", this);
+        GlobalService.dispatch("PostDamage", this);
 
-        if (this.familiar.health <= 0) {
-            this.familiar.health = 0;
+        if (this.familiar.health === 0) {
             BattleLogger.KO(this.familiar.familiar_name);
             GlobalService.dispatch("OnKO", this);
         }
     }
 
-    adjustStamina(value: number) {
-        this.familiar.stamina = value;
+    useStamina(value: number) {
+        this.familiar.stamina -= value;
     }
 
-    reduceStamina(value: number) {
-        this.familiar.stamina -= value;
+    gainStamina(value: number) {
+        this.familiar.stamina += value;
     }
 
     adjustSpeed(value: number) {
         this.familiar.speed = value;
     }
 
-    getSpeed() {
-        return this.familiar.speed;
-    }
-
     adjustAttack(value: number) {
         this.familiar.attack = value;
     }
 
-    getAttack() {
-        return this.familiar.attack;
-    }
-
     adjustDefense(value: number) {
         this.familiar.defense = value;
+    }
+
+    getSpeed() {
+        return this.familiar.speed;
+    }
+
+    getAttack() {
+        return this.familiar.attack;
     }
 
     getDefense() {

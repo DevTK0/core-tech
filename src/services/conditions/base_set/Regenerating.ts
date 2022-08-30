@@ -2,8 +2,8 @@ import { GlobalService } from "@/services/battle/GlobalService";
 import { Familiar } from "../../battle/Familiar";
 import { Condition } from "../Condition";
 
-export class Burned extends Condition {
-    ConditionName = "Burned";
+export class Regenerating extends Condition {
+    readonly ConditionName = "Regenerating";
 
     constructor(protected source: Familiar) {
         super(source);
@@ -12,6 +12,6 @@ export class Burned extends Condition {
     }
 
     effect() {
-        this.source.damage(1);
+        this.source.heal(1);
     }
 }

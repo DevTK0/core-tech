@@ -7,7 +7,6 @@ export class Rest extends Move {
     }
 
     effect = () => {
-        const target = this.source;
-        target.adjustStamina(100);
+        this.source.gainStamina(100);
     };
 }

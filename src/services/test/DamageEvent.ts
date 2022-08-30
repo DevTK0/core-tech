@@ -1,4 +1,3 @@
-import { FocusSash } from "./BerryItem";
 import { GlobalService } from "../battle/GlobalService";
 
 export class MiniFamiliar {
@@ -23,7 +22,7 @@ export class MiniFamiliar {
 
         this.health -= value;
 
-        GlobalService.dispatch("OnDamage", this);
+        GlobalService.dispatch("PostDamage", this);
 
         return this;
     }
@@ -45,8 +44,6 @@ export class MiniFamiliar {
 
 const ice_golem = new MiniFamiliar("Ice Golem", 100, 100, 123);
 const fire_golem = new MiniFamiliar("Fire Golem", 100, 100, 234);
-
-const fs = new FocusSash(fire_golem);
 
 GlobalService.dispatch("TurnStart");
 

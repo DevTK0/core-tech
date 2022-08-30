@@ -22,7 +22,7 @@ export class BerryItem extends Item {
 export class FocusSash extends Item {
     constructor(private source: MiniFamiliar) {
         super();
-        GlobalService.subscribe("OnDamage", this.effect.bind(this));
+        GlobalService.subscribe("PostDamage", this.effect.bind(this));
     }
 
     effect() {

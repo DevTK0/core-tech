@@ -3,20 +3,19 @@ import { Move } from "../../../Move";
 import { BattleLogger } from "@/services/battle/BattleLogger";
 
 export class FireBlast extends Move {
-    moveName = "Fire Blast";
+    moveName = "Earthquake";
 
     protected power: number = 100;
     protected cost: number = 100;
-    protected moveSpeed: number = 2;
+    protected speed: number = 0.5;
 
     constructor(protected source: Familiar) {
         super(source);
     }
 
-    effect = () => {
+    effect = (target: Familiar) => {
         const value = this.power * this.source.getAttack();
 
-        this.targets[0].damage(value);
-        this.source.reduceStamina(this.cost);
+        target.damage(value);
     };
 }
