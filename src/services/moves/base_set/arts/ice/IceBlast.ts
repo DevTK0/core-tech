@@ -7,7 +7,7 @@ export class IceBlast extends Move {
 
     protected power: number = 100;
     protected cost: number = 100;
-    protected speed: number = 2;
+    protected speed: number = 1;
 
     constructor(protected source: Familiar) {
         super(source);

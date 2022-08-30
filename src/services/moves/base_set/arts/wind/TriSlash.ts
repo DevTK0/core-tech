@@ -2,8 +2,8 @@ import { Familiar } from "@/services/battle/Familiar";
 import { Move } from "../../../Move";
 import { BattleLogger } from "@/services/battle/BattleLogger";
 
-export class FireBlast extends Move {
-    moveName = "Fire Blast";
+export class TriSlash extends Move {
+    moveName = "Tri Slash";
 
     protected power: number = 100;
     protected cost: number = 100;
@@ -16,6 +16,8 @@ export class FireBlast extends Move {
     effect = (target: Familiar) => {
         const value = this.power * this.source.getAttack();
 
+        target.damage(value);
+        target.damage(value);
         target.damage(value);
     };
 }

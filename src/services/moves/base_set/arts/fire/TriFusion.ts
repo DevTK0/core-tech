@@ -9,7 +9,7 @@ export class TriFusion extends Move {
 
     protected power: number = 100;
     protected cost: number = 100;
-    protected speed: number = 2;
+    protected speed: number = 0.5;
     protected turnLock: number = 13;
     protected cooldown: number = 999;
 
