@@ -6,7 +6,11 @@ export class Rest extends Move {
         super(source);
     }
 
+    setup = () => {};
+
     effect = () => {
         this.source.gainStamina(100);
     };
+
+    post = () => {};
 }

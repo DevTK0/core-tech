@@ -6,7 +6,11 @@ export class Swap extends Move {
         super(source);
     }
 
+    setup = () => {};
+
     effect = (target: Familiar) => {
         this.source.swap(target);
     };
+
+    post = () => {};
 }
