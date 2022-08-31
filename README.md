@@ -5,10 +5,6 @@
 -   Pricing scales to 0 (Shouldn't be charged if low/no usage)
 -   Easy to develop; Quick to configure
 
-## Use Cases
-
-The primary Dynamic/Static websites
-
 ## Tech
 
 **Frontend**
@@ -41,5 +37,3 @@ The primary Dynamic/Static websites
 # Core Tech Demo
 
 https://core-tech-demo.vercel.app
-
-This simple demo illustrates the stack in action.
