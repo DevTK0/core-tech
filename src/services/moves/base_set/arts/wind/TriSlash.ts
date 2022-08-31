@@ -1,7 +1,7 @@
 import { Familiar } from "@/services/battle/Familiar";
 import { Move } from "../../../Move";
-import { battleQueue } from "@/services/battle/BattleQueue";
 import { MoveFactory } from "@/services/moves/MoveFactory";
+import { GlobalService } from "@/services/battle/GlobalService";
 
 export class TriSlash extends Move {
     moveName = "Tri Slash";
@@ -30,10 +30,10 @@ export class TriSlash extends Move {
             this.source
         ).setTargets([target]);
 
-        battleQueue.insertMove(first);
-        battleQueue.insertMove(second);
-        battleQueue.insertMove(third);
-        battleQueue.removeSelf(this);
+        GlobalService.queue.insertMove(first);
+        GlobalService.queue.insertMove(second);
+        GlobalService.queue.insertMove(third);
+        GlobalService.queue.removeSelf(this);
     };
 
     post = () => {};

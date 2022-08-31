@@ -46,7 +46,6 @@ export abstract class Move {
         this.targets.forEach((target) => {
             if (target.isEvading()) {
                 GlobalService.dispatch("Evade", target);
-                BattleLogger.logCondition("Evaded!");
             } else {
                 this.effect(target);
             }

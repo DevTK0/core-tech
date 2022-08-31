@@ -1,6 +1,7 @@
 import { GlobalEvent, EventName } from "./GlobalEvent";
 import { Familiar } from "../battle/Familiar";
 import { Callback } from "./Handlers";
+import { BattleQueue } from "./BattleQueue";
 
 /**
  * A service for managing globals including:
@@ -12,6 +13,7 @@ import { Callback } from "./Handlers";
  */
 export class Globals {
     private globalEvent = new GlobalEvent();
+    public queue: BattleQueue = new BattleQueue();
 
     constructor(private familiars: Familiar[] = []) {}
 

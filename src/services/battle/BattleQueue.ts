@@ -84,5 +84,3 @@ export class BattleQueue {
         return this.battle.length;
     }
 }
-
-export const battleQueue: BattleQueue = new BattleQueue();

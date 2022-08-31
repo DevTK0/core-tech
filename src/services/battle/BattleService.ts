@@ -1,5 +1,4 @@
 import { BattleLogger } from "./BattleLogger";
-import { battleQueue, BattleQueue } from "./BattleQueue";
 import { DataService } from "./DataService";
 import { GlobalService } from "./GlobalService";
 
@@ -8,16 +7,12 @@ export async function run() {
 
     // load moves into queue
     const moves = DataService.getPlayerMoves();
-    // const queue = new BattleQueue();
     moves.forEach((move) => {
-        battleQueue.addMove(move);
+        GlobalService.queue.addMove(move);
     });
 
     GlobalService.dispatch("TurnStart");
-
-    // run queue
-    battleQueue.execute();
-
+    GlobalService.queue.execute();
     GlobalService.dispatch("TurnEnd");
 
     await DataService.save();
