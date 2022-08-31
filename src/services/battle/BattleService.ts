@@ -11,15 +11,15 @@ export async function run() {
         GlobalService.queue.addMove(move);
     });
 
-    GlobalService.dispatch("TurnStart");
+    GlobalService.event.dispatch("TurnStart");
     GlobalService.queue.execute();
-    GlobalService.dispatch("TurnEnd");
+    GlobalService.event.dispatch("TurnEnd");
 
     await DataService.save();
 
     // generate log
-    const log = BattleLogger.getLog();
-    BattleLogger.clear();
+    const log = GlobalService.logger.getLog();
+    GlobalService.logger.clear();
 
     return {
         game: GlobalService.getAllFamiliars(),

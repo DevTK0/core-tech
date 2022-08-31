@@ -5,6 +5,7 @@ import { Item } from "../Item";
 
 export class LightningBerry extends Item {
     itemName = "Lightning Berry";
+
     constructor(protected source: Familiar) {
         super(source);
         GlobalService.event.subscribe(
