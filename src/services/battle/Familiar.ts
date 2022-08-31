@@ -1,4 +1,5 @@
 import { Condition, CounterType } from "../conditions/Condition";
+import { ConditionFactory } from "../conditions/ConditionFactory";
 import { ConditionMap } from "../conditions/ConditionMap";
 import { FamiliarState } from "../database/FamiliarState";
 import { BattleLogger } from "./BattleLogger";
@@ -108,6 +109,14 @@ export class Familiar {
     isInvulnerable() {
         return this.familiar.conditions.find(
             (c) => c.condition_name === "Invulnerable"
+        );
+    }
+
+    isEvading() {
+        return (
+            this.familiar.conditions.find(
+                (c) => c.condition_name === "Evading"
+            ) !== undefined
         );
     }
 

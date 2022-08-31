@@ -17,6 +17,8 @@ export class TriFusion extends Move {
         super(source);
     }
 
+    setup = () => {};
+
     effect = (target: Familiar) => {
         const condition = ConditionFactory.getCondition("Knocked Out", target);
         target.addNegativeCondition(condition);
@@ -25,4 +27,6 @@ export class TriFusion extends Move {
         this.source.adjustAttack(target.getAttack());
         this.source.adjustDefense(target.getDefense());
     };
+
+    post = () => {};
 }

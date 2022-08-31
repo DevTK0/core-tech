@@ -1,6 +1,7 @@
 import { Familiar } from "@/services/battle/Familiar";
 import { Move } from "../../../Move";
-import { BattleLogger } from "@/services/battle/BattleLogger";
+import { battleQueue } from "@/services/battle/BattleQueue";
+import { MoveFactory } from "@/services/moves/MoveFactory";
 
 export class TriSlash extends Move {
     moveName = "Tri Slash";
@@ -13,11 +14,27 @@ export class TriSlash extends Move {
         super(source);
     }
 
-    effect = (target: Familiar) => {
-        const value = this.power * this.source.getAttack();
+    effect = () => {};
 
-        target.damage(value);
-        target.damage(value);
-        target.damage(value);
+    setup = (target: Familiar) => {
+        const first = MoveFactory.getMove(
+            "First Slash",
+            this.source
+        ).setTargets([target]);
+        const second = MoveFactory.getMove(
+            "Second Slash",
+            this.source
+        ).setTargets([target]);
+        const third = MoveFactory.getMove(
+            "Third Slash",
+            this.source
+        ).setTargets([target]);
+
+        battleQueue.insertMove(first);
+        battleQueue.insertMove(second);
+        battleQueue.insertMove(third);
+        battleQueue.removeSelf(this);
     };
+
+    post = () => {};
 }

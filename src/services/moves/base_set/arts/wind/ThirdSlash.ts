@@ -2,12 +2,12 @@ import { Familiar } from "@/services/battle/Familiar";
 import { Move } from "../../../Move";
 import { BattleLogger } from "@/services/battle/BattleLogger";
 
-export class FireBlast extends Move {
-    moveName = "Earthquake";
+export class ThirdSlash extends Move {
+    moveName = "Third Slash";
 
     protected power: number = 100;
     protected cost: number = 100;
-    protected speed: number = 0.5;
+    protected speed: number = 1;
 
     constructor(protected source: Familiar) {
         super(source);

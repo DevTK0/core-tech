@@ -9,6 +9,7 @@ enum Events {
     OnKO,
     OnHeal,
     SpeedChange,
+    Evade,
     TurnStart,
     TurnEnd,
 }

@@ -1,6 +1,8 @@
 import { BattleLogger } from "@/services/battle/BattleLogger";
 import { Familiar } from "@/services/battle/Familiar";
 import { MoveFactory } from "@/services/moves/MoveFactory";
+import { battleQueue } from "../battle/BattleQueue";
+import { ConditionFactory } from "../conditions/ConditionFactory";
 
 const source = new Familiar({
     id: 1,
@@ -63,17 +65,24 @@ const target = new Familiar({
         {
             id: 1,
             familiarstate_id: 1,
-            condition_name: "Undying",
+            condition_name: "Evading",
             duration: 999,
-            charges: 1,
+            charges: 2,
         },
     ],
     items: [],
     arts: [],
 });
 
-const move = MoveFactory.getMove("Tri Slash", source);
-move.setTargets([target]);
-move.useMove();
+describe("evade condition with", () => {
+    const condition = ConditionFactory.getCondition("Evading", target, 999, 2);
 
-console.log(BattleLogger.getLog());
+    it("moves that hit multiple times", () => {
+        battleQueue.addMove(
+            MoveFactory.getMove("Tri Slash", source).setTargets([target])
+        );
+        battleQueue.execute();
+
+        console.log(BattleLogger.getLog());
+    });
+});

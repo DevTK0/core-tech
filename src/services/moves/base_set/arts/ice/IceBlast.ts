@@ -13,9 +13,13 @@ export class IceBlast extends Move {
         super(source);
     }
 
+    setup = () => {};
+
     effect = (target: Familiar) => {
         const value = this.power * this.source.getAttack();
 
         target.damage(value);
     };
+
+    post = () => {};
 }

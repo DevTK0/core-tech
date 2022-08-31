@@ -3,11 +3,15 @@ import { Familiar } from "../../battle/Familiar";
 import { Condition } from "../Condition";
 
 export class Evading extends Condition {
-    readonly ConditionName = "Evading";
+    conditionName = "Evading";
 
-    constructor(protected source: Familiar) {
-        super(source);
-        // TBD
+    constructor(
+        protected source: Familiar,
+        protected duration: number,
+        protected charges: number
+    ) {
+        super(source, duration, charges);
+        GlobalService.subscribe("Evade", this.applyEffect.bind(this));
     }
 
     effect() {}

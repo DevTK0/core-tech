@@ -8,9 +8,10 @@ export abstract class Move {
     protected speed: number = 1;
     protected cost: number = 0;
     protected priority: number = 1;
+    protected turnLock: number = 0;
+    protected cooldown: number = 0;
 
     protected targets: Familiar[] = [];
-    protected negated: boolean = false;
 
     constructor(protected source: Familiar) {
         GlobalService.subscribe("SpeedChange", this.reCalcPriority.bind(this));
@@ -21,10 +22,6 @@ export abstract class Move {
         return this;
     };
 
-    setNegated = () => {
-        this.negated = true;
-    };
-
     reCalcPriority() {
         this.priority = this.source.getSpeed() * this.speed;
     }
@@ -33,20 +30,36 @@ export abstract class Move {
         return this.priority;
     };
 
+    protected abstract setup(target?: Familiar): void;
     protected abstract effect(target?: Familiar): void;
+    protected abstract post(history: Move[], target?: Familiar): void;
+
+    setupMove = () => {
+        this.targets.forEach((target) => {
+            this.setup(target);
+        });
+    };
 
     useMove = () => {
-        GlobalService.dispatch("PreMove", this);
         BattleLogger.useMove(this.source.getName(), this.moveName);
 
         this.targets.forEach((target) => {
-            this.effect(target);
+            if (target.isEvading()) {
+                GlobalService.dispatch("Evade", target);
+                BattleLogger.logCondition("Evaded!");
+            } else {
+                this.effect(target);
+            }
         });
 
         this.source.useStamina(this.cost);
 
-        GlobalService.dispatch("PostMove", this);
-
         return this;
+    };
+
+    postMove = (history: Move[]) => {
+        this.targets.forEach((target) => {
+            this.post(history, target);
+        });
     };
 }
