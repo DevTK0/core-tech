@@ -1,7 +1,5 @@
 import { Familiar } from "@/services/battle/Familiar";
 import { Move } from "../../../Move";
-import { BattleLogger } from "@/services/battle/BattleLogger";
-import { GlobalService } from "@/services/battle/GlobalService";
 import { ConditionFactory } from "@/services/conditions/ConditionFactory";
 
 export class TriFusion extends Move {

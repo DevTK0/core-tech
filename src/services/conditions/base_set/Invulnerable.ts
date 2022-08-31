@@ -11,9 +11,11 @@ export class Invulnerable extends Condition {
         protected charges: number
     ) {
         super(source, duration, charges);
-
-        // TBD After implementing Target Class
     }
 
-    effect() {}
+    effect() {
+        GlobalService.logger.logCondition(
+            `${this.source.getName()} was invulnerable!`
+        );
+    }
 }

@@ -7,7 +7,10 @@ export class LightningBerry extends Item {
     itemName = "Lightning Berry";
     constructor(protected source: Familiar) {
         super(source);
-        GlobalService.subscribe("TurnStart", this.triggerEffect.bind(this));
+        GlobalService.event.subscribe(
+            "TurnStart",
+            this.triggerEffect.bind(this)
+        );
     }
 
     effect() {

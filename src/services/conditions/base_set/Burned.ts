@@ -12,10 +12,13 @@ export class Burned extends Condition {
     ) {
         super(source, duration, charges);
 
-        GlobalService.subscribe("TurnEnd", this.applyEffect.bind(this));
+        GlobalService.event.subscribe("TurnEnd", this.applyEffect.bind(this));
     }
 
     effect() {
         this.source.damage(1);
+        GlobalService.logger.logCondition(
+            `${this.source.getName()} took burn damage!`
+        );
     }
 }

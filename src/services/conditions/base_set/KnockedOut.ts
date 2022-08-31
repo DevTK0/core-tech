@@ -1,3 +1,4 @@
+import { GlobalService } from "@/services/battle/GlobalService";
 import { Familiar } from "../../battle/Familiar";
 import { Condition } from "../Condition";
 
@@ -12,5 +13,9 @@ export class KnockedOut extends Condition {
         super(source, duration, charges);
     }
 
-    effect() {}
+    effect() {
+        GlobalService.logger.logCondition(
+            `${this.source.getName()} was Knocked Out!`
+        );
+    }
 }

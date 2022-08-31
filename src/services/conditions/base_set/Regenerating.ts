@@ -12,7 +12,7 @@ export class Regenerating extends Condition {
     ) {
         super(source, duration, charges);
 
-        GlobalService.subscribe("TurnEnd", this.applyEffect.bind(this));
+        GlobalService.event.subscribe("TurnEnd", this.applyEffect.bind(this));
     }
 
     effect() {

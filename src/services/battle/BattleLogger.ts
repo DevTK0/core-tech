@@ -1,6 +1,6 @@
 import { Condition, CounterType } from "../conditions/Condition";
 
-export class Logger {
+export class BattleLogger {
     private combatLog: string[] = [];
 
     constructor() {}
@@ -53,5 +53,3 @@ export class Logger {
         this.combatLog = [];
     }
 }
-
-export const BattleLogger: Logger = new Logger();

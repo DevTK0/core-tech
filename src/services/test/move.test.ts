@@ -83,6 +83,6 @@ describe("evade condition with", () => {
         );
         GlobalService.queue.execute();
 
-        console.log(BattleLogger.getLog());
+        console.log(GlobalService.logger.getLog());
     });
 });

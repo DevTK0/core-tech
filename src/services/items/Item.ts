@@ -1,5 +1,6 @@
 import { Familiar } from "@/services/battle/Familiar";
 import { BattleLogger } from "../battle/BattleLogger";
+import { GlobalService } from "../battle/GlobalService";
 
 export abstract class Item {
     protected readonly itemName: string = "";
@@ -9,7 +10,7 @@ export abstract class Item {
     protected abstract effect(): void;
 
     triggerEffect = () => {
-        BattleLogger.useItem(this.itemName);
+        GlobalService.logger.useItem(this.itemName);
         this.effect();
         return this;
     };

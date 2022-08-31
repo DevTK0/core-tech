@@ -21,7 +21,7 @@ export class Familiar {
             this.familiar!.position,
         ];
 
-        GlobalService.dispatch("OnSwap", this);
+        GlobalService.event.dispatch("OnSwap", this);
 
         return this;
     }
@@ -31,7 +31,7 @@ export class Familiar {
         counter: number,
         type: CounterType
     ) {
-        BattleLogger.addPositiveCondition(
+        GlobalService.logger.addPositiveCondition(
             this.getName(),
             condition,
             counter,
@@ -47,7 +47,7 @@ export class Familiar {
     }
 
     addNegativeCondition(condition: Condition) {
-        BattleLogger.addNegativeCondition(this.getName(), condition);
+        GlobalService.logger.addNegativeCondition(this.getName(), condition);
         this.addCondition(condition);
     }
 
@@ -121,18 +121,24 @@ export class Familiar {
     }
 
     damage(value: number) {
-        GlobalService.dispatch("PreDamage", this);
-
         if (!this.isInvulnerable()) {
             this.familiar.health =
                 this.familiar.health > value ? this.familiar.health - value : 0;
+        } else {
+            GlobalService.event.dispatch("Invulnerable", this);
         }
 
-        GlobalService.dispatch("PostDamage", this);
+        GlobalService.event.dispatch("OnDamage", this);
 
         if (this.familiar.health === 0) {
-            BattleLogger.KO(this.familiar.familiar_name);
-            GlobalService.dispatch("OnKO", this);
+            const KO = ConditionFactory.getCondition(
+                "Knocked Out",
+                this,
+                999,
+                999
+            );
+            this.addNegativeCondition(KO);
+            GlobalService.event.dispatch("OnKO", this);
         }
     }
 

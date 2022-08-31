@@ -14,7 +14,10 @@ export abstract class Move {
     protected targets: Familiar[] = [];
 
     constructor(protected source: Familiar) {
-        GlobalService.subscribe("SpeedChange", this.reCalcPriority.bind(this));
+        GlobalService.event.subscribe(
+            "OnSpeedChange",
+            this.reCalcPriority.bind(this)
+        );
     }
 
     setTargets = (targets: Familiar[]) => {
@@ -41,11 +44,11 @@ export abstract class Move {
     };
 
     useMove = () => {
-        BattleLogger.useMove(this.source.getName(), this.moveName);
+        GlobalService.logger.useMove(this.source.getName(), this.moveName);
 
         this.targets.forEach((target) => {
             if (target.isEvading()) {
-                GlobalService.dispatch("Evade", target);
+                GlobalService.event.dispatch("Evade", target);
             } else {
                 this.effect(target);
             }

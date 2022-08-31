@@ -11,9 +11,11 @@ export class Immune extends Condition {
         protected charges: number
     ) {
         super(source, duration, charges);
-
-        // GlobalService.subscribe(")
     }
 
-    effect() {}
+    effect() {
+        GlobalService.logger.logCondition(
+            `${this.source.getName()} was immune!`
+        );
+    }
 }

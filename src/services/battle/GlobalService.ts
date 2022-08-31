@@ -2,6 +2,7 @@ import { GlobalEvent, EventName } from "./GlobalEvent";
 import { Familiar } from "../battle/Familiar";
 import { Callback } from "./Handlers";
 import { BattleQueue } from "./BattleQueue";
+import { BattleLogger } from "./BattleLogger";
 
 /**
  * A service for managing globals including:
@@ -12,8 +13,9 @@ import { BattleQueue } from "./BattleQueue";
  *
  */
 export class Globals {
-    private globalEvent = new GlobalEvent();
+    public event = new GlobalEvent();
     public queue: BattleQueue = new BattleQueue();
+    public logger: BattleLogger = new BattleLogger();
 
     constructor(private familiars: Familiar[] = []) {}
 
@@ -49,13 +51,13 @@ export class Globals {
         return this.familiars;
     }
 
-    subscribe(event: EventName, fn: Callback) {
-        this.globalEvent.subscribe(event, fn);
-    }
+    // subscribe(event: EventName, fn: Callback) {
+    //     this.globalEvent.subscribe(event, fn);
+    // }
 
-    dispatch(event: EventName, ...args: any[]) {
-        this.globalEvent.dispatch(event, ...args);
-    }
+    // dispatch(event: EventName, ...args: any[]) {
+    //     this.globalEvent.dispatch(event, ...args);
+    // }
 }
 
 export const GlobalService: Globals = new Globals();

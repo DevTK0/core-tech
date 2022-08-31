@@ -10,7 +10,10 @@ export class FocusSash extends Item {
 
     constructor(protected source: Familiar) {
         super(source);
-        GlobalService.subscribe("TurnStart", this.triggerEffect.bind(this));
+        GlobalService.event.subscribe(
+            "TurnStart",
+            this.triggerEffect.bind(this)
+        );
     }
 
     effect() {

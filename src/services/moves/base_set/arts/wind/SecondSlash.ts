@@ -1,6 +1,5 @@
 import { Familiar } from "@/services/battle/Familiar";
 import { Move } from "../../../Move";
-import { BattleLogger } from "@/services/battle/BattleLogger";
 
 export class SecondSlash extends Move {
     moveName = "Second Slash";

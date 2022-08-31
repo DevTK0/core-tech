@@ -1,15 +1,13 @@
 import { Handlers, Callback } from "./Handlers";
 
 enum Events {
-    PreMove,
-    PostMove,
-    PostDamage,
-    PreDamage,
+    OnDamage,
     OnSwap,
     OnKO,
     OnHeal,
-    SpeedChange,
+    OnSpeedChange,
     Evade,
+    Invulnerable,
     TurnStart,
     TurnEnd,
 }

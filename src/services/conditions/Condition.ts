@@ -11,7 +11,7 @@ export abstract class Condition {
         protected duration: number = 999,
         protected charges: number = 999
     ) {
-        GlobalService.subscribe("TurnEnd", () => {
+        GlobalService.event.subscribe("TurnEnd", () => {
             this.duration--;
             if (this.duration == 0) {
                 this.source.removeCondition(this);
