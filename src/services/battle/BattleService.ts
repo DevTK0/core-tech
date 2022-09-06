@@ -15,14 +15,14 @@ export async function run() {
     GlobalService.queue.execute();
     GlobalService.event.dispatch("TurnEnd");
 
-    await DataService.save();
+    const response = await DataService.save();
 
     // generate log
     const log = GlobalService.logger.getLog();
     GlobalService.logger.clear();
 
     return {
-        game: GlobalService.getAllFamiliars(),
+        turn: response,
         log: log,
     };
 }

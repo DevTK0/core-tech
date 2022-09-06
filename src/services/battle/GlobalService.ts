@@ -50,14 +50,6 @@ export class Globals {
     getAllFamiliars() {
         return this.familiars;
     }
-
-    // subscribe(event: EventName, fn: Callback) {
-    //     this.globalEvent.subscribe(event, fn);
-    // }
-
-    // dispatch(event: EventName, ...args: any[]) {
-    //     this.globalEvent.dispatch(event, ...args);
-    // }
 }
 
 export const GlobalService: Globals = new Globals();

@@ -83,6 +83,10 @@ export class DataManager {
         return moves;
     }
 
+    getTurnState() {
+        return this.turnData;
+    }
+
     async load(battleId: number, turn: number) {
         this.turnData = await getTurn(battleId, turn);
     }

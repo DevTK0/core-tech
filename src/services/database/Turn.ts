@@ -113,6 +113,18 @@ export async function saveTurn(turn: Turn) {
                 }),
             },
         },
+        include: {
+            field: true,
+            familiars: {
+                include: {
+                    familiar: true,
+                    conditions: true,
+                    team: true,
+                    items: true,
+                    arts: true,
+                },
+            },
+        },
     });
 
     return response;
