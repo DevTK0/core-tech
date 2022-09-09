@@ -60,10 +60,7 @@ export class DataManager {
         // load player moves for this turn
         this.turnData.PlayerMove.forEach((data: PlayerMoves) => {
             if (data) {
-                const moveName =
-                    data.type_name == "Art"
-                        ? (data.art_name as keyof typeof MoveMap)
-                        : (data.spell_name as keyof typeof MoveMap);
+                const moveName = data.move_name as keyof typeof MoveMap;
 
                 const familiar = FamiliarService.findFamiliar(data.source_id);
                 const move = MoveFactory.getMove(moveName, familiar);

@@ -37,13 +37,12 @@ model Item {
 }
 
 model Art {
-  name         String       @id @db.VarChar(255)
-  element      Element      @relation(fields: [element_name], references: [name])
+  name         String     @id @db.VarChar(255)
+  element      Element    @relation(fields: [element_name], references: [name])
   element_name String
-  effect       String       @db.VarChar(255)
+  effect       String     @db.VarChar(255)
   ArtSet       ArtSet[]
   ArtState     ArtState[]
-  PlayerMove   PlayerMove[]
 }
 
 // Management
@@ -118,8 +117,7 @@ model Turn {
   battle     Battle          @relation(fields: [battle_id], references: [id])
   battle_id  Int
   turn       Int
-  field      FieldState      @relation(fields: [field_id], references: [id])
-  field_id   Int
+  field      FieldState[]
   familiars  FamiliarState[]
   PlayerMove PlayerMove[]
 
@@ -127,17 +125,15 @@ model Turn {
 }
 
 model PlayerMove {
-  id         Int           @unique @default(autoincrement())
-  turn       Turn          @relation(fields: [turn_id], references: [id])
-  turn_id    Int
-  type       MoveType      @relation(fields: [type_name], references: [name])
-  type_name  String
-  spell_name String?
-  art        Art?          @relation(fields: [art_name], references: [name])
-  art_name   String?
-  source     FamiliarState @relation(fields: [source_id], references: [id])
-  source_id  Int
-  targets    Target[]
+  id        Int           @unique @default(autoincrement())
+  turn      Turn          @relation(fields: [turn_id], references: [id])
+  turn_id   Int
+  type      MoveType      @relation(fields: [type_name], references: [name])
+  type_name String
+  move_name String
+  source    FamiliarState @relation(fields: [source_id], references: [id])
+  source_id Int
+  targets   Target[]
 }
 
 model MoveType {
@@ -147,9 +143,10 @@ model MoveType {
 
 model FieldState {
   id         Int    @id @default(autoincrement())
+  turn       Turn   @relation(fields: [turn_id], references: [id])
+  turn_id    Int
   field      Field  @relation(fields: [field_name], references: [name])
   field_name String
-  Turn       Turn[]
 }
 
 model Field {

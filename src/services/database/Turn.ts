@@ -46,13 +46,11 @@ export async function saveTurn(turn: Turn) {
             },
             turn: turn.turn + 1,
             field: {
-                create: {
-                    field: {
-                        connect: {
-                            name: turn.field.field_name,
-                        },
-                    },
-                },
+                create: turn.field.map((field) => {
+                    return {
+                        field: field.field_name,
+                    };
+                }),
             },
             familiars: {
                 create: turn.familiars.map((familiar) => {

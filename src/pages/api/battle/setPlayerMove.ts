@@ -4,29 +4,74 @@ import { getServerSession } from "../auth/[...nextauth]";
 import { ajv, JSONSchemaType, ErrorObject } from "@/ajv";
 
 interface RequestType {
-    teamName: string;
+    turn: number;
+    battleId: number;
+    playerMove: PlayerMove[];
 }
 
 const schema: JSONSchemaType<RequestType> = {
     type: "object",
     properties: {
-        teamName: { type: "string", default: "team1" },
+        turn: { type: "integer" },
+        battleId: { type: "integer" },
+        playerMove: {
+            type: "array",
+            items: {
+                type: "object",
+                properties: {
+                    id: { type: "integer" },
+                    turn_id: { type: "integer" },
+                    type_name: { type: "string" },
+                    move_name: { type: "string" },
+                    source_id: { type: "integer" },
+                },
+                required: ["turn_id", "type_name", "move_name", "source_id"],
+            },
+        },
     },
-    required: [],
-    additionalProperties: false,
+    required: ["turn", "battleId", "playerMove"],
 };
 
 type ResponseType = PrismaNamespace.PromiseReturnType<typeof query>;
 
-async function query(turn: number, playerMove: PlayerMove[]) {
-    const response = await PrismaClient.turn.create({
-        data: {
-            battle_id: 1,
-            turn: turn,
-            field_id: 1,
-            PlayerMove: {
-                create: playerMove,
+async function query(
+    turn: number,
+    battleId: number,
+    playerMoves: PlayerMove[]
+) {
+    const response = await PrismaClient.turn.upsert({
+        where: {
+            battle_id_turn: {
+                battle_id: battleId,
+                turn: turn,
             },
+        },
+        update: {
+            PlayerMove: {
+                create: playerMoves.map((playerMove) => {
+                    return {
+                        type_name: playerMove.type_name,
+                        move_name: playerMove.move_name,
+                        source_id: playerMove.source_id,
+                    };
+                }),
+            },
+        },
+        create: {
+            battle_id: battleId,
+            turn: turn,
+            PlayerMove: {
+                create: playerMoves.map((playerMove) => {
+                    return {
+                        type_name: playerMove.type_name,
+                        move_name: playerMove.move_name,
+                        source_id: playerMove.source_id,
+                    };
+                }),
+            },
+        },
+        include: {
+            PlayerMove: true,
         },
     });
 
@@ -45,17 +90,24 @@ export default async function handler(
     } else {
         const validate = ajv.compile(schema);
 
-        if (!validate(req.query)) {
+        if (!validate(req.body)) {
             const errors: ErrorObject[] = validate.errors
                 ? validate.errors
                 : [];
             return res.status(400).json(errors);
         }
 
-        // TBD
-        // const userId = session.user.id;
-        // const teamName = req.body.teamName;
+        const userId = session.user.id;
+        const battleId = req.body.battleId;
+        const turn = req.body.turn;
+        const playerMove = req.body.playerMove;
 
-        return res.json(await query(1, []));
+        // get state from database
+        // TBD
+
+        // save new state to database
+        // TBD
+
+        return res.json(await query(turn, battleId, playerMove));
     }
 }
