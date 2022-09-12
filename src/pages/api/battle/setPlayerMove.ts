@@ -20,12 +20,19 @@ const schema: JSONSchemaType<RequestType> = {
                 type: "object",
                 properties: {
                     id: { type: "integer" },
+                    player_id: { type: "string" },
                     turn_id: { type: "integer" },
                     type_name: { type: "string" },
                     move_name: { type: "string" },
                     source_id: { type: "integer" },
                 },
-                required: ["turn_id", "type_name", "move_name", "source_id"],
+                required: [
+                    "turn_id",
+                    "player_id",
+                    "type_name",
+                    "move_name",
+                    "source_id",
+                ],
             },
         },
     },
@@ -33,6 +40,25 @@ const schema: JSONSchemaType<RequestType> = {
 };
 
 type ResponseType = PrismaNamespace.PromiseReturnType<typeof query>;
+
+async function get(turn: number, battleId: number, playerId: string) {
+    const response = await PrismaClient.turn.findMany({
+        where: {
+            battle_id: battleId,
+            turn: turn,
+            PlayerMove: {
+                some: {
+                    player_id: playerId,
+                },
+            },
+        },
+        include: {
+            PlayerMove: true,
+        },
+    });
+
+    return response;
+}
 
 async function query(
     turn: number,
@@ -50,6 +76,7 @@ async function query(
             PlayerMove: {
                 create: playerMoves.map((playerMove) => {
                     return {
+                        player_id: playerMove.player_id,
                         type_name: playerMove.type_name,
                         move_name: playerMove.move_name,
                         source_id: playerMove.source_id,
@@ -63,6 +90,7 @@ async function query(
             PlayerMove: {
                 create: playerMoves.map((playerMove) => {
                     return {
+                        player_id: playerMove.player_id,
                         type_name: playerMove.type_name,
                         move_name: playerMove.move_name,
                         source_id: playerMove.source_id,
@@ -80,7 +108,7 @@ async function query(
 
 export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<ResponseType | ErrorObject[]>
+    res: NextApiResponse<any>
 ) {
     const session = await getServerSession(req, res);
 
@@ -103,11 +131,17 @@ export default async function handler(
         const playerMove = req.body.playerMove;
 
         // get state from database
-        // TBD
+        const previous = await get(turn, battleId, userId);
+
+        // check if player has committed previous moves
+        if (previous.length > 0) {
+            console.log("Player has already committed moves");
+            return res
+                .status(400)
+                .json({ message: "Player has already committed moves" });
+        }
 
         // save new state to database
-        // TBD
-
         return res.json(await query(turn, battleId, playerMove));
     }
 }
