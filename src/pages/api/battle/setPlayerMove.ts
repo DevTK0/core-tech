@@ -114,7 +114,7 @@ export default async function handler(
 
     if (!session) {
         console.log("no session");
-        return res.status(401);
+        return res.status(401).json("Unauthorized");
     } else {
         const validate = ajv.compile(schema);
 

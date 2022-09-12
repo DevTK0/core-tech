@@ -1,9 +1,13 @@
-## Philosophy
+## Core Tech Prototype for Familiar Beasts
 
--   Start small and adapt accordingly
+This repo is meant to test the foundational systems for the Familiar Beasts engine.
+
+## Goals & Priorities
+
+Infrastructure
+
 -   Scalability
--   Pricing scales to 0 (Shouldn't be charged if low/no usage)
--   Easy to develop; Quick to configure
+-   Pricing scales to 0 (Shouldn't be charged for low/no usage)
 
 ## Tech
 
@@ -15,6 +19,7 @@
 -   Typescript
 -   Prisma
 
+-   Ably for pub/sub messaging
 -   Ajv for input validation
 -   NextAuth for user authentication
 -   Upstash for caching
@@ -22,7 +27,6 @@
 
 **Database**
 
--   MongoDB
 -   Planetscale
 
 **DevOps**
