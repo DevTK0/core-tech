@@ -113,13 +113,15 @@ model Ruleset {
 }
 
 model Turn {
-  id         Int             @unique @default(autoincrement())
-  battle     Battle          @relation(fields: [battle_id], references: [id])
-  battle_id  Int
-  turn       Int
-  field      FieldState[]
-  familiars  FamiliarState[]
-  PlayerMove PlayerMove[]
+  id            Int             @unique @default(autoincrement())
+  battle        Battle          @relation(fields: [battle_id], references: [id])
+  battle_id     Int
+  turn          Int
+  player_1_done Boolean         @default(false)
+  player_2_done Boolean         @default(false)
+  field         FieldState[]
+  familiars     FamiliarState[]
+  PlayerMove    PlayerMove[]
 
   @@id([battle_id, turn])
 }

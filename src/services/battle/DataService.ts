@@ -8,7 +8,7 @@ import { ItemMap } from "../items/ItemMap";
 import { ConditionMap } from "../conditions/ConditionMap";
 import { ConditionFactory } from "../conditions/ConditionFactory";
 
-import { PlayerMoves } from "../database/PlayerMoves";
+import { PlayerMove } from "../database/PlayerMove";
 import { FamiliarState } from "../database/FamiliarState";
 import { ItemState } from "../database/ItemState";
 import { Target } from "../database/Target";
@@ -58,7 +58,7 @@ export class DataManager {
         const moves: Move[] = [];
 
         // load player moves for this turn
-        this.turnData.PlayerMove.forEach((data: PlayerMoves) => {
+        this.turnData.PlayerMove.forEach((data: PlayerMove) => {
             if (data) {
                 const moveName = data.move_name as keyof typeof MoveMap;
 

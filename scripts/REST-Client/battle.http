@@ -12,7 +12,17 @@ Cookie: {{$dotenv %COOKIE}}
             "player_id": "cl75stydk000909mh7nnpp7xa",
             "type_name": "Art",
             "move_name": "Fire Blast",
-            "source_id": 1
+            "source_id": 1,
+            "targets": [
+                {
+                    "target_id": 2
+                }
+            ]
         }
     ]
 }
+
+### 
+POST http://localhost:3000/api/battle/reset 
+content-type: application/json
+Cookie: {{$dotenv %COOKIE}}

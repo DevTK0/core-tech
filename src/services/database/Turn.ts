@@ -48,7 +48,7 @@ export async function saveTurn(turn: Turn) {
             field: {
                 create: turn.field.map((field) => {
                     return {
-                        field: field.field_name,
+                        field_name: field.field_name,
                     };
                 }),
             },

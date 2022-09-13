@@ -1,6 +1,6 @@
 import { PrismaClient, PrismaNamespace } from "@/prisma";
 
-export type PlayerMoves = Exclude<
+export type PlayerMove = Exclude<
     PrismaNamespace.PromiseReturnType<typeof PlayerMoves>,
     null | undefined
 >;
