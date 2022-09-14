@@ -337,10 +337,10 @@
   "resolved" "https://registry.npmjs.org/@headlessui/react/-/react-1.6.6.tgz"
   "version" "1.6.6"
 
-"@heroicons/react@^1.0.6":
-  "integrity" "sha512-JJCXydOFWMDpCP4q13iEplA503MQO3xLoZiKum+955ZCtHINWnx26CUxVxxFQu/uLb4LW3ge15ZpzIkXKkJ8oQ=="
-  "resolved" "https://registry.npmjs.org/@heroicons/react/-/react-1.0.6.tgz"
-  "version" "1.0.6"
+"@heroicons/react@^2.0.11":
+  "integrity" "sha512-bASjOgSSaYj8HqXWsOqaBiB6ZLalE/g90WYGgZ5lPm4KCCG7wPXntY4kzHf5NrLh6UBAcnPwvbiw1Ne9GYfJtw=="
+  "resolved" "https://registry.npmjs.org/@heroicons/react/-/react-2.0.11.tgz"
+  "version" "2.0.11"
 
 "@humanwhocodes/config-array@^0.10.4":
   "integrity" "sha512-mXAIHxZT3Vcpg83opl1wGlVZ9xydbfZO3r5YfRSH6Gpp2J/PfdBP0wbDa2sO6/qRbcalpoevVyW6A/fI6LfeMw=="
