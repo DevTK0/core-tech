@@ -56,20 +56,21 @@ const Home: NextPage = () => {
 
     return (
         <div>
-            <div className="mx-auto hidden px-4 lg:block portrait:block">
+            <div className="mx-auto px-4 md:block portrait:block">
                 <Header />
             </div>
             <main>
                 <div className="landscape:hidden">
                     Please use landscape mode.
                 </div>
+
+                {/* actual game */}
                 <div className="portrait:hidden">
                     <div
                         ref={game}
                         className="relative m-auto h-[100vh] max-h-[50vw] w-[200vh] max-w-[100vw] overflow-hidden border-4 border-red-200"
                     >
                         {/* ====== Background Layer ====== */}
-                        {"width: " + width + " height: " + height}
                         <div
                             ref={canvas}
                             className="absolute top-0 left-0 h-[100vh] max-h-[50vw] w-[200vh] max-w-[100vw] bg-green-400"
@@ -96,6 +97,7 @@ const Home: NextPage = () => {
                         {/* ====== UI Layer ====== */}
 
                         <div className="absolute bottom-5 right-5 flex flex-col items-end">
+                            {"width: " + width + " height: " + height}
                             <button
                                 type="button"
                                 className={`mb-5 items-center rounded-full border border-transparent bg-white p-3 text-red-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
