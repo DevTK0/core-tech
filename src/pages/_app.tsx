@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 />
                 <meta name="description" content="Description" />
                 <meta name="keywords" content="Keywords" />
-                <title>Next.js PWA Example</title>
+                <title>Familiar Beasts</title>
 
                 <link rel="manifest" href="/manifest.json" />
                 <link
