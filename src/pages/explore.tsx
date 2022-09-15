@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Header from "../components/Header";
-import { SearchIcon } from "@heroicons/react/solid";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 
 const tabs = [
@@ -65,7 +65,7 @@ const Home: NextPage = () => {
                     </div>
                     <div className="relative flex  border-gray-200 pb-2">
                         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 pb-2">
-                            <SearchIcon
+                            <MagnifyingGlassIcon
                                 className="h-5 w-5 text-gray-400"
                                 aria-hidden="true"
                             />
