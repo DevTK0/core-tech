@@ -100,22 +100,22 @@ const Home: NextPage = () => {
                             {"width: " + width + " height: " + height}
                             <button
                                 type="button"
-                                className={`mb-5 items-center rounded-full border border-transparent bg-white p-3 text-red-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
+                                className={`mb-5 items-center rounded-full border border-transparent bg-white p-1.5 text-red-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 md:p-3`}
                             >
                                 <MagnifyingGlassIcon
-                                    className="h-6 w-6"
+                                    className="h-5 w-5 md:h-6 md:w-6"
                                     aria-hidden="true"
                                 />
                             </button>
                             <button
                                 type="button"
-                                className={`mb-5 items-center rounded-full border border-transparent bg-white p-3 text-red-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
+                                className={`mb-5 items-center rounded-full border border-transparent bg-white p-1.5 text-red-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 md:p-3`}
                                 onClick={() =>
                                     moveTo(canvas, toggle, setToggle)
                                 }
                             >
                                 <ArrowPathIcon
-                                    className="h-6 w-6"
+                                    className="h-5 w-5 md:h-6 md:w-6"
                                     aria-hidden="true"
                                 />
                             </button>
@@ -124,10 +124,10 @@ const Home: NextPage = () => {
                                     type="button"
                                     className={`${
                                         showMenu ? "" : "hidden"
-                                    }  mr-5 items-center rounded-full border border-transparent bg-white p-3 text-red-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
+                                    }  mr-5 items-center rounded-full border border-transparent bg-white p-1.5 text-red-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 md:p-3`}
                                 >
                                     <ShieldExclamationIcon
-                                        className="h-6 w-6"
+                                        className="h-5 w-5 md:h-6 md:w-6"
                                         aria-hidden="true"
                                     />
                                 </button>
@@ -135,20 +135,20 @@ const Home: NextPage = () => {
                                     type="button"
                                     className={`${
                                         showMenu ? "" : "hidden"
-                                    }  mr-5 items-center rounded-full border border-transparent bg-white p-3 text-red-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
+                                    }  mr-5 items-center rounded-full border border-transparent bg-white p-1.5 text-red-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 md:p-3`}
                                 >
                                     <BoltIcon
-                                        className="h-6 w-6"
+                                        className="h-5 w-5 md:h-6 md:w-6"
                                         aria-hidden="true"
                                     />
                                 </button>
                                 <button
                                     type="button"
-                                    className=" items-center rounded-full border border-transparent bg-red-600 p-3 text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                    className=" items-center rounded-full border border-transparent bg-red-600 p-1.5 text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 md:p-3"
                                     onClick={() => setShowMenu(!showMenu)}
                                 >
                                     <PlusIcon
-                                        className="h-6 w-6"
+                                        className="h-5 w-5 md:h-6 md:w-6"
                                         aria-hidden="true"
                                     />
                                 </button>
