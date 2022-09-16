@@ -31,7 +31,7 @@ const Home: NextPage = () => {
     const [height, setHeight] = useState(0);
 
     const [toggle, setToggle] = useState(true);
-    const [mon1h, setMon1h] = useState(0);
+    const [showMsgBox, setShowMsgBox] = useState(false);
 
     const [transform, setTransform] = useState({});
 
@@ -84,23 +84,56 @@ const Home: NextPage = () => {
                                     height={20000}
                                 />
                             </div> */}
-                            <div
+                            {/* <div
                                 ref={mon1}
                                 className="absolute right-[5vw] top-[5vw] inline-block h-[10vw] w-[10vw] rounded-[50%] bg-gray-500 "
                             ></div>
                             <div className="absolute bottom-[5vw] left-[5vw] inline-block h-[10vw] w-[10vw] rounded-[50%] bg-gray-500"></div>
-                            <div className="absolute -left-[10vw] bottom-[5vw] inline-block h-[10vw] w-[10vw] rounded-[50%] bg-gray-500 hover:bg-red-500"></div>
+                            <div className="absolute -left-[10vw] bottom-[5vw] inline-block h-[10vw] w-[10vw] rounded-[50%] bg-gray-500 hover:bg-red-500"></div> */}
                         </div>
 
                         {/* ====== Foreground Layer ====== */}
 
-                        {/* ====== UI Layer ====== */}
+                        {/* ====== UI Layer - Enemy status ====== */}
+
+                        <div className="absolute top-2 right-5 flex flex-row">
+                            <div className="mr-5 overflow-hidden rounded-lg bg-white shadow">
+                                <div className="top:0 px-4 py-5">HP : 100</div>
+                            </div>
+
+                            <div className="mr-5 overflow-hidden rounded-lg bg-white shadow">
+                                <div className="top:0 px-4 py-5">HP : 100</div>
+                            </div>
+
+                            <div className="mr-5 overflow-hidden rounded-lg bg-white shadow">
+                                <div className="top:0 px-4 py-5">HP : 100</div>
+                            </div>
+                        </div>
+
+                        {/* ====== UI Layer - Ally status ====== */}
+
+                        <div className="absolute bottom-2 left-5 flex flex-row">
+                            <div className="mr-5 overflow-hidden rounded-lg bg-white shadow">
+                                <div className="top:0 px-4 py-5">HP : 100</div>
+                            </div>
+
+                            <div className="mr-5 overflow-hidden rounded-lg bg-white shadow">
+                                <div className="top:0 px-4 py-5">HP : 100</div>
+                            </div>
+
+                            <div className="mr-5 overflow-hidden rounded-lg bg-white shadow">
+                                <div className="top:0 px-4 py-5">HP : 100</div>
+                            </div>
+                        </div>
+
+                        {/* ====== UI Layer - Menu ====== */}
 
                         <div className="absolute bottom-5 right-5 flex flex-col items-end">
                             {"width: " + width + " height: " + height}
                             <button
                                 type="button"
                                 className={`mb-5 items-center rounded-full border border-transparent bg-white p-1.5 text-red-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 md:p-3`}
+                                onClick={() => setShowMsgBox(!showMsgBox)}
                             >
                                 <MagnifyingGlassIcon
                                     className="h-5 w-5 md:h-6 md:w-6"
@@ -152,6 +185,17 @@ const Home: NextPage = () => {
                                         aria-hidden="true"
                                     />
                                 </button>
+                            </div>
+                        </div>
+
+                        {/* ====== UI Layer - Message Box ====== */}
+                        <div
+                            className={`${
+                                showMsgBox ? "" : "hidden"
+                            } absolute bottom-0 w-full border bg-gray-800/90`}
+                        >
+                            <div className="px-7 py-7 text-white">
+                                Familiar was Knocked Out!
                             </div>
                         </div>
                     </div>
