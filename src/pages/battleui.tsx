@@ -15,8 +15,8 @@ const moveTo = (
     toggle: any,
     setToggle: any
 ) => {
-    if (toggle) canvas.current!.style.transform = "translate(100px, 0px)";
-    else canvas.current!.style.transform = "translate(0px, 0px)";
+    // if (toggle) canvas.current!.style.transform = "translate(100px, 0px)";
+    // else canvas.current!.style.transform = "translate(0px, 0px)";
 
     setToggle(!toggle);
 };
@@ -30,7 +30,7 @@ const Home: NextPage = () => {
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
 
-    const [toggle, setToggle] = useState(true);
+    const [toggle, setToggle] = useState(false);
     const [showMsgBox, setShowMsgBox] = useState(false);
 
     const [transform, setTransform] = useState({});
@@ -68,12 +68,14 @@ const Home: NextPage = () => {
                 <div className="portrait:hidden">
                     <div
                         ref={game}
-                        className="relative m-auto h-[100vh] max-h-[50vw] w-[200vh] max-w-[100vw] overflow-hidden border-4 border-red-200"
+                        className={`relative m-auto h-[100vh] max-h-[50vw] w-[200vh] max-w-[100vw] overflow-hidden border-4 border-red-200`}
                     >
                         {/* ====== Background Layer ====== */}
                         <div
                             ref={canvas}
-                            className="absolute top-0 left-0 h-[100vh] max-h-[50vw] w-[200vh] max-w-[100vw] bg-green-400"
+                            className={`${
+                                toggle && "translate-x-48"
+                            } absolute top-0 left-0 h-[100vh] max-h-[50vw] w-[200vh] max-w-[100vw] bg-green-400 transition duration-300`}
                         >
                             {/* <div className="inline border-2 bg-cyan-700">
                                 <Image
@@ -84,12 +86,12 @@ const Home: NextPage = () => {
                                     height={20000}
                                 />
                             </div> */}
-                            {/* <div
+                            <div
                                 ref={mon1}
                                 className="absolute right-[5vw] top-[5vw] inline-block h-[10vw] w-[10vw] rounded-[50%] bg-gray-500 "
                             ></div>
                             <div className="absolute bottom-[5vw] left-[5vw] inline-block h-[10vw] w-[10vw] rounded-[50%] bg-gray-500"></div>
-                            <div className="absolute -left-[10vw] bottom-[5vw] inline-block h-[10vw] w-[10vw] rounded-[50%] bg-gray-500 hover:bg-red-500"></div> */}
+                            <div className="absolute -left-[10vw] bottom-[5vw] inline-block h-[10vw] w-[10vw] rounded-[50%] bg-gray-500 hover:bg-red-500"></div>
                         </div>
 
                         {/* ====== Foreground Layer ====== */}
@@ -193,6 +195,7 @@ const Home: NextPage = () => {
                             className={`${
                                 showMsgBox ? "" : "hidden"
                             } absolute bottom-0 w-full border bg-gray-800/90`}
+                            onClick={() => setShowMsgBox(!showMsgBox)}
                         >
                             <div className="px-7 py-7 text-white">
                                 Familiar was Knocked Out!
