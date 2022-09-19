@@ -9,10 +9,26 @@ import {
     ShieldExclamationIcon,
     ArrowPathIcon,
 } from "@heroicons/react/24/outline";
+import lottie from "lottie-web";
 
 const moveTo = (zoom: any, setZoom: any, toggle: any, setToggle: any) => {
     setZoom(!zoom);
     setToggle(!toggle);
+};
+
+const playMove = (element: RefObject<HTMLInputElement>) => {
+    const animation = lottie.loadAnimation({
+        container: element.current!, // the dom element that will contain the animation
+        renderer: "svg",
+        loop: false,
+        autoplay: true,
+        path: "animation.json", // the path to the animation json
+    });
+
+    animation.addEventListener("complete", () => {
+        animation.destroy();
+        console.log("destroyed");
+    });
 };
 
 const Home: NextPage = () => {
@@ -20,6 +36,7 @@ const Home: NextPage = () => {
     const game = useRef<HTMLInputElement>(null);
     const mon1 = useRef<HTMLInputElement>(null);
     const canvas = useRef<HTMLInputElement>(null);
+    const animation = useRef<HTMLInputElement>(null);
 
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
@@ -369,9 +386,7 @@ const Home: NextPage = () => {
                                     className={`${
                                         showMenu ? "" : "hidden"
                                     }  mr-5 items-center rounded-full border border-transparent bg-white p-1.5 text-red-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 md:p-3`}
-                                    onClick={() =>
-                                        moveTo(zoom6, setZoom6, shift, setShift)
-                                    }
+                                    onClick={() => playMove(animation)}
                                 >
                                     <ShieldExclamationIcon className="h-5 w-5 md:h-6 md:w-6"></ShieldExclamationIcon>
                                 </button>
@@ -387,6 +402,8 @@ const Home: NextPage = () => {
                                 </button>
                             </div>
                         </div>
+
+                        <div ref={animation} className="h-full w-full"></div>
 
                         {/* ====== UI Layer - Message Box ====== */}
                         <div
