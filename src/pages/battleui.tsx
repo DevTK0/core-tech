@@ -33,7 +33,8 @@ const Home: NextPage = () => {
     const [zoom6, setZoom6] = useState(false);
 
     const [showMsgBox, setShowMsgBox] = useState(false);
-    const [showSidebar, setShowSidebar] = useState(false);
+    const [showDetails, setShowDetails] = useState(false);
+    const [showMoves, setShowMoves] = useState(false);
 
     const [transform, setTransform] = useState({});
 
@@ -173,10 +174,38 @@ const Home: NextPage = () => {
                             </div>
                         </div>
 
-                        {/* ====== UI Layer - Menu ====== */}
+                        {/* ====== UI Layer - Familiar Attack Menu ====== */}
                         <div
                             className={`${
-                                !showSidebar && "hidden w-0"
+                                !showMoves && "hidden w-0"
+                            } absolute right-0 h-full w-4/5 bg-black`}
+                        >
+                            <div className="absolute right-20 flex h-full w-4/5 flex-row justify-end overflow-auto">
+                                <div className="w-full flex-col space-y-5 p-5">
+                                    <div className="rounded-lg bg-white p-4">
+                                        Attack
+                                    </div>
+                                    <div className="rounded-lg bg-white p-4">
+                                        Art 1
+                                    </div>
+                                    <div className="rounded-lg bg-white p-4">
+                                        Art 2
+                                    </div>
+                                    <div className="rounded-lg bg-white p-4">
+                                        Art 3
+                                    </div>
+                                    <div className="rounded-lg bg-white p-4">
+                                        Art 4
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* ====== UI Layer - Familiar Details Menu ====== */}
+
+                        <div
+                            className={`${
+                                !showDetails && "hidden w-0"
                             } absolute right-0 h-full w-4/5 bg-black`}
                         >
                             <div className="absolute right-20 flex h-full w-full flex-row justify-end overflow-auto">
@@ -223,6 +252,8 @@ const Home: NextPage = () => {
                             </div>
                         </div>
 
+                        {/* ====== UI Layer - Menu ====== */}
+
                         <div className="absolute bottom-5 right-5 flex flex-col items-end">
                             {"width: " + width + " height: " + height}
                             <button
@@ -238,7 +269,7 @@ const Home: NextPage = () => {
                             <button
                                 type="button"
                                 className={`mb-5 items-center rounded-full border border-transparent bg-white p-1.5 text-red-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 md:p-3`}
-                                onClick={() => setShowSidebar(!showSidebar)}
+                                onClick={() => setShowDetails(!showDetails)}
                             >
                                 <ArrowPathIcon
                                     className="h-5 w-5 md:h-6 md:w-6"
@@ -246,7 +277,7 @@ const Home: NextPage = () => {
                                 />
                             </button>
                             <div>
-                                <button
+                                {/* <button
                                     type="button"
                                     className={`${
                                         showMenu ? "" : "hidden"
@@ -323,6 +354,26 @@ const Home: NextPage = () => {
                                     <div className="h-5 w-5 md:h-6 md:w-6">
                                         6
                                     </div>
+                                </button> */}
+                                <button
+                                    type="button"
+                                    className={`${
+                                        showMenu ? "" : "hidden"
+                                    }  mr-5 items-center rounded-full border border-transparent bg-white p-1.5 text-red-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 md:p-3`}
+                                    onClick={() => setShowMoves(!showMoves)}
+                                >
+                                    <BoltIcon className="h-5 w-5 md:h-6 md:w-6"></BoltIcon>
+                                </button>
+                                <button
+                                    type="button"
+                                    className={`${
+                                        showMenu ? "" : "hidden"
+                                    }  mr-5 items-center rounded-full border border-transparent bg-white p-1.5 text-red-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 md:p-3`}
+                                    onClick={() =>
+                                        moveTo(zoom6, setZoom6, shift, setShift)
+                                    }
+                                >
+                                    <ShieldExclamationIcon className="h-5 w-5 md:h-6 md:w-6"></ShieldExclamationIcon>
                                 </button>
                                 <button
                                     type="button"
