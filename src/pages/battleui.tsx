@@ -110,8 +110,8 @@ const Home: NextPage = () => {
                                 />
                             </div> */}
 
-                            <div className="absolute h-[50vh] w-[400vw] -translate-x-[50vw] -translate-y-[15vh] bg-gradient-to-t from-blue-500 to-blue-100"></div>
-                            <div className="absolute h-[200vh] w-[400vw] -translate-x-[50vw] translate-y-[20vh] bg-green-500"></div>
+                            <div className="absolute h-[50vh] w-[800vw] -translate-x-[50vw] -translate-y-[15vh] bg-gradient-to-t from-blue-500 to-blue-100"></div>
+                            <div className="absolute h-[200vh] w-[800vw] -translate-x-[50vw] translate-y-[20vh] bg-green-500"></div>
 
                             <div className="absolute right-10 top-0 flex h-1/2 w-full flex-row items-end justify-end space-x-14">
                                 <div
@@ -181,20 +181,20 @@ const Home: NextPage = () => {
                             } absolute right-0 h-full w-4/5 bg-black`}
                         >
                             <div className="absolute right-20 flex h-full w-4/5 flex-row justify-end overflow-auto">
-                                <div className="w-full flex-col space-y-5 p-5">
-                                    <div className="rounded-lg bg-white p-4">
+                                <div className="flex h-full w-full flex-wrap space-y-5 p-5">
+                                    <div className="w-full flex-auto rounded-lg bg-white p-4">
                                         Attack
                                     </div>
-                                    <div className="rounded-lg bg-white p-4">
+                                    <div className="w-full flex-auto rounded-lg bg-white p-4">
                                         Art 1
                                     </div>
-                                    <div className="rounded-lg bg-white p-4">
+                                    <div className="w-full flex-auto rounded-lg bg-white p-4">
                                         Art 2
                                     </div>
-                                    <div className="rounded-lg bg-white p-4">
+                                    <div className="w-full flex-auto rounded-lg bg-white p-4">
                                         Art 3
                                     </div>
-                                    <div className="rounded-lg bg-white p-4">
+                                    <div className="w-full flex-auto rounded-lg bg-white p-4">
                                         Art 4
                                     </div>
                                 </div>
@@ -206,46 +206,46 @@ const Home: NextPage = () => {
                         <div
                             className={`${
                                 !showDetails && "hidden w-0"
-                            } absolute right-0 h-full w-4/5 bg-black`}
+                            } lg:4-full absolute right-0 h-full w-4/5 bg-black `}
                         >
                             <div className="absolute right-20 flex h-full w-full flex-row justify-end overflow-auto">
-                                <div className="w-2/5 flex-col space-y-5 p-5">
-                                    <div className="rounded-lg bg-white p-4">
+                                <div className="flex h-full w-2/5 flex-wrap space-y-5 p-5">
+                                    <div className="w-full flex-auto rounded-lg bg-white p-4">
                                         Familiar 1
                                     </div>
-                                    <div className="rounded-lg bg-white p-4">
+                                    <div className="w-full flex-auto rounded-lg bg-white p-4">
                                         Familiar 2
                                     </div>
-                                    <div className="rounded-lg bg-white p-4">
+                                    <div className="w-full flex-auto rounded-lg bg-white p-4">
                                         Familiar 3
                                     </div>
-                                    <div className="rounded-lg bg-white p-4">
+                                    <div className="w-full flex-auto rounded-lg bg-white p-4">
                                         Familiar 4
                                     </div>
-                                    <div className="rounded-lg bg-white p-4">
+                                    <div className="w-full flex-auto rounded-lg bg-white p-4">
                                         Familiar 5
                                     </div>
-                                    <div className="rounded-lg bg-white p-4">
+                                    <div className="w-full flex-auto rounded-lg bg-white p-4">
                                         Familiar 6
                                     </div>
                                 </div>
-                                <div className="w-2/5 flex-col space-y-5 p-5">
-                                    <div className="rounded-lg bg-white p-4">
+                                <div className="flex h-full w-2/5 flex-wrap space-y-5 p-5">
+                                    <div className="w-full flex-auto rounded-lg bg-white p-4">
                                         Familiar 1
                                     </div>
-                                    <div className="rounded-lg bg-white p-4">
+                                    <div className="w-full flex-auto rounded-lg bg-white p-4">
                                         Familiar 2
                                     </div>
-                                    <div className="rounded-lg bg-white p-4">
+                                    <div className="w-full flex-auto rounded-lg bg-white p-4">
                                         Familiar 3
                                     </div>
-                                    <div className="rounded-lg bg-white p-4">
+                                    <div className="w-full flex-auto rounded-lg bg-white p-4">
                                         Familiar 4
                                     </div>
-                                    <div className="rounded-lg bg-white p-4">
+                                    <div className="w-full flex-auto rounded-lg bg-white p-4">
                                         Familiar 5
                                     </div>
-                                    <div className="rounded-lg bg-white p-4">
+                                    <div className="w-full flex-auto rounded-lg bg-white p-4">
                                         Familiar 6
                                     </div>
                                 </div>
@@ -277,7 +277,7 @@ const Home: NextPage = () => {
                                 />
                             </button>
                             <div>
-                                {/* <button
+                                <button
                                     type="button"
                                     className={`${
                                         showMenu ? "" : "hidden"
@@ -354,7 +354,7 @@ const Home: NextPage = () => {
                                     <div className="h-5 w-5 md:h-6 md:w-6">
                                         6
                                     </div>
-                                </button> */}
+                                </button>
                                 <button
                                     type="button"
                                     className={`${
