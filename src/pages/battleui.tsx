@@ -30,7 +30,7 @@ const Home: NextPage = () => {
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
 
-    const [toggle, setToggle] = useState(false);
+    const [shift, setShift] = useState(true);
     const [showMsgBox, setShowMsgBox] = useState(false);
 
     const [transform, setTransform] = useState({});
@@ -74,8 +74,8 @@ const Home: NextPage = () => {
                         <div
                             ref={canvas}
                             className={`${
-                                toggle && "translate-x-48"
-                            } absolute top-0 left-0 h-[100vh] max-h-[50vw] w-[200vh] max-w-[100vw] bg-green-400 transition duration-300`}
+                                shift && "-translate-x-40"
+                            } absolute top-0 left-0 h-[100vh] max-h-[50vw] w-[200vh] max-w-[100vw] transition duration-300`}
                         >
                             {/* <div className="inline border-2 bg-cyan-700">
                                 <Image
@@ -86,12 +86,32 @@ const Home: NextPage = () => {
                                     height={20000}
                                 />
                             </div> */}
-                            <div
-                                ref={mon1}
-                                className="absolute right-[5vw] top-[5vw] inline-block h-[10vw] w-[10vw] rounded-[50%] bg-gray-500 "
-                            ></div>
-                            <div className="absolute bottom-[5vw] left-[5vw] inline-block h-[10vw] w-[10vw] rounded-[50%] bg-gray-500"></div>
-                            <div className="absolute -left-[10vw] bottom-[5vw] inline-block h-[10vw] w-[10vw] rounded-[50%] bg-gray-500 hover:bg-red-500"></div>
+                            <div className="h-[100vh] w-[400vh] bg-green-400"></div>
+                            <div className="absolute -right-40 top-0 flex flex-row items-end">
+                                <div
+                                    ref={mon1}
+                                    className="mr-14 inline-block h-[10vw] w-[10vw] rounded-[50%] bg-gray-500"
+                                >
+                                    3
+                                </div>
+                                <div className="mr-14 inline-block h-[10vw] w-[10vw] rounded-[50%] bg-gray-500">
+                                    2
+                                </div>
+                                <div className="mr-14 inline-block h-[20vw] w-[10vw] rounded-[50%] bg-gray-500">
+                                    1
+                                </div>
+                            </div>
+                            <div className="absolute left-48 bottom-20 flex flex-row items-end">
+                                <div className="mr-14 inline-block h-[10vw] w-[10vw] rounded-[50%] bg-gray-500">
+                                    1
+                                </div>
+                                <div className="mr-14 inline-block h-[10vw] w-[10vw] rounded-[50%] bg-gray-500">
+                                    2
+                                </div>
+                                <div className="mr-14 inline-block h-[20vw] w-[10vw] rounded-[50%] bg-gray-500">
+                                    3
+                                </div>
+                            </div>
                         </div>
 
                         {/* ====== Foreground Layer ====== */}
@@ -145,9 +165,7 @@ const Home: NextPage = () => {
                             <button
                                 type="button"
                                 className={`mb-5 items-center rounded-full border border-transparent bg-white p-1.5 text-red-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 md:p-3`}
-                                onClick={() =>
-                                    moveTo(canvas, toggle, setToggle)
-                                }
+                                onClick={() => moveTo(canvas, shift, setShift)}
                             >
                                 <ArrowPathIcon
                                     className="h-5 w-5 md:h-6 md:w-6"
