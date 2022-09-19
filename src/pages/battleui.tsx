@@ -157,6 +157,11 @@ const Home: NextPage = () => {
                             </div>
                         </div>
 
+                        <div
+                            ref={animation}
+                            className="absolute h-full w-full"
+                        ></div>
+
                         {/* ====== Foreground Layer ====== */}
 
                         {/* ====== UI Layer - Enemy status ====== */}
@@ -402,8 +407,6 @@ const Home: NextPage = () => {
                                 </button>
                             </div>
                         </div>
-
-                        <div ref={animation} className="h-full w-full"></div>
 
                         {/* ====== UI Layer - Message Box ====== */}
                         <div
