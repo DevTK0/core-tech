@@ -76,26 +76,26 @@ const Home: NextPage = () => {
                             ref={canvas}
                             className={`${
                                 zoom1 &&
-                                "-translate-x-[20vw] translate-y-[30vh] scale-150"
+                                "-translate-x-[0vw] translate-y-[10vh] scale-150"
                             } 
                             ${
                                 zoom2 &&
-                                "-translate-x-[40vw] translate-y-[30vh] scale-150"
+                                "-translate-x-[30vw] translate-y-[10vh] scale-150"
                             } ${
                                 zoom3 &&
-                                "-translate-x-[60vw] translate-y-[30vh] scale-150"
+                                "-translate-x-[60vw] translate-y-[10vh] scale-150"
                             }
                             ${
                                 zoom4 &&
-                                "translate-x-[60vw] -translate-y-[30vh] scale-150"
+                                "translate-x-[60vw] -translate-y-[20vh] scale-150"
                             }
                             ${
                                 zoom5 &&
-                                "translate-x-[30vw] -translate-y-[30vh] scale-150"
+                                "translate-x-[30vw] -translate-y-[20vh] scale-150"
                             }
                             ${
                                 zoom6 &&
-                                "translate-x-[10vw] -translate-y-[30vh] scale-150"
+                                "translate-x-[0vw] -translate-y-[20vh] scale-150"
                             } absolute top-0 left-0 h-[100vh] max-h-[50vw] w-[200vh] max-w-[100vw] transition duration-300`}
                         >
                             {/* <div className="inline border-2 bg-cyan-700">
@@ -108,8 +108,8 @@ const Home: NextPage = () => {
                                 />
                             </div> */}
 
-                            <div className="absolute h-[200vh] w-[400vw] -translate-x-[50vw] -translate-y-[50vh] bg-blue-400"></div>
-                            <div className="absolute h-[200vh] w-[400vw] -translate-x-[50vw] translate-y-[20vh] bg-green-400"></div>
+                            <div className="absolute h-[50vh] w-[400vw] -translate-x-[50vw] -translate-y-[15vh] bg-gradient-to-t from-blue-500 to-blue-100"></div>
+                            <div className="absolute h-[200vh] w-[400vw] -translate-x-[50vw] translate-y-[20vh] bg-green-500"></div>
 
                             <div className="absolute right-10 top-0 flex h-1/2 w-full flex-row items-end justify-end space-x-14">
                                 <div
