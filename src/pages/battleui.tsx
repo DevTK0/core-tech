@@ -74,28 +74,28 @@ const Home: NextPage = () => {
                         {/* ====== Background Layer ====== */}
                         <div
                             ref={canvas}
-                            className={`${shift && "-translate-x-40"} ${
+                            className={`${
                                 zoom1 &&
-                                "-translate-x-[30vw] translate-y-[30vh] scale-150"
+                                "-translate-x-[20vw] translate-y-[30vh] scale-150"
                             } 
                             ${
                                 zoom2 &&
-                                "-translate-x-[50vw] translate-y-[30vh] scale-150"
+                                "-translate-x-[40vw] translate-y-[30vh] scale-150"
                             } ${
                                 zoom3 &&
-                                "-translate-x-[70vw] translate-y-[30vh] scale-150"
+                                "-translate-x-[60vw] translate-y-[30vh] scale-150"
                             }
                             ${
                                 zoom4 &&
-                                "translate-x-[20vw] -translate-y-[30vh] scale-150"
+                                "translate-x-[60vw] -translate-y-[30vh] scale-150"
                             }
                             ${
                                 zoom5 &&
-                                "-translate-x-[0vw] -translate-y-[30vh] scale-150"
+                                "translate-x-[30vw] -translate-y-[30vh] scale-150"
                             }
                             ${
                                 zoom6 &&
-                                "-translate-x-[20vw] -translate-y-[30vh] scale-150"
+                                "translate-x-[10vw] -translate-y-[30vh] scale-150"
                             } absolute top-0 left-0 h-[100vh] max-h-[50vw] w-[200vh] max-w-[100vw] transition duration-300`}
                         >
                             {/* <div className="inline border-2 bg-cyan-700">
@@ -107,29 +107,32 @@ const Home: NextPage = () => {
                                     height={20000}
                                 />
                             </div> */}
-                            <div className="h-[200vh] w-[400vw] -translate-x-40 -translate-y-40 bg-green-400"></div>
-                            <div className="absolute -right-40 top-0 flex flex-row items-end">
+
+                            <div className="absolute h-[200vh] w-[400vw] -translate-x-[50vw] -translate-y-[50vh] bg-blue-400"></div>
+                            <div className="absolute h-[200vh] w-[400vw] -translate-x-[50vw] translate-y-[20vh] bg-green-400"></div>
+
+                            <div className="absolute right-10 top-0 flex h-1/2 w-full flex-row items-end justify-end space-x-14">
                                 <div
                                     ref={mon1}
-                                    className="mr-14 inline-block h-[10vw] w-[10vw] rounded-[50%] bg-gray-500"
+                                    className="h-1/2 w-[12.5%] rounded-[50%] bg-gray-500"
                                 >
                                     1
                                 </div>
-                                <div className="mr-14 inline-block h-[10vw] w-[10vw] rounded-[50%] bg-gray-500">
+                                <div className="h-1/2 w-[12.5%] rounded-[50%] bg-gray-500">
                                     2
                                 </div>
-                                <div className="mr-14 inline-block h-[20vw] w-[10vw] rounded-[50%] bg-gray-500">
+                                <div className="h-1/2 w-[12.5%] rounded-[50%] bg-gray-500">
                                     3
                                 </div>
                             </div>
-                            <div className="absolute left-48 bottom-20 flex flex-row items-end">
-                                <div className="mr-14 inline-block h-[10vw] w-[10vw] rounded-[50%] bg-gray-500">
+                            <div className="absolute left-10 bottom-20 flex h-1/2 w-full flex-row items-end space-x-14">
+                                <div className="h-1/2 w-[12.5%] rounded-[50%] bg-gray-500">
                                     4
                                 </div>
-                                <div className="mr-14 inline-block h-[10vw] w-[10vw] rounded-[50%] bg-gray-500">
+                                <div className="h-1/2 w-[12.5%] rounded-[50%] bg-gray-500">
                                     5
                                 </div>
-                                <div className="mr-14 inline-block h-[20vw] w-[10vw] rounded-[50%] bg-gray-500">
+                                <div className="h-1/2 w-[12.5%] rounded-[50%] bg-gray-500">
                                     6
                                 </div>
                             </div>
@@ -139,33 +142,33 @@ const Home: NextPage = () => {
 
                         {/* ====== UI Layer - Enemy status ====== */}
 
-                        <div className="absolute top-2 right-5 flex flex-row">
-                            <div className="mr-5 overflow-hidden rounded-lg bg-white shadow">
-                                <div className="top:0 px-4 py-5">HP : 100</div>
+                        <div className="absolute top-2 right-5 flex flex-row space-x-5">
+                            <div className="overflow-hidden rounded-lg bg-white shadow">
+                                <div className="px-4 py-5">HP : 100</div>
                             </div>
 
-                            <div className="mr-5 overflow-hidden rounded-lg bg-white shadow">
-                                <div className="top:0 px-4 py-5">HP : 100</div>
+                            <div className="overflow-hidden rounded-lg bg-white shadow">
+                                <div className="px-4 py-5">HP : 100</div>
                             </div>
 
-                            <div className="mr-5 overflow-hidden rounded-lg bg-white shadow">
-                                <div className="top:0 px-4 py-5">HP : 100</div>
+                            <div className="overflow-hidden rounded-lg bg-white shadow">
+                                <div className="px-4 py-5">HP : 100</div>
                             </div>
                         </div>
 
                         {/* ====== UI Layer - Ally status ====== */}
 
-                        <div className="absolute bottom-2 left-5 flex flex-row">
-                            <div className="mr-5 overflow-hidden rounded-lg bg-white shadow">
-                                <div className="top:0 px-4 py-5">HP : 100</div>
+                        <div className="absolute bottom-2 left-5 flex flex-row space-x-5">
+                            <div className="overflow-hidden rounded-lg bg-white shadow">
+                                <div className="px-4 py-5">HP : 100</div>
                             </div>
 
-                            <div className="mr-5 overflow-hidden rounded-lg bg-white shadow">
-                                <div className="top:0 px-4 py-5">HP : 100</div>
+                            <div className="overflow-hidden rounded-lg bg-white shadow">
+                                <div className="px-4 py-5">HP : 100</div>
                             </div>
 
-                            <div className="mr-5 overflow-hidden rounded-lg bg-white shadow">
-                                <div className="top:0 px-4 py-5">HP : 100</div>
+                            <div className="overflow-hidden rounded-lg bg-white shadow">
+                                <div className="px-4 py-5">HP : 100</div>
                             </div>
                         </div>
 
@@ -186,9 +189,6 @@ const Home: NextPage = () => {
                             <button
                                 type="button"
                                 className={`mb-5 items-center rounded-full border border-transparent bg-white p-1.5 text-red-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 md:p-3`}
-                                onClick={() =>
-                                    moveTo(zoom1, setZoom1, shift, setShift)
-                                }
                             >
                                 <ArrowPathIcon
                                     className="h-5 w-5 md:h-6 md:w-6"
