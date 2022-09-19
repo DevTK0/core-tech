@@ -33,6 +33,7 @@ const Home: NextPage = () => {
     const [zoom6, setZoom6] = useState(false);
 
     const [showMsgBox, setShowMsgBox] = useState(false);
+    const [showSidebar, setShowSidebar] = useState(false);
 
     const [transform, setTransform] = useState({});
 
@@ -173,6 +174,54 @@ const Home: NextPage = () => {
                         </div>
 
                         {/* ====== UI Layer - Menu ====== */}
+                        <div
+                            className={`${
+                                !showSidebar && "hidden w-0"
+                            } absolute right-0 h-full w-4/5 bg-black`}
+                        >
+                            <div className="absolute right-20 flex h-full w-full flex-row justify-end overflow-auto">
+                                <div className="w-2/5 flex-col space-y-5 p-5">
+                                    <div className="rounded-lg bg-white p-4">
+                                        Familiar 1
+                                    </div>
+                                    <div className="rounded-lg bg-white p-4">
+                                        Familiar 2
+                                    </div>
+                                    <div className="rounded-lg bg-white p-4">
+                                        Familiar 3
+                                    </div>
+                                    <div className="rounded-lg bg-white p-4">
+                                        Familiar 4
+                                    </div>
+                                    <div className="rounded-lg bg-white p-4">
+                                        Familiar 5
+                                    </div>
+                                    <div className="rounded-lg bg-white p-4">
+                                        Familiar 6
+                                    </div>
+                                </div>
+                                <div className="w-2/5 flex-col space-y-5 p-5">
+                                    <div className="rounded-lg bg-white p-4">
+                                        Familiar 1
+                                    </div>
+                                    <div className="rounded-lg bg-white p-4">
+                                        Familiar 2
+                                    </div>
+                                    <div className="rounded-lg bg-white p-4">
+                                        Familiar 3
+                                    </div>
+                                    <div className="rounded-lg bg-white p-4">
+                                        Familiar 4
+                                    </div>
+                                    <div className="rounded-lg bg-white p-4">
+                                        Familiar 5
+                                    </div>
+                                    <div className="rounded-lg bg-white p-4">
+                                        Familiar 6
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <div className="absolute bottom-5 right-5 flex flex-col items-end">
                             {"width: " + width + " height: " + height}
@@ -189,6 +238,7 @@ const Home: NextPage = () => {
                             <button
                                 type="button"
                                 className={`mb-5 items-center rounded-full border border-transparent bg-white p-1.5 text-red-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 md:p-3`}
+                                onClick={() => setShowSidebar(!showSidebar)}
                             >
                                 <ArrowPathIcon
                                     className="h-5 w-5 md:h-6 md:w-6"
