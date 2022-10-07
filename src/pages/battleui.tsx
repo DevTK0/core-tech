@@ -9,15 +9,19 @@ import {
     ShieldExclamationIcon,
     ArrowPathIcon,
 } from "@heroicons/react/24/outline";
-import lottie from "lottie-web";
+import lottie, { AnimationItem } from "lottie-web";
 
 const moveTo = (zoom: any, setZoom: any, toggle: any, setToggle: any) => {
     setZoom(!zoom);
     setToggle(!toggle);
 };
 
+let animation: AnimationItem | null;
+
 const playMove = (element: RefObject<HTMLInputElement>) => {
-    const animation = lottie.loadAnimation({
+    if (animation) return;
+
+    animation = lottie.loadAnimation({
         container: element.current!, // the dom element that will contain the animation
         renderer: "svg",
         loop: false,
@@ -26,7 +30,8 @@ const playMove = (element: RefObject<HTMLInputElement>) => {
     });
 
     animation.addEventListener("complete", () => {
-        animation.destroy();
+        animation!.destroy();
+        animation = null;
         console.log("destroyed");
     });
 };
@@ -88,7 +93,7 @@ const Home: NextPage = () => {
                 <div className="portrait:hidden">
                     <div
                         ref={game}
-                        className={`relative m-auto h-[100vh] max-h-[50vw] w-[200vh] max-w-[100vw] overflow-hidden border-4 border-red-200`}
+                        className={`relative m-auto h-[100vh] max-h-[50vw] w-[200vh] max-w-[100vw] overflow-hidden `}
                     >
                         {/* ====== Background Layer ====== */}
                         <div
@@ -127,33 +132,28 @@ const Home: NextPage = () => {
                                 />
                             </div> */}
 
+                            {/* sky */}
                             <div className="absolute h-[50vh] w-[800vw] -translate-x-[50vw] -translate-y-[15vh] bg-gradient-to-t from-blue-500 to-blue-100"></div>
+                            {/* grass */}
                             <div className="absolute h-[200vh] w-[800vw] -translate-x-[50vw] translate-y-[20vh] bg-green-500"></div>
-
+                            {/* center line */}
+                            <div className="absolute top-1/2 h-0 w-full border border-black"></div>
                             <div className="absolute right-10 top-0 flex h-1/2 w-full flex-row items-end justify-end space-x-14">
                                 <div
                                     ref={mon1}
                                     className="h-1/2 w-[12.5%] rounded-[50%] bg-gray-500"
-                                >
-                                    1
+                                ></div>
+                                {/* <div className="h-1/2 w-[12.5%] rounded-[50%] bg-gray-500">
                                 </div>
                                 <div className="h-1/2 w-[12.5%] rounded-[50%] bg-gray-500">
-                                    2
-                                </div>
-                                <div className="h-1/2 w-[12.5%] rounded-[50%] bg-gray-500">
-                                    3
-                                </div>
+                                </div> */}
                             </div>
-                            <div className="absolute left-10 bottom-20 flex h-1/2 w-full flex-row items-end space-x-14">
-                                <div className="h-1/2 w-[12.5%] rounded-[50%] bg-gray-500">
-                                    4
+                            <div className="absolute left-10 bottom-5 flex h-1/2 w-full flex-row items-end space-x-14">
+                                <div className="h-1/2 w-[12.5%] rounded-[50%] bg-gray-500"></div>
+                                {/* <div className="h-1/2 w-[12.5%] rounded-[50%] bg-gray-500">
                                 </div>
                                 <div className="h-1/2 w-[12.5%] rounded-[50%] bg-gray-500">
-                                    5
-                                </div>
-                                <div className="h-1/2 w-[12.5%] rounded-[50%] bg-gray-500">
-                                    6
-                                </div>
+                                </div> */}
                             </div>
                         </div>
 
@@ -168,15 +168,15 @@ const Home: NextPage = () => {
 
                         <div className="absolute top-2 right-5 flex flex-row space-x-5">
                             <div className="overflow-hidden rounded-lg bg-white shadow">
-                                <div className="px-4 py-5">HP : 100</div>
+                                <div className="px-10 py-5">HP : 100</div>
                             </div>
 
                             <div className="overflow-hidden rounded-lg bg-white shadow">
-                                <div className="px-4 py-5">HP : 100</div>
+                                <div className="px-10 py-5">HP : 100</div>
                             </div>
 
                             <div className="overflow-hidden rounded-lg bg-white shadow">
-                                <div className="px-4 py-5">HP : 100</div>
+                                <div className="px-10 py-5">HP : 100</div>
                             </div>
                         </div>
 
@@ -184,15 +184,15 @@ const Home: NextPage = () => {
 
                         <div className="absolute bottom-2 left-5 flex flex-row space-x-5">
                             <div className="overflow-hidden rounded-lg bg-white shadow">
-                                <div className="px-4 py-5">HP : 100</div>
+                                <div className="px-10 py-5">HP : 100</div>
                             </div>
 
                             <div className="overflow-hidden rounded-lg bg-white shadow">
-                                <div className="px-4 py-5">HP : 100</div>
+                                <div className="px-10 py-5">HP : 100</div>
                             </div>
 
                             <div className="overflow-hidden rounded-lg bg-white shadow">
-                                <div className="px-4 py-5">HP : 100</div>
+                                <div className="px-10 py-5">HP : 100</div>
                             </div>
                         </div>
 
@@ -391,7 +391,7 @@ const Home: NextPage = () => {
                                     className={`${
                                         showMenu ? "" : "hidden"
                                     }  mr-5 items-center rounded-full border border-transparent bg-white p-1.5 text-red-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 md:p-3`}
-                                    onClick={() => playMove(animation)}
+                                    onClick={() => playMove(mon1)}
                                 >
                                     <ShieldExclamationIcon className="h-5 w-5 md:h-6 md:w-6"></ShieldExclamationIcon>
                                 </button>
