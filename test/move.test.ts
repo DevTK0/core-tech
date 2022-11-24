@@ -1,8 +1,8 @@
 import { BattleLogger } from "@/services/battle/BattleLogger";
 import { Familiar } from "@/services/battle/Familiar";
 import { MoveFactory } from "@/services/moves/MoveFactory";
-import { GlobalService } from "../battle/GlobalService";
-import { ConditionFactory } from "../conditions/ConditionFactory";
+import { GlobalService } from "../src/services/battle/GlobalService";
+import { ConditionFactory } from "../src/services/conditions/ConditionFactory";
 
 const source = new Familiar({
     id: 1,
