@@ -77,12 +77,17 @@ const target = new Familiar({
 describe("evade condition with", () => {
     const condition = ConditionFactory.getCondition("Evading", target, 999, 1);
 
-    it("moves that hit multiple times", () => {
+    test("moves that hit multiple times", () => {
         GlobalService.queue.addMove(
             MoveFactory.getMove("Tri Slash", source).setTargets([target])
         );
         GlobalService.queue.execute();
+    });
 
-        console.log(GlobalService.logger.getLog());
+    test("moves that hit multiple times", () => {
+        GlobalService.queue.addMove(
+            MoveFactory.getMove("Tri Slash", source).setTargets([target])
+        );
+        GlobalService.queue.execute();
     });
 });

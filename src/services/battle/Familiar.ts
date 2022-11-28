@@ -120,15 +120,25 @@ export class Familiar {
         );
     }
 
+    isKOed() {
+        return (
+            this.familiar.conditions.find(
+                (c) => c.condition_name === "Knocked Out"
+            ) !== undefined
+        );
+    }
+
     damage(value: number) {
-        if (!this.isInvulnerable()) {
+        if (this.isInvulnerable()) {
+            GlobalService.event.dispatch("Invulnerable", this);
+        } else if (this.isEvading()) {
+            GlobalService.event.dispatch("Evade", this);
+        } else {
             this.familiar.health =
                 this.familiar.health > value ? this.familiar.health - value : 0;
-        } else {
-            GlobalService.event.dispatch("Invulnerable", this);
-        }
 
-        GlobalService.event.dispatch("OnDamage", this);
+            GlobalService.event.dispatch("OnDamage", this);
+        }
 
         if (this.familiar.health === 0) {
             const KO = ConditionFactory.getCondition(
