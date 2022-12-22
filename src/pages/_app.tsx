@@ -1,9 +1,10 @@
 import "../styles/globals.css";
 import Head from "next/head";
 import { SessionProvider } from "next-auth/react";
+import { Session } from "next-auth";
 import type { AppProps } from "next/app";
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps<{ session: Session }>) {
     return (
         <>
             <Head>
