@@ -1,12 +1,11 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider             = "mysql"
-  url                  = env("DATABASE_URL")
-  referentialIntegrity = "prisma"
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 // FamiliarDex
@@ -27,6 +26,8 @@ model Familiar {
   speed         Int
   FamiliarSet   FamiliarSet[]
   FamiliarState FamiliarState[]
+
+  @@index([element_name])
 }
 
 model Item {
@@ -43,6 +44,8 @@ model Art {
   effect       String     @db.VarChar(255)
   ArtSet       ArtSet[]
   ArtState     ArtState[]
+
+  @@index([element_name])
 }
 
 // Management
@@ -53,6 +56,8 @@ model Team {
   player_id     String
   FamiliarSet   FamiliarSet[]
   FamiliarState FamiliarState[]
+
+  @@index([player_id])
 }
 
 model FamiliarSet {
@@ -66,6 +71,8 @@ model FamiliarSet {
   ArtSet        ArtSet[]
 
   @@id([team_id, position])
+  @@index([familiar_name])
+  @@index([team_id])
 }
 
 model ItemSet {
@@ -77,6 +84,8 @@ model ItemSet {
   item_name      String
 
   @@id([familiarset_id, slot])
+  @@index([item_name])
+  @@index([familiarset_id])
 }
 
 model ArtSet {
@@ -88,6 +97,8 @@ model ArtSet {
   art_name       String
 
   @@id([familiarset_id, slot])
+  @@index([art_name])
+  @@index([familiarset_id])
 }
 
 // Battle
@@ -104,6 +115,12 @@ model Battle {
   ruleset      Ruleset @relation(fields: [ruleset_name], references: [name])
   ruleset_name String
   Turn         Turn[]
+
+  @@index([ruleset_name])
+  @@index([loser_id])
+  @@index([winner_id])
+  @@index([player_2_id])
+  @@index([player_1_id])
 }
 
 model Ruleset {
@@ -124,6 +141,7 @@ model Turn {
   PlayerMove    PlayerMove[]
 
   @@id([battle_id, turn])
+  @@index([battle_id])
 }
 
 model PlayerMove {
@@ -138,6 +156,11 @@ model PlayerMove {
   source    FamiliarState @relation(fields: [source_id], references: [id])
   source_id Int
   targets   Target[]
+
+  @@index([turn_id])
+  @@index([player_id])
+  @@index([type_name])
+  @@index([source_id])
 }
 
 model MoveType {
@@ -151,6 +174,9 @@ model FieldState {
   turn_id    Int
   field      Field  @relation(fields: [field_name], references: [name])
   field_name String
+
+  @@index([turn_id])
+  @@index([field_name])
 }
 
 model Field {
@@ -179,6 +205,10 @@ model FamiliarState {
   arts          ArtState[]
   targets       Target[]
   PlayerMove    PlayerMove[]
+
+  @@index([turn_id])
+  @@index([familiar_name])
+  @@index([team_id])
 }
 
 model Target {
@@ -187,6 +217,9 @@ model Target {
   playermove_id Int
   target        FamiliarState @relation(fields: [target_id], references: [id])
   target_id     Int
+
+  @@index([playermove_id])
+  @@index([target_id])
 }
 
 model ConditionState {
@@ -197,6 +230,9 @@ model ConditionState {
   condition_name   String
   type             String
   count            Int
+
+  @@index([familiarstate_id])
+  @@index([condition_name])
 }
 
 model Condition {
@@ -211,6 +247,9 @@ model ItemState {
   familiarstate_id Int
   item             Item          @relation(fields: [item_name], references: [name])
   item_name        String
+
+  @@index([familiarstate_id])
+  @@index([item_name])
 }
 
 model ArtState {
@@ -219,6 +258,9 @@ model ArtState {
   familiarstate_id Int
   art              Art           @relation(fields: [art_name], references: [name])
   art_name         String
+
+  @@index([familiarstate_id])
+  @@index([art_name])
 }
 
 // NextAuth Models
@@ -240,6 +282,7 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
@@ -248,6 +291,8 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model User {
