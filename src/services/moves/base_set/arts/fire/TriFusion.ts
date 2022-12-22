@@ -18,12 +18,19 @@ export class TriFusion extends Move {
     setup = () => {};
 
     effect = (target: Familiar) => {
-        const condition = ConditionFactory.getCondition("Knocked Out", target);
-        target.addNegativeCondition(condition);
+        target.adjustHealth(0);
+        const condition = ConditionFactory.getCondition(
+            "Knocked Out",
+            target,
+            "KO"
+        );
+        target.addCondition(condition);
 
-        this.source.adjustHealth(target.getHealth());
-        this.source.adjustAttack(target.getAttack());
-        this.source.adjustDefense(target.getDefense());
+        this.source.adjustHealth(this.source.getHealth() + target.getHealth());
+        this.source.adjustAttack(this.source.getAttack() + target.getAttack());
+        this.source.adjustDefense(
+            this.source.getDefense() + target.getDefense()
+        );
     };
 
     post = () => {};
