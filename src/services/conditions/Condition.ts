@@ -31,11 +31,11 @@ export abstract class Condition {
         this.count = charges;
     }
 
-    getDuration() {
-        return this.count;
+    getCountdownType() {
+        return this.type;
     }
 
-    getCharges() {
+    getCountdown() {
         return this.count;
     }
 

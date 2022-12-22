@@ -31,8 +31,8 @@ export class Familiar {
         // @ts-ignore
         this.familiar.conditions.push({
             condition_name: condition.getName(),
-            duration: condition.getDuration(),
-            charges: condition.getCharges(),
+            type: condition.getCountdownType(),
+            count: condition.getCountdown(),
         });
     }
 
@@ -47,8 +47,8 @@ export class Familiar {
             (c) => c.condition_name === condition.getName()
         );
         if (found) {
-            found.duration = condition.getDuration();
-            found.charges = condition.getCharges();
+            found.type = condition.getCountdownType();
+            found.count = condition.getCountdown();
         }
     }
 

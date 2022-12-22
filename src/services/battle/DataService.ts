@@ -14,6 +14,7 @@ import { ItemState } from "../database/ItemState";
 import { Target } from "../database/Target";
 import { Turn, getTurn, saveTurn } from "../database/Turn";
 import { ConditionState } from "../database/ConditionState";
+import { CounterType } from "../conditions/Condition";
 
 export class DataManager {
     private turnData: Turn | undefined;
@@ -47,8 +48,8 @@ export class DataManager {
                         ConditionFactory.getCondition(
                             conditionName,
                             familiar,
-                            condition.duration,
-                            condition.charges
+                            condition.type as CounterType,
+                            condition.count
                         );
                     }
                 });
