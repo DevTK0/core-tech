@@ -29,6 +29,8 @@ const playMove = (element: RefObject<HTMLInputElement>) => {
         path: "animation.json", // the path to the animation json
     });
 
+    animation.playSpeed = 1;
+
     animation.addEventListener("complete", () => {
         animation!.destroy();
         animation = null;
