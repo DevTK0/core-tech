@@ -1,16 +1,16 @@
 import { Familiar } from "../../battle/Familiar";
 import { GlobalService } from "../../battle/GlobalService";
-import { Condition } from "../Condition";
+import { Condition, CounterType } from "../Condition";
 
 export class Undying extends Condition {
     conditionName = "Undying";
 
     constructor(
         protected source: Familiar,
-        protected duration: number,
-        protected charges: number
+        protected type: CounterType,
+        protected count: number
     ) {
-        super(source, duration, charges);
+        super(source, type, count);
         GlobalService.event.subscribe("OnDamage", this.applyEffect.bind(this));
     }
 

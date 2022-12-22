@@ -21,22 +21,6 @@ export class BattleLogger {
         this.combatLog.push("Buff");
     }
 
-    addPositiveCondition(
-        familiar: string,
-        condition: Condition,
-        counter: number,
-        type: CounterType
-    ) {
-        this.combatLog.push(
-            `${familiar} is ${condition.getName()} (${counter} ${type})!`
-        );
-    }
-
-    // Negative Conditions should be past tense.
-    addNegativeCondition(familiar: string, condition: Condition) {
-        this.combatLog.push(`${familiar} was ${condition.getName()}!`);
-    }
-
     logCondition(effect: string) {
         this.combatLog.push(`${effect}`);
     }

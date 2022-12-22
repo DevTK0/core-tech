@@ -1,4 +1,3 @@
-import { BattleLogger } from "@/services/battle/BattleLogger";
 import { Familiar } from "@/services/battle/Familiar";
 import { MoveFactory } from "@/services/moves/MoveFactory";
 import { GlobalService } from "../src/services/battle/GlobalService";
@@ -75,14 +74,12 @@ const target = new Familiar({
 });
 
 describe("evade condition with", () => {
-    const condition = ConditionFactory.getCondition("Evading", target, 999, 1);
-
-    test("moves that hit multiple times", () => {
-        GlobalService.queue.addMove(
-            MoveFactory.getMove("Tri Slash", source).setTargets([target])
-        );
-        GlobalService.queue.execute();
-    });
+    const condition = ConditionFactory.getCondition(
+        "Evading",
+        target,
+        "Charges",
+        1
+    );
 
     test("moves that hit multiple times", () => {
         GlobalService.queue.addMove(

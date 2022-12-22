@@ -1,16 +1,16 @@
 import { GlobalService } from "@/services/battle/GlobalService";
 import { Familiar } from "../../battle/Familiar";
-import { Condition } from "../Condition";
+import { Condition, CounterType } from "../Condition";
 
 export class Burned extends Condition {
     conditionName = "Burned";
 
     constructor(
         protected source: Familiar,
-        protected duration: number,
-        protected charges: number
+        protected type: CounterType,
+        protected count: number
     ) {
-        super(source, duration, charges);
+        super(source, type, count);
 
         GlobalService.event.subscribe("TurnEnd", this.applyEffect.bind(this));
     }

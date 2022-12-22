@@ -26,32 +26,7 @@ export class Familiar {
         return this;
     }
 
-    addPositiveCondition(
-        condition: Condition,
-        counter: number,
-        type: CounterType
-    ) {
-        GlobalService.logger.addPositiveCondition(
-            this.getName(),
-            condition,
-            counter,
-            type
-        );
-        if (type === "Charges") {
-            condition.setCharges(counter);
-        }
-        if (type === "Turns") {
-            condition.setDuration(counter);
-        }
-        this.addCondition(condition);
-    }
-
-    addNegativeCondition(condition: Condition) {
-        GlobalService.logger.addNegativeCondition(this.getName(), condition);
-        this.addCondition(condition);
-    }
-
-    private addCondition(condition: Condition) {
+    addCondition(condition: Condition) {
         // New ConditionStates will be added so the missing fields are unnecessary.
         // @ts-ignore
         this.familiar.conditions.push({
@@ -141,13 +116,8 @@ export class Familiar {
         }
 
         if (this.familiar.health === 0) {
-            const KO = ConditionFactory.getCondition(
-                "Knocked Out",
-                this,
-                999,
-                999
-            );
-            this.addNegativeCondition(KO);
+            const KO = ConditionFactory.getCondition("Knocked Out", this, "KO");
+            this.addCondition(KO);
             GlobalService.event.dispatch("OnKO", this);
         }
     }
